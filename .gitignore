@@ -1,0 +1,12 @@
+# Salidas generadas por build.py (se regeneran con: python build.py)
+dist/
+
+# Sistema
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
