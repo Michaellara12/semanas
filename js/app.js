@@ -16,9 +16,20 @@
   const T=()=>Charts.theme().pal;
 
   /* ---------- Secciones (menú lateral y cajón móvil) ---------- */
-  const SECTIONS=[["inicio","Inicio"],["historia","Historia"],["series","Series históricas"],["diagnostico","Diagnóstico"],["comparador","Antes / después"],["calculadora","Calculadora"],["analisis","Análisis avanzado"],["modelos","Modelos y algoritmos"],["ley","La Ley, artículo por artículo"],["jurisprudencia","Corte Constitucional"],["critica","La crítica: Jerome Sanabria"],["preguntas","Preguntas abiertas"],["ia","IA y trabajo"],["fuentes","Fuentes"],["metodologia","Metodología"]];
+  /* El menú ya no es una secuencia de 01 a 15: son partes temáticas.
+     El orden respeta el del documento para que el resaltado por scroll no salte. */
+  const PARTS=[
+    ["El sistema", [["inicio","Inicio"],["historia","Historia"],["series","Series históricas"],["diagnostico","Diagnóstico"]]],
+    ["La reforma", [["comparador","Antes y después"],["calculadora","Calculadora"]]],
+    ["Modelos",    [["analisis","Análisis avanzado"],["modelos","Modelos y algoritmos"]]],
+    ["La ley 2381",[["ley","Artículo por artículo"],["jurisprudencia","Corte Constitucional"]]],
+    ["El debate",  [["critica","Jerome Sanabria"],["preguntas","Preguntas abiertas"],["ia","IA y trabajo"]]],
+    ["Referencias",[["fuentes","Fuentes"],["metodologia","Metodología"]]]
+  ];
+  const SECTIONS=PARTS.reduce((a,[,ss])=>a.concat(ss),[]);
   function nav(){
-    const html=SECTIONS.map(([id,l],i)=>`<a href="#${id}" data-s="${id}"><span class="n">${String(i+1).padStart(2,"0")}</span><span>${l}</span></a>`).join("");
+    const html=PARTS.map(([parte,ss])=>`<span class="part">${parte}</span>`+ss.map(([id,l])=>
+      `<a href="#${id}" data-s="${id}"><span class="dot"></span><span>${l}</span></a>`).join("")).join("");
     setHTML("sidenav",html); setHTML("drawernav",html);
     const burger=$("#burger"), drawer=$("#drawer"); if(burger){ burger.addEventListener("click",()=>drawer.classList.add("open")); drawer.addEventListener("click",e=>{ if(e.target===drawer||e.target.closest("a")) drawer.classList.remove("open"); }); }
     const secs=SECTIONS.map(([id])=>document.getElementById(id)).filter(Boolean); const prog=$("#sideprog i"); const top=$("#totop");
@@ -27,24 +38,90 @@
     window.addEventListener("scroll",onScroll,{passive:true}); onScroll(); if(top) top.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
   }
 
+  /* ---------- Visor de PDF dentro de la aplicación ----------
+     Las fuentes en PDF se previsualizan aquí, abiertas en la página exacta
+     que sustenta el dato (SEMANAS.PDFPAGES, o data-page en la propia cita).
+     Siempre queda a la vista el botón que lleva a la fuente original, y si
+     el servidor bloquea el embebido se muestra la salida alterna. */
+  const isPDF=u=>!!u&&/\.pdf($|[?#])/i.test(u);
+  const pdfMap=k=>(SEMANAS.PDFPAGES||{})[k]||null;
+  function pdfPage(k,override){
+    if(override) return parseInt(override,10)||1;
+    const m=pdfMap(k); return m&&m.def?m.def:1;
+  }
+  function pdfPageNote(k,page){
+    const m=pdfMap(k); if(!m||!m.pages) return "";
+    const hit=m.pages.find(x=>x.p===page); return hit?hit.d:"";
+  }
+  let pdfTimer=null;
+  function openPDF(k,page){
+    const n=SRC[k]; if(!n) return; const src=SEMANAS.SOURCES[n-1]; if(!src||!src.u) return;
+    const view=$("#pdfview"); if(!view) return;
+    page=page||pdfPage(k);
+    const frame=$("#pdf-frame"), fb=$("#pdf-fallback");
+    const plain=src.t.replace(/<[^>]+>/g,"");
+    setHTML("pdf-title",plain.length>120?plain.slice(0,120)+"…":plain);
+    const go=p=>{
+      const ext=src.u+"#page="+p;
+      $("#pdf-open").href=ext; $("#pdf-fallback-open").href=ext;
+      $("#pdf-kicker").textContent="Vista previa · página "+p;
+      setHTML("pdf-note",pdfPageNote(k,p));
+      fb.classList.remove("show");
+      clearTimeout(pdfTimer); let ok=false;
+      frame.onload=()=>{ ok=true; fb.classList.remove("show"); };
+      frame.src=src.u+"#page="+p+"&view=FitH";
+      /* Si el documento no llega, el visor no puede quedarse en negro. */
+      pdfTimer=setTimeout(()=>{ if(!ok) fb.classList.add("show"); },4500);
+      $$("#pdf-pages button").forEach(b=>b.classList.toggle("active",+b.dataset.p===p));
+    };
+    const m=pdfMap(k);
+    setHTML("pdf-pages", m&&m.pages&&m.pages.length>1
+      ? '<span>Páginas citadas</span>'+m.pages.map(x=>`<button data-p="${x.p}" title="${x.d.replace(/"/g,"&quot;")}">p. ${x.p}</button>`).join("")
+      : "");
+    $$("#pdf-pages button").forEach(b=>b.onclick=()=>go(+b.dataset.p));
+    view.classList.add("open"); document.body.style.overflow="hidden"; go(page);
+    $("#pdf-close").focus();
+  }
+  function closePDF(){
+    const view=$("#pdfview"); if(!view||!view.classList.contains("open")) return;
+    clearTimeout(pdfTimer); view.classList.remove("open");
+    $("#pdf-frame").src="about:blank"; document.body.style.overflow="";
+  }
+  function pdfWire(){
+    on("pdf-close","click",closePDF);
+    const v=$("#pdfview"); if(v) v.addEventListener("click",e=>{ if(e.target===v) closePDF(); });
+  }
+
   /* ---------- Citas: numeración, bibliografía y vista previa ---------- */
   let pop, popTimer, pinned=false;
   function popover(){ if(pop) return pop; pop=document.createElement("div"); pop.className="pop"; pop.setAttribute("role","dialog"); document.body.appendChild(pop); pop.addEventListener("mouseenter",()=>clearTimeout(popTimer)); pop.addEventListener("mouseleave",()=>{ if(!pinned) hidePop(); }); return pop; }
   function showPop(a){ const k=a.dataset.ref; const n=SRC[k]; if(!n) return; const s=SEMANAS.SOURCES[n-1]; const p=popover(); let host=""; try{ host=new URL(s.u).hostname.replace("www.",""); }catch(e){}
-    p.innerHTML=`<div class="pn"><span>REFERENCIA [${n}]</span><button aria-label="Cerrar" data-close>×</button></div><div>${s.t}</div>${s.u?`<div class="host">${host}</div><div class="pl"><a class="pri" href="${s.u}" target="_blank" rel="noopener">Abrir fuente ↗</a><a href="#ref-${n}" data-goto="${n}">Ver en bibliografía</a></div>`:""}`;
+    const pdf=isPDF(s.u), page=pdf?pdfPage(k,a.dataset.page):0, note=pdf?pdfPageNote(k,page):"";
+    const href=pdf?(s.u+"#page="+page):s.u;
+    p.innerHTML=`<div class="pn"><span>REFERENCIA [${n}]</span><button aria-label="Cerrar" data-close>×</button></div><div>${s.t}</div>`+
+      (pdf?`<div class="loc">PDF · página ${page}${note?" — "+note:""}</div>`:"")+
+      (s.u?`<div class="host">${host}</div><div class="pl">`+
+        (pdf?`<button class="pri" data-pdf>Previsualizar aquí</button>`:"")+
+        `<a class="${pdf?"":"pri"}" href="${href}" target="_blank" rel="noopener">Abrir fuente ↗</a>`+
+        `<a href="#ref-${n}" data-goto="${n}">Ver en bibliografía</a></div>`:"");
     const r=a.getBoundingClientRect(); const pw=Math.min(360,window.innerWidth-24); let left=Math.min(Math.max(12,r.left-20), window.innerWidth-pw-12); p.style.left=left+"px"; p.classList.add("show"); const ph=p.offsetHeight; let topY=r.bottom+8; if(topY+ph>window.innerHeight-12) topY=Math.max(12,r.top-ph-8); p.style.top=topY+"px";
     $$(".cite.on").forEach(x=>x.classList.remove("on")); a.classList.add("on");
     p.querySelector("[data-close]").onclick=()=>{ pinned=false; hidePop(); };
+    const pv=p.querySelector("[data-pdf]"); if(pv) pv.onclick=()=>{ pinned=false; hidePop(); openPDF(k,page); };
     const g=p.querySelector("[data-goto]"); if(g) g.onclick=(e)=>{ e.preventDefault(); pinned=false; hidePop(); const li=document.getElementById("ref-"+n); if(li){ li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500);} }; }
   function hidePop(){ if(pop){ pop.classList.remove("show"); } $$(".cite.on").forEach(x=>x.classList.remove("on")); }
   function renderCites(){
-    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href="#ref-"+n; a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(!a._wired){ a._wired=true;
+    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href="#ref-"+n; a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
       a.addEventListener("mouseenter",()=>{ clearTimeout(popTimer); if(!pinned) showPop(a); }); a.addEventListener("mouseleave",()=>{ if(!pinned) popTimer=setTimeout(hidePop,260); });
       a.addEventListener("focus",()=>showPop(a)); a.addEventListener("click",e=>{ e.preventDefault(); if(pinned && a.classList.contains("on")){ pinned=false; hidePop(); } else { pinned=true; showPop(a); } }); } } });
-    const ol=$("#refs"); if(ol&&!ol.children.length){ ol.innerHTML=SEMANAS.SOURCES.map((s,i)=>`<li id="ref-${i+1}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}</li>`).join(""); }
+    const ol=$("#refs"); if(ol&&!ol.children.length){ ol.innerHTML=SEMANAS.SOURCES.map((s,i)=>{
+      const pv=isPDF(s.u)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
+      return `<li id="ref-${i+1}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}${pv}</li>`;
+    }).join("");
+      $$("#refs .pdfbtn").forEach(b=>b.onclick=()=>openPDF(b.dataset.pdfk)); }
   }
   document.addEventListener("click",e=>{ if(pop&&pop.classList.contains("show")&&!e.target.closest(".pop")&&!e.target.closest(".cite")){ pinned=false; hidePop(); } });
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ pinned=false; hidePop(); $("#modal")?.classList.remove("open"); $("#drawer")?.classList.remove("open"); } });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ pinned=false; hidePop(); closePDF(); $("#modal")?.classList.remove("open"); $("#drawer")?.classList.remove("open"); } });
 
   /* ---------- Animaciones ---------- */
   function reveal(){ const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); if(e.target.dataset.count) countUp(e.target); } }); },{threshold:.1}); $$(".reveal").forEach(el=>io.observe(el)); $$("[data-count]").forEach(el=>io.observe(el)); }
@@ -220,5 +297,5 @@
   /* ---------- Sanabria ---------- */
   function sanabria(){ const c=$("#sb-columns"); if(c){ c.innerHTML=SEMANAS.SANABRIA.columnas.slice().sort((a,b)=>a.f.localeCompare(b.f)).map(x=>`<div class="tl-item"><div class="y">${x.f}</div><h3>${x.t} ${cite(x.k)}</h3><p>${x.r}</p></div>`).join(""); } const cl=$("#sb-claims"); if(cl){ cl.innerHTML=SEMANAS.SANABRIA.tesis.map((t,i)=>`<div class="claim reveal"><div class="side a"><div class="h">Tesis ${i+1} · Sanabria</div>${t.a}</div><div class="side b"><div class="h">Contraste con fuentes primarias</div>${t.b} ${t.k.map(cite).join(" ")}<br><span class="verdict v${t.v}">${t.vt}</span></div></div>`).join(""); } setHTML("sb-perfil",SEMANAS.SANABRIA.perfil+" "+cite("sMejor")+" "+cite("sEnvejecer")+" "+cite("sTigre")); }
 
-  document.addEventListener("DOMContentLoaded",()=>{ nav(); tabs(); timeline(); pillars(); articulos(); modal(); sanabria(); renderCites(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  document.addEventListener("DOMContentLoaded",()=>{ nav(); pdfWire(); tabs(); timeline(); pillars(); articulos(); modal(); sanabria(); renderCites(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();

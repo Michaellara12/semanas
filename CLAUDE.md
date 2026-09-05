@@ -32,13 +32,25 @@ Sitio web estático de análisis técnico e interactivo sobre el sistema pension
 
 ## Reglas de diseño
 
-La identidad visual toma como referencia el lenguaje gráfico de Innfiltrados: fondo blanco cálido, tipografía Archivo en pesos altos con interletrado negativo, menú lateral fijo numerado, botones píldora, bordes de 0,8 px, color plano. Paleta: blanco, morado (`--purple`), amarillo (`--yellow`) y azul (`--blue`) como acento de datos.
+La identidad visual v3 toma como referencia el lenguaje gráfico de **Aardvark Book Club**: fondo blanco, bloques de color plano y saturado en lugar de tarjetas, tipografía display ancha de peso alto, cuerpo en semibold, radios grandes en `em`, bordes negros de 1,5–2 px con sombra dura (`4px 4px 0`), botones píldora y un acento manuscrito puntual. Paleta: magenta (`--magenta`), violeta y periwinkle, cian, amarillo, verde, naranja y vino, con sus tintes suaves como fondo de bloque.
 
+- Tipografías: **Bricolage Grotesque** para titulares (`--display`), **Figtree** para el cuerpo (`--font`), **Caveat** para las notas manuscritas (`--hand`) e **IBM Plex Mono** para código (`--mono`). Se cargan desde Google Fonts en el `<head>` de `index.html`.
 - Todos los colores y tipografías viven en variables CSS al inicio de `css/styles.css`. Cambiar allí, nunca con valores sueltos en los componentes.
-- Las gráficas leen la paleta desde esas variables (`--c1` a `--c8`), así que un cambio de tema se propaga solo.
+- Las gráficas leen la paleta desde esas variables (`--c1` a `--c8`), así que un cambio de tema se propaga solo. `--c4`, `--c7` y `--cyan-ink` son las versiones oscurecidas del cian y el verde: los tonos plenos no tienen contraste suficiente sobre blanco.
+- **No meter todo en tarjetas.** Hay un catálogo de bloques para alternar: `.figure` (gráfica con regla superior de color, o en variante `boxed` / `tinted`), `.panel` (herramienta interactiva sobre fondo tintado), `.block` (solo una regla arriba), `.listblock` (barra de color a la izquierda), `.rows` (filas separadas por reglas), `.tiles` (mosaico de color plano), `.stat-strip` / `.kpis` (cifras separadas por reglas, nunca por cajas), `.band` (franja a sangre), `.callout`, `.slab` y `.steps`. `.card` sigue existiendo, pero es para uso puntual.
+- **Los filtros no se repiten.** Cada control tiene su propio estilo: `.seg` (segmentado, línea de tiempo), `.chips` (fichas conmutables), `.tabs` (pestañas subrayadas) y `.tabs.pill` (pestañas píldora), `.searchbar` (buscador con lupa), `.select-wrap` y `.switch`.
+- El menú lateral se agrupa por **partes temáticas** (`PARTS` en `js/app.js`), no por una secuencia numerada. El orden de las partes debe seguir el orden de las secciones en el documento para que el resaltado por desplazamiento no salte.
 - Los bloques con clase `.illus` y el `.avatar` son espacios reservados para ilustraciones y animaciones que el autor agregará después. No borrarlos.
 - Mobile primero. Nada debe desbordar horizontalmente; tablas y gráficas anchas van dentro de un contenedor con desplazamiento propio.
 - Las animaciones parten de un estado de reposo visible (nunca `opacity: 0` esperando un observador) y respetan `prefers-reduced-motion`.
+
+## Fuentes en PDF: vista previa con página exacta
+
+Las fuentes cuya URL termina en `.pdf` se previsualizan **dentro de la aplicación** (`#pdfview` en `index.html`, lógica en `js/app.js`), abiertas en la página que sustenta el dato, con un botón que lleva siempre a la fuente original y una salida alterna si el servidor bloquea el embebido.
+
+- `SEMANAS.PDFPAGES` en `js/data.js` guarda, por clave de fuente, la página `def` que abre el visor y la lista `pages` de páginas citadas con su descripción.
+- Una cita concreta puede apuntar a su propia página con `data-page`: `<a class="cite" data-ref="oecd23" data-page="5"></a>`.
+- **Las páginas se verifican extrayendo el texto del PDF**, nunca por el número impreso en la hoja: `#page=N` cuenta páginas físicas. Si una fuente nueva en PDF no se puede descargar, se deja sin entrada en `PDFPAGES` (el visor la abre en la primera página) antes que inventar una referencia.
 
 ## Verificación antes de dar por terminado un cambio
 
@@ -48,7 +60,7 @@ node tests/test_models.js
 
 Si se tocó `js/models.js`, revisar que las calibraciones sigan cuadrando con las referencias: esperanza de vida a los 65 (16,0 / 19,3 años poblacional; 18,2 / 21,5 rentistas), población máxima cerca de 2047, agotamiento del Fondo de Ahorro cerca de 2063 (el CARF estima 2062) y el subsidio implícito del régimen de prima media en el orden de Farné y Nieto (2017).
 
-Si se agregaron citas, confirmar que no quedó ninguna clave sin fuente: cada `data-ref` del HTML debe existir en `SEMANAS.SOURCES`.
+Si se agregaron citas, confirmar que no quedó ninguna clave sin fuente: cada `data-ref` del HTML debe existir en `SEMANAS.SOURCES`. Si la fuente es un PDF, confirmar también que la página registrada en `SEMANAS.PDFPAGES` (o en `data-page`) es la página física donde está el dato.
 
 ## Despliegue
 

@@ -119,6 +119,42 @@ SEMANAS.SOURCES = [
  {k:"danePIB", t:"DANE. <b>Cuentas nacionales anuales – PIB a precios corrientes</b> (2017–2024; cifras redondeadas en billones de pesos).", u:"https://www.dane.gov.co/index.php/estadisticas-por-tema/cuentas-nacionales/cuentas-nacionales-anuales"},
  {k:"bosch15", t:"Bosch, M.; Berstein, S.; Castellani, F.; Oliveri, M. L. & Villa, J. M. (2015). <b>Diagnóstico del sistema previsional colombiano y opciones de reforma</b>. Banco Interamericano de Desarrollo, Nota técnica IDB-TN-825.", u:"https://publications.iadb.org/publications/spanish/document/Diagn%C3%B3stico-del-sistema-previsional-colombiano-y-opciones-de-reforma.pdf"},
 ];
+/* ---------- PÁGINAS EXACTAS DE LAS FUENTES EN PDF ----------
+   Para cada fuente en PDF se registra la página física (la que entiende
+   #page=N del visor) donde está el dato citado. `def` es la página que abre
+   el visor cuando la cita no indica una propia con data-page.
+   Verificado extrayendo el texto de cada PDF, no por el número impreso.
+   Las fuentes cuyo servidor no permitió la descarga (CONPES 4144 y 3975,
+   Abbott & Bogenschneider, Bosch et al.) quedan sin mapa de páginas: el
+   visor las abre en la primera página y el botón «Abrir fuente» sigue igual. */
+SEMANAS.PDFPAGES = {
+  oecd23:{def:1, pages:[
+    {p:1, d:"Indicadores país: gasto público en pensiones 5,7 % del PIB y población 65+ (14,5 % frente a 31,3 % de la OCDE)"},
+    {p:5, d:"Tasas de reemplazo modeladas: neta 103,5 % para 0,5 del salario promedio y 73,1 % para el promedio"}]},
+  daneMayores:{def:42, pages:[
+    {p:41, d:"Mesada pensional promedio en 2020: $1.565.922 (mujeres) y $1.891.004 (hombres)"},
+    {p:42, d:"Cobertura: 25,5 % de hombres de 62+ y mujeres de 57+ recibe pensión; 22,4 % entre las mujeres"}]},
+  oit25:{def:18, pages:[
+    {p:18, d:"Cobertura proyectada del componente de prima media: ≈ 72 % de los asalariados, sobre el mínimo de 50 % del Convenio 102"},
+    {p:28, d:"Renta Básica Solidaria: monto unificado de ≈ $230.226 mensuales"}]},
+  gmyrek24:{def:32, pages:[
+    {p:32, d:"Colombia, mujeres: 5,5 % del empleo expuesto a automatización, 11,3 % en categoría de aumento y 22,5 % en «gran incógnita»"},
+    {p:33, d:"Automatización por sexo (5,5 % mujeres frente a 1,6 % hombres) y por zona (3,9 % urbano frente a 0,8 % rural)"}]},
+  gmyrek25:{def:4, pages:[
+    {p:4, d:"Resumen: los cuatro gradientes de exposición a la IA generativa y su concentración en ocupaciones de oficina"}]},
+  farne17:{def:10, pages:[
+    {p:9,  d:"Al subir la edad de pensión, el subsidio de un IBC de 20 SMMLV cae de 33,4 % a 21,7 % (gráfico 4)"},
+    {p:10, d:"En el salario mínimo la pensión sigue subsidiada en 71 % de la reserva actuarial (gráfico 5)"}]},
+  danePPED:{def:23, pages:[
+    {p:13, d:"Estructura de la población base frente a la censada de 2018 (gráfico 1)"},
+    {p:21, d:"Resultados: la población de 0 a 14 años pasa de 25,2 % en 2018 a 13,6 % en 2050"},
+    {p:23, d:"Índice de envejecimiento 2018 y 2070 (gráfico 8)"}]},
+  abece:{def:1, pages:[
+    {p:1, d:"Vigencia y aspectos generales de la Ley 2381"},
+    {p:2, d:"Umbral de cotización de 2,3 SMLMV y reparto entre componentes"},
+    {p:3, d:"Tabla de factores de aporte por rango de IBC en SMLMV"}]}
+};
+
 SEMANAS.SRC = {}; SEMANAS.SOURCES.forEach((s,i)=>{ SEMANAS.SRC[s.k]=i+1; });
 
 /* ---------- SERIES ECONÓMICAS Y DEMOGRÁFICAS ---------- */
