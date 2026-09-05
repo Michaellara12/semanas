@@ -84,11 +84,13 @@
   /* ---------- 5. Ley 2381 de 2024 ---------- */
   M.semanasMujer = function(anio){ if(anio<=2024) return 1300; if(anio>=2036) return 1000; return 1300-25*(anio-2024); }; /* art. 32 */
   M.transicion = function(sex, semanasAl2027){ const umbral= sex==="F"?750:900; return {enTransicion: semanasAl2027>=umbral, umbral}; }; /* art. 75 */
-  M.ley2381 = function({sex, edad, semanas, ibl, smmlv, anio, saldoCCAI, iTecnica, beneficiario, hijos}){
+  M.ley2381 = function({sex, edad, semanas, ibl, smmlv, anio, saldoCCAI, iTecnica, beneficiario, hijos, umbralSM}){
     smmlv=smmlv||M.smmlv(CURRENT_YEAR); anio=anio||2027; iTecnica=iTecnica==null?0.03:iTecnica;
     const edadReq=M.edadPension(sex); let req = sex==="F"? M.semanasMujer(anio):1300;
     let reqHijos=req; if(sex==="F" && hijos>0){ reqHijos=Math.max(850, req-50*Math.min(3,hijos)); } /* art. 36 (devuelto a la Cámara) */
-    const umbral=2.3*smmlv; const iblCPM=Math.min(ibl, umbral); const s=iblCPM/smmlv;
+    /* umbralSM: el umbral del art. 24 en SMLMV. La ley lo fija en 2,3; se deja
+       como parámetro para poder simular los otros valores que se debatieron. */
+    const umbral=(umbralSM==null?2.3:umbralSM)*smmlv; const iblCPM=Math.min(ibl, umbral); const s=iblCPM/smmlv;
     const base=65.5-0.5*s; const extra=Math.max(0,Math.floor((semanas-req)/50))*1.5; const tasa=Math.min(80, base+extra);
     const elegible = edad>=edadReq && semanas>=req; const elegibleConHijos = edad>=edadReq && semanas>=reqHijos;
     const mesadaCPM = (elegible||elegibleConHijos)? Math.max(smmlv, iblCPM*tasa/100) : 0;

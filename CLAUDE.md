@@ -50,6 +50,7 @@ Las fuentes cuya URL termina en `.pdf` se previsualizan **dentro de la aplicaci�
 
 - `SEMANAS.PDFPAGES` en `js/data.js` guarda, por clave de fuente, la página `def` que abre el visor y la lista `pages` de páginas citadas con su descripción.
 - Una cita concreta puede apuntar a su propia página con `data-page`: `<a class="cite" data-ref="oecd23" data-page="5"></a>`.
+- Una fuente cuenta como PDF si su URL termina en `.pdf` **o** si tiene entrada en `PDFPAGES`. Esto último es lo que rescata a los servidores que entregan el archivo sin extensión (el CARF lo sirve con `?download=true`).
 - **Las páginas se verifican extrayendo el texto del PDF**, nunca por el número impreso en la hoja: `#page=N` cuenta páginas físicas. Si una fuente nueva en PDF no se puede descargar, se deja sin entrada en `PDFPAGES` (el visor la abre en la primera página) antes que inventar una referencia.
 
 ## Verificación antes de dar por terminado un cambio

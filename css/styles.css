@@ -260,7 +260,7 @@ main{margin-left:var(--side);min-width:0}
 .kpi{padding:18px 16px 16px;border-right:1.5px solid var(--line);border-bottom:1.5px solid var(--line);background:none;position:relative;transition:background .28s}
 .kpi:hover{background:var(--pale-yellow)}
 .kpi .v{font-family:var(--display);font-size:clamp(1.7rem,4.2vw,2.5rem);font-weight:800;letter-spacing:-.045em;line-height:.96;font-variant-numeric:tabular-nums}
-.kpi .v small{font-size:.44em;font-weight:800;margin-left:4px;letter-spacing:-.01em;color:var(--ink-3)}
+.kpi .v small{font-size:.44em;font-weight:800;margin-left:4px;letter-spacing:-.01em;color:var(--ink-3);white-space:nowrap}
 .kpi .l{font-size:.82rem;color:var(--ink-2);margin-top:9px;line-height:1.34}
 .kpi .s{font-size:.65rem;margin-top:9px;color:var(--ink-3);font-weight:700;letter-spacing:.05em}
 /* el color ahora vive en la cifra, no en un fondo de tarjeta */
@@ -450,6 +450,64 @@ ul.ticks b{color:var(--ink)}
 .tooltip b{color:var(--yellow);font-weight:800}
 
 /* =====================================================================
+   EL UMBRAL · reparto del salario, ruta política y fórmulas
+   ===================================================================== */
+/* Diagrama del reparto: la jarra, los tubos y las dos ollas */
+.splitter{display:grid;grid-template-columns:1fr;gap:14px;align-items:center;margin-top:16px}
+@media (min-width:720px){.splitter{grid-template-columns:132px 90px 1fr;gap:0}}
+.splitter .jar{display:flex;flex-direction:column;align-items:center;gap:8px}
+.splitter .jar-body{position:relative;width:100%;max-width:132px;height:220px;border:var(--bd);border-radius:var(--r) var(--r) var(--r-lg) var(--r-lg);background:var(--paper-2);overflow:hidden;display:flex;flex-direction:column-reverse}
+.splitter .fill{width:100%;flex:none;position:relative;transition:height .55s var(--ease);display:grid;place-items:center;min-height:0;overflow:hidden}
+.splitter .fill span{font-size:.6rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;opacity:0;transition:opacity .3s;text-align:center;padding:0 6px;line-height:1.15}
+.splitter .fill.cpm{background:var(--magenta);color:#fff}
+.splitter .fill.ccai{background:var(--cyan);color:var(--ink)}
+.splitter .fill.tall span{opacity:.9}
+.splitter .mark{position:absolute;left:0;right:0;height:0;border-top:2.5px dashed var(--ink);transition:bottom .55s var(--ease);z-index:2}
+.splitter .mark i{position:absolute;right:4px;top:-17px;font-style:normal;font-size:.6rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;background:var(--yellow);border:1.5px solid var(--ink);border-radius:var(--pill);padding:1px 7px}
+.splitter .jar-foot,.splitter .jar-scale{font-size:.66rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);text-align:center}
+.splitter .jar-scale{color:var(--ink);font-size:.88rem;letter-spacing:-.02em;text-transform:none;font-variant-numeric:tabular-nums;line-height:1.25;min-height:2.4em}
+.splitter .pipes{display:none}
+@media (min-width:720px){.splitter .pipes{display:block;height:220px}}
+.splitter .pipes svg{width:100%;height:100%;display:block;overflow:visible}
+.splitter .pipe{fill:none;stroke-width:9;stroke-linecap:round;stroke-dasharray:11 9;animation:flow 1.6s linear infinite}
+.splitter .pipe-cpm{stroke:var(--magenta)}
+.splitter .pipe-ccai{stroke:var(--cyan)}
+@keyframes flow{to{stroke-dashoffset:-40}}
+.splitter .pots{display:grid;gap:2px;background:var(--ink);border:var(--bd);border-radius:var(--r-lg);overflow:hidden}
+.splitter .pot{padding:14px 16px;background:#fff}
+.splitter .pot.ccai{background:var(--soft-blue)}
+.splitter .pot.cpm{background:var(--soft-pink)}
+.splitter .pot-h{font-size:.63rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2)}
+.splitter .pot-v{font-family:var(--display);font-size:clamp(1.5rem,3.6vw,2rem);font-weight:800;letter-spacing:-.04em;line-height:1;margin:6px 0 7px;font-variant-numeric:tabular-nums}
+.splitter .pot.ccai .pot-v{color:var(--cyan-ink)}
+.splitter .pot.cpm .pot-v{color:var(--magenta)}
+.splitter .pot p{font-size:.81rem;color:var(--ink-2);margin:0;line-height:1.4}
+
+/* Ruta política del número */
+.journey{list-style:none;padding:0;margin:0;counter-reset:none}
+.journey li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;padding:12px 0;position:relative}
+.journey li + li{border-top:1.5px solid rgba(0,0,0,.16)}
+.journey .jn{font-family:var(--display);font-size:1.5rem;font-weight:800;letter-spacing:-.04em;line-height:1;min-width:2.6ch;color:var(--ink-2);padding-top:2px;font-variant-numeric:tabular-nums}
+.journey li.win .jn{color:#fff;background:var(--magenta);border:1.5px solid var(--ink);border-radius:var(--pill);padding:4px 11px;min-width:0}
+.journey b{display:block;font-size:.94rem;letter-spacing:-.01em;margin-bottom:3px}
+.journey p{margin:0;font-size:.87rem;color:var(--ink-2)}
+
+/* Fórmulas explicadas paso a paso */
+.steps.formulas > li{align-items:start;padding:22px 0}
+.steps.formulas h3{font-size:1.08rem}
+.formula-box{background:var(--paper-2);border-radius:var(--r);padding:10px 14px;margin:10px 0;overflow-x:auto}
+.section.tint .formula-box,.section.tint-peri .formula-box,.section.tint-blue .formula-box,.section.tint-pink .formula-box{background:#fff}
+.formula-say{font-size:.95rem;color:var(--ink-2);margin:0 0 10px}
+.formula-say b{color:var(--ink)}
+.glossary{display:grid;gap:0;margin:10px 0 0;border-top:1.5px solid var(--line)}
+.glossary div{display:grid;grid-template-columns:auto 1fr;gap:12px;padding:7px 0;border-bottom:1.5px solid var(--line);font-size:.87rem;color:var(--ink-2)}
+.glossary dt{font-family:var(--mono);font-weight:600;color:var(--magenta);min-width:3.2ch}
+.glossary dd{margin:0}
+.example{background:var(--pale-yellow);border-radius:var(--r);padding:11px 15px;font-size:.88rem;margin-top:11px;line-height:1.5}
+.example b{font-variant-numeric:tabular-nums}
+.example .eh{display:block;font-size:.62rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--wine);margin-bottom:5px}
+
+/* =====================================================================
    FILTROS · cada tipo con su propio estilo
    ===================================================================== */
 /* 1· Control segmentado (línea de tiempo) */
@@ -521,7 +579,7 @@ output{font-family:var(--mono);font-size:.8rem;color:var(--magenta);font-weight:
 .result.bluish{background:var(--soft-blue)}
 .result .t{font-size:.66rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-3)}
 .result .v{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2rem);font-weight:800;letter-spacing:-.04em;margin:8px 0 4px;line-height:1;font-variant-numeric:tabular-nums}
-.result .v small{font-size:.48em;font-weight:800;color:var(--ink-3)}
+.result .v small{font-size:.48em;font-weight:800;color:var(--ink-3);white-space:nowrap}
 .result .d{font-size:.85rem;color:var(--ink-2);line-height:1.5}
 .result .d b{color:var(--ink)}
 .status{display:inline-block;padding:4px 11px;border-radius:var(--pill);font-size:.7rem;font-weight:800;letter-spacing:.05em;border:1.5px solid var(--ink)}

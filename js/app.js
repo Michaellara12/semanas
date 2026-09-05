@@ -20,7 +20,7 @@
      El orden respeta el del documento para que el resaltado por scroll no salte. */
   const PARTS=[
     ["El sistema", [["inicio","Inicio"],["historia","Historia"],["series","Series históricas"],["diagnostico","Diagnóstico"]]],
-    ["La reforma", [["comparador","Antes y después"],["calculadora","Calculadora"]]],
+    ["La reforma", [["comparador","Antes y después"],["umbral","El umbral de 2,3"],["calculadora","Calculadora"]]],
     ["Modelos",    [["analisis","Análisis avanzado"],["modelos","Modelos y algoritmos"]]],
     ["La ley 2381",[["ley","Artículo por artículo"],["jurisprudencia","Corte Constitucional"]]],
     ["El debate",  [["critica","Jerome Sanabria"],["preguntas","Preguntas abiertas"],["ia","IA y trabajo"]]],
@@ -43,7 +43,9 @@
      que sustenta el dato (SEMANAS.PDFPAGES, o data-page en la propia cita).
      Siempre queda a la vista el botón que lleva a la fuente original, y si
      el servidor bloquea el embebido se muestra la salida alterna. */
-  const isPDF=u=>!!u&&/\.pdf($|[?#])/i.test(u);
+  /* Algunos servidores entregan el PDF sin extensión en la URL (el CARF, por
+     ejemplo, usa «?download=true»), así que tener mapa de páginas también cuenta. */
+  const isPDF=(u,k)=>!!(k&&(SEMANAS.PDFPAGES||{})[k]) || (!!u&&/\.pdf($|[?#])/i.test(u));
   const pdfMap=k=>(SEMANAS.PDFPAGES||{})[k]||null;
   function pdfPage(k,override){
     if(override) return parseInt(override,10)||1;
@@ -96,7 +98,7 @@
   let pop, popTimer, pinned=false;
   function popover(){ if(pop) return pop; pop=document.createElement("div"); pop.className="pop"; pop.setAttribute("role","dialog"); document.body.appendChild(pop); pop.addEventListener("mouseenter",()=>clearTimeout(popTimer)); pop.addEventListener("mouseleave",()=>{ if(!pinned) hidePop(); }); return pop; }
   function showPop(a){ const k=a.dataset.ref; const n=SRC[k]; if(!n) return; const s=SEMANAS.SOURCES[n-1]; const p=popover(); let host=""; try{ host=new URL(s.u).hostname.replace("www.",""); }catch(e){}
-    const pdf=isPDF(s.u), page=pdf?pdfPage(k,a.dataset.page):0, note=pdf?pdfPageNote(k,page):"";
+    const pdf=isPDF(s.u,k), page=pdf?pdfPage(k,a.dataset.page):0, note=pdf?pdfPageNote(k,page):"";
     const href=pdf?(s.u+"#page="+page):s.u;
     p.innerHTML=`<div class="pn"><span>REFERENCIA [${n}]</span><button aria-label="Cerrar" data-close>×</button></div><div>${s.t}</div>`+
       (pdf?`<div class="loc">PDF · página ${page}${note?" — "+note:""}</div>`:"")+
@@ -111,11 +113,11 @@
     const g=p.querySelector("[data-goto]"); if(g) g.onclick=(e)=>{ e.preventDefault(); pinned=false; hidePop(); const li=document.getElementById("ref-"+n); if(li){ li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500);} }; }
   function hidePop(){ if(pop){ pop.classList.remove("show"); } $$(".cite.on").forEach(x=>x.classList.remove("on")); }
   function renderCites(){
-    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href="#ref-"+n; a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
+    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href="#ref-"+n; a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u,SEMANAS.SOURCES[n-1].k)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
       a.addEventListener("mouseenter",()=>{ clearTimeout(popTimer); if(!pinned) showPop(a); }); a.addEventListener("mouseleave",()=>{ if(!pinned) popTimer=setTimeout(hidePop,260); });
       a.addEventListener("focus",()=>showPop(a)); a.addEventListener("click",e=>{ e.preventDefault(); if(pinned && a.classList.contains("on")){ pinned=false; hidePop(); } else { pinned=true; showPop(a); } }); } } });
     const ol=$("#refs"); if(ol&&!ol.children.length){ ol.innerHTML=SEMANAS.SOURCES.map((s,i)=>{
-      const pv=isPDF(s.u)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
+      const pv=isPDF(s.u,s.k)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
       return `<li id="ref-${i+1}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}${pv}</li>`;
     }).join("");
       $$("#refs .pdfbtn").forEach(b=>b.onclick=()=>openPDF(b.dataset.pdfk)); }
@@ -297,5 +299,189 @@
   /* ---------- Sanabria ---------- */
   function sanabria(){ const c=$("#sb-columns"); if(c){ c.innerHTML=SEMANAS.SANABRIA.columnas.slice().sort((a,b)=>a.f.localeCompare(b.f)).map(x=>`<div class="tl-item"><div class="y">${x.f}</div><h3>${x.t} ${cite(x.k)}</h3><p>${x.r}</p></div>`).join(""); } const cl=$("#sb-claims"); if(cl){ cl.innerHTML=SEMANAS.SANABRIA.tesis.map((t,i)=>`<div class="claim reveal"><div class="side a"><div class="h">Tesis ${i+1} · Sanabria</div>${t.a}</div><div class="side b"><div class="h">Contraste con fuentes primarias</div>${t.b} ${t.k.map(cite).join(" ")}<br><span class="verdict v${t.v}">${t.vt}</span></div></div>`).join(""); } setHTML("sb-perfil",SEMANAS.SANABRIA.perfil+" "+cite("sMejor")+" "+cite("sEnvejecer")+" "+cite("sTigre")); }
 
-  document.addEventListener("DOMContentLoaded",()=>{ nav(); pdfWire(); tabs(); timeline(); pillars(); articulos(); modal(); sanabria(); renderCites(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  /* ---------- El umbral de 2,3 SMLMV ----------
+     Sección propia: qué hace el umbral, de dónde salió el número, las fórmulas
+     explicadas para quien no viene de economía, y un simulador que recalcula
+     el reparto, el Fondo de Ahorro y tres perfiles de trabajador. */
+  function umbral(){
+    if(!$("#u-split")) return;
+    const SM=Models.smmlv(2026);
+    const citeP=(k,pg)=>`<a class="cite" data-ref="${k}"${pg?` data-page="${pg}"`:""}></a>`;
+    let U=2.3, W=2;   /* umbral en SMLMV · salario de ejemplo en SMLMV */
+
+    /* --- 1· El diagrama del reparto --- */
+    function pintarSplit(){
+      const escala=Math.max(W,U,4);                 /* la jarra siempre muestra al menos 4 mínimos */
+      const bCPM=Math.min(W,U), bCCAI=Math.max(0,W-U);
+      const pc=v=>(v/escala*100).toFixed(2)+"%";
+      const fCPM=$("#u-fill-cpm"), fCCAI=$("#u-fill-ccai");
+      fCPM.style.height=pc(bCPM); fCCAI.style.height=pc(bCCAI);
+      fCPM.classList.toggle("tall",bCPM/escala>0.13); fCCAI.classList.toggle("tall",bCCAI/escala>0.13);
+      fCPM.querySelector("span").textContent="al fondo común";
+      fCCAI.querySelector("span").textContent="a su cuenta";
+      $("#u-mark").style.bottom=pc(Math.min(U,escala));
+      setHTML("u-scale",`${COP(W*SM)} <span class="xs muted">(${NUM(W,1)} mínimos)</span>`);
+      $("#u-v-cpm").textContent=COP(0.16*bCPM*SM);
+      $("#u-v-ccai").textContent=COP(0.16*bCCAI*SM);
+    }
+
+    /* --- 2· Las fórmulas, una por una --- */
+    const FORMULAS=[
+      {t:"Dónde cae cada peso de su salario",
+       say:"<b>Tome su salario del mes. La parte que no pasa del umbral es la base del componente público; lo que sobra es la base de su cuenta individual.</b> Nada más. Si gana menos que el umbral, la segunda base es cero y usted queda entero en Colpensiones.",
+       tex:"B_{\\text{público}}=\\min(w,\\;u\\cdot S)\\qquad B_{\\text{cuenta}}=\\max(0,\\;w-u\\cdot S)",
+       g:[["w","su salario mensual (el IBC sobre el que cotiza)"],
+          ["u","el umbral, en número de salarios mínimos. La ley lo fija en 2,3"],
+          ["S","el salario mínimo: $1.750.905 en 2026"],
+          ["min","«el menor de los dos»"],["max","«el mayor de los dos»"]],
+       ex:()=>{const w=4*SM,t=2.3*SM;return `Con un salario de ${COP(w)} (4 mínimos) y umbral 2,3: la base pública es ${COP(t)} y la base de su cuenta es ${COP(w-t)}. Los dos pedazos suman su salario completo.`},
+       src:"ley2381"},
+      {t:"Cuánto cotiza y a dónde va cada punto",
+       say:"<b>El umbral no cambia cuánto le descuentan: sigue siendo el 16 % del salario.</b> Cambia el destino. Dentro de cada mitad, además, la plata se reparte: en el componente público 13 de los 16 puntos alimentan el fondo común y el Fondo de Ahorro; en su cuenta, 13,2 puntos engordan el saldo y 1 punto se va al Pilar Solidario que paga las rentas de quienes nunca alcanzaron a pensionarse.",
+       tex:"C_{\\text{público}}=0{,}16\\,B_{\\text{público}}\\qquad C_{\\text{cuenta}}=0{,}16\\,B_{\\text{cuenta}}",
+       g:[["0,16","la tasa de cotización, 16 % del salario"],
+          ["C","lo que sale de su bolsillo (y del de su empleador) cada mes hacia cada lado"]],
+       ex:()=>{const w=4*SM,t=2.3*SM;return `Ese salario de ${COP(w)} cotiza ${COP(0.16*w)} en total: ${COP(0.16*t)} a Colpensiones y ${COP(0.16*(w-t))} a su cuenta. De estos últimos, ${COP(0.132*(w-t))} quedan como saldo suyo.`},
+       src:"ley2381"},
+      {t:"Por qué es 66 % de la plata y no 66 % de la gente",
+       say:"<b>Esta es la confusión más común de todo el debate.</b> El 66 % del CARF mide plata, no personas. Para calcularlo se suma, trabajador por trabajador, solo el pedazo de salario que queda bajo el umbral, y se divide entre la suma de todos los salarios completos. Quien gana 10 mínimos aporta al numerador únicamente 2,3, pero al denominador aporta los 10. Por eso la proporción de <i>gente</i> que gana menos del umbral es mucho más alta que la proporción de <i>dinero</i> que el umbral captura.",
+       tex:"s(u)=\\frac{\\sum_i \\min(w_i,\\;u\\cdot S)}{\\sum_i w_i}",
+       g:[["s(u)","la fracción de la masa de cotizaciones que capta el componente público"],
+          ["Σ","«sume esto para todos los cotizantes»"],
+          ["w_i","el salario del cotizante i"]],
+       ex:()=>`Con tres cotizantes de 1, 2 y 10 mínimos y umbral 2,3, el numerador es 1 + 2 + 2,3 = 5,3 y el denominador 1 + 2 + 10 = 13: el umbral capta 41 % de la plata, aunque dos de los tres trabajadores (67 % de la gente) estén enteramente por debajo. Con la distribución real de salarios de Colombia el resultado es 66 %.`,
+       src:"carf24u", pg:12},
+      {t:"La mesada que sale del componente público",
+       say:"<b>Aquí aparece el efecto que casi nadie ve venir: subir el umbral baja un poco la tasa, pero sube mucho la base.</b> La tasa de reemplazo arranca en 65,5 % y le resta medio punto por cada salario mínimo de IBL: castiga levemente a quien más gana. Pero el umbral define hasta dónde llega el IBL que entra en la cuenta. Un umbral más alto sube el techo, y como la base pesa más que la tasa, la mesada pública sube y el subsidio que la acompaña también.",
+       tex:"r = 65{,}5 - 0{,}5\\,s + 1{,}5\\left\\lfloor\\frac{n-1300}{50}\\right\\rfloor \\;\\le\\; 80\\qquad M=\\max\\!\\left(S,\\; \\tfrac{r}{100}\\cdot \\text{IBL}_{\\text{público}}\\right)",
+       g:[["r","la tasa de reemplazo, en porcentaje"],
+          ["s","el IBL público medido en número de salarios mínimos"],
+          ["n","las semanas que usted cotizó"],
+          ["⌊ ⌋","«quédese con la parte entera»: los premios van de 50 en 50 semanas"],
+          ["M","la mesada mensual del componente público, nunca menor a un mínimo"]],
+       ex:()=>{const a=Models.ley2381({sex:"M",edad:62,semanas:1300,ibl:5*SM,saldoCCAI:0,anio:2027,umbralSM:2.3});
+               const b=Models.ley2381({sex:"M",edad:62,semanas:1300,ibl:5*SM,saldoCCAI:0,anio:2027,umbralSM:4});
+               return `Un hombre con 1.300 semanas y 5 mínimos de IBL: con umbral 2,3 la tasa es ${NUM(a.tasa,1)} % sobre ${COP(a.iblCPM)} y la mesada pública ${COP(a.mesadaCPM)}. Con umbral 4 la tasa baja a ${NUM(b.tasa,1)} % pero la base sube, y la mesada pública llega a ${COP(b.mesadaCPM)}: ${NUM((b.mesadaCPM/a.mesadaCPM-1)*100,0)} % más.`},
+       src:"ley2381"},
+      {t:"El Fondo de Ahorro, año por año",
+       say:"<b>Es la fórmula de una cuenta de ahorro, escrita en porcentaje del PIB.</b> El saldo del año próximo es el de este año, más lo que rindió por encima de lo que creció la economía, más lo que entró, menos lo que se pagó. Se mide contra el PIB —por eso se resta el crecimiento g— porque lo que importa no son los pesos sino si el país puede con ellos. Cuando el saldo llega a cero, lo que falte para pagar las mesadas lo pone el Presupuesto: eso es la transferencia de la Nación.",
+       tex:"B_{t+1}=B_t\\,(1+r_{\\text{real}}-g)\\;+\\;S_t\\;-\\;P_t",
+       g:[["B_t","el saldo del Fondo de Ahorro al final del año t, en % del PIB"],
+          ["r_real","el rendimiento del portafolio, descontada la inflación"],
+          ["g","el crecimiento real de la economía"],
+          ["S_t","lo que entra: cotizaciones por encima del tope del art. 24, el punto solidario y los traslados"],
+          ["P_t","las mesadas que ese año se pagan con cargo al fondo"]],
+       ex:()=>`Si el fondo tiene 10 % del PIB, rinde 4,3 % real, la economía crece 3 % y ese año entra 1 % del PIB y salen 1,5 %: el saldo del año siguiente es 10 × (1 + 0,043 − 0,03) + 1 − 1,5 = ${NUM(10*1.013+1-1.5,2)} % del PIB. Mientras lo que entra supere lo que sale, el fondo crece; cuando se invierte, empieza la cuenta regresiva.`,
+       src:"carf24u", pg:19}
+    ];
+    function pintarFormulas(){
+      setHTML("u-formulas", FORMULAS.map(f=>`<li>
+        <div><h3>${f.t}</h3>
+        <p class="formula-say">${f.say}</p>
+        <div class="formula-box math">\\[${f.tex}\\]</div>
+        <dl class="glossary">${f.g.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
+        <div class="example"><span class="eh">Un ejemplo con números de 2026</span>${f.ex()} ${citeP(f.src,f.pg)}</div>
+        </div></li>`).join(""));
+    }
+
+    /* --- 3· El simulador --- */
+    const ESCEN=[
+      {u:1,   quien:"CARF (recomendación técnica)", dice:`El acervo de ahorro nacional sería ≈ 17,1 pp del PIB mayor que en el escenario actual. ${citeP("carf24u",22)}`},
+      {u:1.5, quien:"Fedesarrollo", dice:`Luis Fernando Mejía pidió insistir en bajar el umbral a 1,5 SMLMV. ${citeP("portafolioU")}`},
+      {u:2.3, quien:"Ley 2381, art. 24 (vigente)", dice:`Capta el 66 % de las cotizaciones; agotado el Fondo, la transferencia salta 2 % del PIB en 2063. ${citeP("carf24u",12)} ${citeP("carf24u",19)}`},
+      {u:3,   quien:"Texto de los primeros debates", dice:`Bajar de 3 a 2,3 redujo el VPN del sistema en 3,3 % del PIB. ${citeP("carf24u",19)}`},
+      {u:4,   quien:"Propuesta inicial del Gobierno", dice:`El CARF modeló 1, 2,3 y 3 SMMLV; en ese documento no publicó un escenario de 4. ${citeP("petro4")} ${citeP("carf24u",11)}`}
+    ];
+    const P=()=>T();
+    function correr(){
+      const r=val("u-r")/100, g=val("u-g")/100;
+      $("#u-umbral-o").textContent=NUM(U,1)+" SMLMV · "+COP(U*SM);
+      $("#u-r-o").textContent=PCT(r*100,1); $("#u-g-o").textContent=PCT(g*100,1);
+      const sc=Models.fapc({umbral:U,rReal:r,gPIB:g}), base=Models.fapc({umbral:2.3,rReal:r,gPIB:g});
+      const share=Models.shareUmbral(U)*100, shareBase=Models.shareUmbral(2.3)*100;
+
+      setHTML("u-kpis",`<div class="kpis">
+        <div class="kpi k"><div class="v">${NUM(share,0)}<small>%</small></div><div class="l">De la plata cotizada va al fondo común</div><div class="s">con 2,3: ${NUM(shareBase,0)} % (CARF: 66 %)</div></div>
+        <div class="kpi p"><div class="v">${sc.agotamiento||"> 2100"}</div><div class="l">Se agota el Fondo de Ahorro</div><div class="s">con 2,3: ${base.agotamiento} · CARF: 2062</div></div>
+        <div class="kpi b"><div class="v">${NUM(sc.vpnTransferencias,1)}<small>% PIB</small></div><div class="l">VPN de lo que pone la Nación, 2027–2100</div><div class="s">con 2,3: ${NUM(base.vpnTransferencias,1)} % · diferencia ${sc.vpnTransferencias>base.vpnTransferencias?"+":""}${NUM(sc.vpnTransferencias-base.vpnTransferencias,1)} pp</div></div>
+      </div>`);
+
+      const filas=x=>x.rows.filter(v=>v.y%5===0||v.y===2027);
+      Charts.line($("#u-chart"),{labels:filas(sc).map(v=>String(v.y)),
+        series:[{name:"Saldo del Fondo · escenario",values:filas(sc).map(v=>v.saldo),color:P()[1],area:true},
+                {name:"Saldo del Fondo · umbral 2,3",values:filas(base).map(v=>v.saldo),color:P()[3],dashed:true},
+                {name:"Transferencia de la Nación · escenario",values:filas(sc).map(v=>v.transferencia),color:P()[0]}],
+        yFormat:v=>NUM(v,1)+" %",height:300});
+      setHTML("u-legend",`<span><i style="background:${P()[1]}"></i>Saldo del Fondo · escenario</span>`+
+        (Math.abs(U-2.3)>0.05?`<span><i style="background:${P()[3]}"></i>Saldo del Fondo · umbral 2,3 de la ley</span>`:"")+
+        `<span><i style="background:${P()[0]}"></i>Transferencia de la Nación · escenario</span>`);
+
+      const dU=U-2.3, mas=dU>0.05, menos=dU<-0.05;
+      setHTML("u-verdict",`<div class="callout ${mas?"warn":menos?"":"yellow"} small">${
+        mas? `<b>Con ${NUM(U,1)} el fondo común recibe más plata hoy.</b> El Fondo de Ahorro crece más y se agota ${sc.agotamiento&&base.agotamiento?`${sc.agotamiento-base.agotamiento} año(s) después`:"más tarde"}, pero esa misma plata compra derechos a mesadas públicas más grandes: el total que la Nación termina poniendo sube ${NUM(sc.vpnTransferencias-base.vpnTransferencias,1)} pp del PIB. Es el argumento por el que el CARF pedía bajarlo, no subirlo. ${citeP("carf24u",23)}`
+        : menos? `<b>Con ${NUM(U,1)} entra menos plata al fondo común, así que el Fondo de Ahorro se agota antes (${sc.agotamiento||"> 2100"} frente a ${base.agotamiento}).</b> Parece peor y no lo es: al mismo tiempo se reduce la pensión pública que hay que pagar y el subsidio que la acompaña, y el total que pone la Nación baja ${NUM(base.vpnTransferencias-sc.vpnTransferencias,1)} pp del PIB. Más ahorro queda invertido en cuentas individuales. ${citeP("carf24u",20)}`
+        : `<b>Este es el umbral que quedó en la ley.</b> Mueva la barra o toque uno de los otros valores para ver qué cambiaba con cada propuesta.`}</div>`);
+
+      perfiles(); tabla(); renderCites();
+      if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise([$("#u-verdict")]).catch(()=>{});
+    }
+
+    /* --- 4· Tres perfiles de trabajador --- */
+    function perfil(wSM,u){
+      const ibl=wSM*SM;
+      const baseCCAI=Math.max(0,(wSM-u))*SM;
+      const saldo=baseCCAI>0? Models.acumular({ibcMensual:baseCCAI,semanas:1300,r:0.04,g:0,share:0.132}) : 0;
+      return Models.ley2381({sex:"M",edad:62,semanas:1300,ibl,saldoCCAI:saldo,anio:2027,umbralSM:u,beneficiario:true});
+    }
+    function perfiles(){
+      const defs=[[1,"Gana el mínimo","y"],[2.3,"Gana justo el umbral","b"],[5,"Gana cinco mínimos","p"]];
+      setHTML("u-perfiles", defs.map(([w,t,c])=>{
+        const a=perfil(w,U), b=perfil(w,2.3);
+        const tot=a.total, pubPct=tot>0?a.mesadaCPM/tot*100:0;
+        const dif=b.total>0? (tot/b.total-1)*100 : 0;
+        return `<div class="tile ${c}">
+          <div class="pot-h" style="font-size:.63rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-2)">${t} · ${COP(w*SM)}</div>
+          <div class="v">${COP(tot)}<small>/mes</small></div>
+          <p>${a.rentaCCAI>0
+            ? `<b>${NUM(pubPct,0)} %</b> sale del componente público (${COP(a.mesadaCPM)}) y el resto de su cuenta individual (${COP(a.rentaCCAI)}).`
+            : `Todo sale del componente público: su salario no pasa del umbral, así que no alcanza a abrir cuenta individual.`}</p>
+          <p class="xs" style="margin-top:8px;font-weight:700">${
+            Math.abs(U-2.3)<0.05 ? "Escenario vigente de la Ley 2381."
+            : Math.abs(dif)<0.5 ? `Con umbral de ${NUM(U,1)} le queda igual que con 2,3.`
+            : `Con umbral de ${NUM(U,1)}: ${dif>0?"+":""}${NUM(dif,1)} % frente al de la ley.`}</p>
+        </div>`;
+      }).join(""));
+    }
+
+    /* --- 5· La tabla de escenarios --- */
+    function tabla(){
+      const tb=$("#u-tabla tbody"); if(!tb) return;
+      tb.innerHTML=ESCEN.map(e=>{
+        const f=Models.fapc({umbral:e.u,rReal:val("u-r")/100,gPIB:val("u-g")/100});
+        const act=Math.abs(e.u-U)<0.05;
+        return `<tr${act?' style="background:var(--pale-yellow)"':''}>
+          <td><b>${NUM(e.u,1)} SMLMV</b><br><span class="xs muted">${COP(e.u*SM)}</span></td>
+          <td class="small">${e.quien}</td>
+          <td class="num">${NUM(Models.shareUmbral(e.u)*100,0)} %</td>
+          <td class="num">${f.agotamiento||"> 2100"}</td>
+          <td class="num">${NUM(f.vpnTransferencias,1)} %</td>
+          <td class="small">${e.dice}</td></tr>`;
+      }).join("");
+    }
+
+    /* --- 6· Cableado --- */
+    on("u-umbral","input",e=>{ U=parseFloat(e.target.value); pintarSplit(); correr();
+      $$("#u-presets button").forEach(b=>b.classList.toggle("active",Math.abs(+b.dataset.u-U)<0.05)); });
+    $$("#u-presets button").forEach(b=>b.addEventListener("click",()=>{
+      U=+b.dataset.u; $("#u-umbral").value=U;
+      $$("#u-presets button").forEach(x=>x.classList.toggle("active",x===b));
+      pintarSplit(); correr(); }));
+    $$("#u-sal-chips button").forEach(b=>b.addEventListener("click",()=>{
+      W=+b.dataset.w; $$("#u-sal-chips button").forEach(x=>x.classList.toggle("active",x===b)); pintarSplit(); }));
+    ["u-r","u-g"].forEach(id=>on(id,"input",correr));
+
+    pintarSplit(); pintarFormulas(); correr();
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{ nav(); pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();
