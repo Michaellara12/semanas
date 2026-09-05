@@ -70,15 +70,20 @@
       ctx.fillText(Math.round(Math.min(1300, progreso/total*1300)).toLocaleString("es-CO"), pad, Hh-pad*1.7);
       ctx.font=`700 ${Math.round(W*0.022)}px Archivo, sans-serif`; ctx.fillStyle="rgba(255,255,255,.7)";
       ctx.fillText("SEMANAS COTIZADAS · 57 M / 62 H", pad, Hh-pad*1.15); }
-    function frame(t){ if(t0===null) t0=t; progreso=Math.min(total,(t-t0)/1000*140); paint();
+    let cuadros=0;
+    function frame(t){ cuadros++; if(t0===null) t0=t; progreso=Math.min(total,(t-t0)/1000*140); paint();
       if(progreso<total) raf=requestAnimationFrame(frame); else raf=null; }
-    size(); paint();
-    if(!reduced) raf=requestAnimationFrame(frame);
-    const repintar=()=>{ if(size()&&raf===null) paint(); };
+    function arrancar(){ if(reduced||raf!==null||progreso>=total) return; t0=null; raf=requestAnimationFrame(frame); }
+    size(); paint(); arrancar();
+    /* Cualquier cambio de tamaño reinicia el lienzo, así que siempre hay que repintar:
+       si la animación sigue corriendo, ella volverá a pintar en su siguiente cuadro. */
+    const repintar=()=>{ if(size()) paint(); };
     window.addEventListener("resize",repintar);
-    window.addEventListener("orientationchange",()=>setTimeout(repintar,200));
-    document.addEventListener("visibilitychange",()=>{ if(!document.hidden&&raf===null){ size(); paint(); } });
+    window.addEventListener("orientationchange",()=>setTimeout(()=>{ size(); paint(); },200));
+    document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ size(); paint(); arrancar(); } });
     if(window.ResizeObserver) new ResizeObserver(repintar).observe(c.parentElement);
+    /* Si el navegador congela la animación (pestaña en segundo plano), mostrar el estado final. */
+    setTimeout(()=>{ if(cuadros===0){ if(raf) cancelAnimationFrame(raf); raf=null; progreso=total; paint(); } },2500);
   }
 
   /* ---------- Línea de tiempo ---------- */
