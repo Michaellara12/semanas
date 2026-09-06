@@ -42,10 +42,11 @@
            ["cronologia","La cronología completa"]] },
 
     { n:"02", id:"reforma", label:"Reforma 2381 de 2024", title:"La Ley 2381 de 2024, entera",
-      desc:"Qué cambia y qué sigue igual, el umbral de 2,3, los 95 artículos, la Corte, las críticas y lo que quedó sin responder.",
+      desc:"Qué es y cómo funciona, los 95 artículos, qué cambia frente a la Ley 100, el umbral de 2,3, la Corte, las críticas y lo que quedó sin responder.",
       color:"cyan", pat:"escamas",
-      sub:[["comparador","Antes y después"],["umbral","El umbral de 2,3"],
-           ["ley","Artículo por artículo"],["jurisprudencia","La Corte y el estado actual"],
+      sub:[["que-es","Qué es y cómo funciona"],["ley","Artículo por artículo"],
+           ["comparador","Antes y después"],["umbral","El umbral de 2,3"],
+           ["jurisprudencia","La Corte y el estado actual"],
            ["critica","Las críticas"],["preguntas","Preguntas abiertas"]] },
 
     { n:"03", id:"cifras", label:"Cifras y cálculos", title:"Cifras, cálculos y estadísticas del sistema",

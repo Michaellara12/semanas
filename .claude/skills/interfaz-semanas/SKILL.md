@@ -106,10 +106,22 @@ para uso puntual.
   amarillo del glosario. Nada más: el pie con la fecha de corte se retiró.
 - El menú muestra su barra de desplazamiento, con marca y algo más ancha que
   las demás: es la única señal de que hay más secciones abajo.
-- El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
-  el buscador con el índice completo en dos columnas (una en móvil). No lleva
-  lista de «ver también» ni página propia: desde cualquier ficha se salta a otro
-  término sin cerrar nada.
+- El cajón del glosario muestra definición, «Lo importante» (2–3 puntos de
+  contexto) y ejemplo, y **siempre debajo** el buscador con el índice completo en
+  dos columnas (una en móvil). Dentro de la ficha, las demás palabras del
+  glosario se enlazan solas (`automarcar` sobre `.gloss-ficha`). No hay «ver
+  también» ni página propia.
+- Un término en el texto lleva **un cuadrito amarillo delante**, no un signo
+  detrás. Es `.term::before`; no agregar iconos por otra vía.
+- **Las citas no muestran nada al pasar el cursor.** Se hace clic en `[n]` y se
+  abre el mismo cajón (`SEMANAS.abrirCita`) con la ficha: qué documento es, en
+  qué página o artículo está el dato, la lista de páginas citadas, «Ver el PDF
+  aquí» y «Abrir fuente original». El flotante `.pop` ya no existe.
+- **Los PDF se sirven desde `pdf/<clave>.pdf`**, copia local registrada en
+  `SEMANAS.PDFLOCAL` (`js/data.js`). El visor carga la copia; el enlace a la
+  fuente original se queda siempre a la vista. Si una fuente nueva es PDF, se
+  descarga a `pdf/` y se agrega a `PDFLOCAL`; si el servidor no la deja bajar,
+  se deja sin copia y el visor intenta con la URL remota.
 - Las barras de desplazamiento van con la marca (`scrollbar-color` y
   `::-webkit-scrollbar-*`): pista clara, pulgar negro que se pone magenta al
   pasar por encima. Ningún contenedor con desplazamiento se deja sin estilo, y

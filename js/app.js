@@ -30,7 +30,9 @@
      el servidor bloquea el embebido se muestra la salida alterna. */
   /* Algunos servidores entregan el PDF sin extensión en la URL (el CARF, por
      ejemplo, usa «?download=true»), así que tener mapa de páginas también cuenta. */
-  const isPDF=(u,k)=>!!(k&&(SEMANAS.PDFPAGES||{})[k]) || (!!u&&/\.pdf($|[?#])/i.test(u));
+  const isPDF=(u,k)=>!!(k&&((SEMANAS.PDFPAGES||{})[k]||(SEMANAS.PDFLOCAL||{})[k])) || (!!u&&/\.pdf($|[?#])/i.test(u));
+  /* Copia guardada en pdf/: es la que se muestra en el visor. */
+  const pdfLocal=k=>{ const l=(SEMANAS.PDFLOCAL||{})[k]; return l?ROOT+l:null; };
   const pdfMap=k=>(SEMANAS.PDFPAGES||{})[k]||null;
   function pdfPage(k,override){
     if(override) return parseInt(override,10)||1;
@@ -56,7 +58,8 @@
       fb.classList.remove("show");
       clearTimeout(pdfTimer); let ok=false;
       frame.onload=()=>{ ok=true; fb.classList.remove("show"); };
-      frame.src=src.u+"#page="+p+"&view=FitH";
+      /* Primero la copia local; la URL original queda en el botón «Abrir fuente». */
+      frame.src=(pdfLocal(k)||src.u)+"#page="+p+"&view=FitH";
       /* Si el documento no llega, el visor no puede quedarse en negro. */
       pdfTimer=setTimeout(()=>{ if(!ok) fb.classList.add("show"); },4500);
       $$("#pdf-pages button").forEach(b=>b.classList.toggle("active",+b.dataset.p===p));
@@ -79,36 +82,58 @@
     const v=$("#pdfview"); if(v) v.addEventListener("click",e=>{ if(e.target===v) closePDF(); });
   }
 
-  /* ---------- Citas: numeración, bibliografía y vista previa ---------- */
-  let pop, popTimer, pinned=false;
-  function popover(){ if(pop) return pop; pop=document.createElement("div"); pop.className="pop"; pop.setAttribute("role","dialog"); document.body.appendChild(pop); pop.addEventListener("mouseenter",()=>clearTimeout(popTimer)); pop.addEventListener("mouseleave",()=>{ if(!pinned) hidePop(); }); return pop; }
-  function showPop(a){ const k=a.dataset.ref; const n=SRC[k]; if(!n) return; const s=SEMANAS.SOURCES[n-1]; const p=popover(); let host=""; try{ host=new URL(s.u).hostname.replace("www.",""); }catch(e){}
-    const pdf=isPDF(s.u,k), page=pdf?pdfPage(k,a.dataset.page):0, note=pdf?pdfPageNote(k,page):"";
+  /* ---------- Citas: numeración y ficha en el cajón ----------
+     Antes la referencia aparecía en un flotante al pasar el cursor. Ahora
+     se hace clic y se abre el mismo cajón lateral del glosario con la
+     ficha completa: qué documento es, qué página o artículo sustenta el
+     dato, la vista previa del PDF y el enlace a la fuente original. */
+  function fichaCita(k, pageOverride){
+    const n=SRC[k]; if(!n) return null; const s=SEMANAS.SOURCES[n-1];
+    let host=""; try{ host=new URL(s.u).hostname.replace("www.",""); }catch(e){}
+    const pdf=isPDF(s.u,k), page=pdf?pdfPage(k,pageOverride):0, note=pdf?pdfPageNote(k,page):"";
+    const m=pdfMap(k);
     const href=pdf?(s.u+"#page="+page):s.u;
-    p.innerHTML=`<div class="pn"><span>REFERENCIA [${n}]</span><button aria-label="Cerrar" data-close>×</button></div><div>${s.t}</div>`+
-      (pdf?`<div class="loc">PDF · página ${page}${note?" — "+note:""}</div>`:"")+
-      (s.u?`<div class="host">${host}</div><div class="pl">`+
-        (pdf?`<button class="pri" data-pdf>Previsualizar aquí</button>`:"")+
-        `<a class="${pdf?"":"pri"}" href="${href}" target="_blank" rel="noopener">Abrir fuente ↗</a>`+
-        `<a href="#ref-${n}" data-goto="${n}">Ver en bibliografía</a></div>`:"");
-    const r=a.getBoundingClientRect(); const pw=Math.min(360,window.innerWidth-24); let left=Math.min(Math.max(12,r.left-20), window.innerWidth-pw-12); p.style.left=left+"px"; p.classList.add("show"); const ph=p.offsetHeight; let topY=r.bottom+8; if(topY+ph>window.innerHeight-12) topY=Math.max(12,r.top-ph-8); p.style.top=topY+"px";
-    $$(".cite.on").forEach(x=>x.classList.remove("on")); a.classList.add("on");
-    p.querySelector("[data-close]").onclick=()=>{ pinned=false; hidePop(); };
-    const pv=p.querySelector("[data-pdf]"); if(pv) pv.onclick=()=>{ pinned=false; hidePop(); openPDF(k,page); };
-    const g=p.querySelector("[data-goto]"); if(g) g.onclick=(e)=>{ const li=document.getElementById("ref-"+n); if(!li) return; e.preventDefault(); pinned=false; hidePop(); li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); }; }
-  function hidePop(){ if(pop){ pop.classList.remove("show"); } $$(".cite.on").forEach(x=>x.classList.remove("on")); }
+    const paginas=(m&&m.pages&&m.pages.length)
+      ? `<div class="cita-paginas"><h4>Páginas citadas en el observatorio</h4><ul class="cita-lista">${
+          m.pages.map(x=>`<li><button data-pdfpage="${x.p}"${x.p===page?' class="es"':""}><span class="pg">p. ${x.p}</span><span>${x.d}</span></button></li>`).join("")
+        }</ul></div>` : "";
+    return {
+      n, s, pdf, page, href,
+      html: `<div class="cita-ficha">
+        <p class="cita-texto">${s.t}</p>
+        ${pdf?`<p class="cita-loc"><b>Dónde está el dato:</b> página ${page}${note?" — "+note:""}${pdfLocal(k)?"":" <span class=\"muted\">(vista previa desde el servidor original)</span>"}</p>`:""}
+        ${host?`<p class="cita-host">${host}</p>`:""}
+        <div class="cita-acciones">
+          ${pdf?`<button class="btn sm" data-pdfk="${k}" data-pdfp="${page}">Ver el PDF aquí</button>`:""}
+          ${s.u?`<a class="btn sm ghost" href="${href}" target="_blank" rel="noopener">Abrir fuente original ↗</a>`:""}
+          <a class="btn sm ghost" href="${hrefRef(n)}" data-goto="${n}">Ver en bibliografía</a>
+        </div>
+        ${paginas}
+      </div>`
+    };
+  }
+  function abrirCita(k, pageOverride, origen){
+    const f=fichaCita(k,pageOverride); if(!f||!SEMANAS.panel) return;
+    SEMANAS.panel.abrir({kicker:"Referencia ["+f.n+"]", titulo:"Fuente "+f.n, html:f.html, origen});
+    const cuerpo=$("#gloss-body");
+    $$("[data-pdfk]",cuerpo).forEach(b=>b.onclick=()=>{ SEMANAS.panel.cerrar(); openPDF(k,+b.dataset.pdfp||undefined); });
+    $$("[data-pdfpage]",cuerpo).forEach(b=>b.onclick=()=>abrirCita(k,b.dataset.pdfpage));
+    const g=$("[data-goto]",cuerpo); if(g) g.onclick=e=>{ const li=document.getElementById("ref-"+f.n); if(!li) return;
+      e.preventDefault(); SEMANAS.panel.cerrar(); li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); };
+    $$(".cite.on").forEach(x=>x.classList.remove("on")); if(origen) origen.classList.add("on");
+  }
+  SEMANAS.abrirCita=abrirCita;
   function renderCites(){
-    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href=hrefRef(n); a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u,SEMANAS.SOURCES[n-1].k)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
-      a.addEventListener("mouseenter",()=>{ clearTimeout(popTimer); if(!pinned) showPop(a); }); a.addEventListener("mouseleave",()=>{ if(!pinned) popTimer=setTimeout(hidePop,260); });
-      a.addEventListener("focus",()=>showPop(a)); a.addEventListener("click",e=>{ e.preventDefault(); if(pinned && a.classList.contains("on")){ pinned=false; hidePop(); } else { pinned=true; showPop(a); } }); } } });
+    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href=hrefRef(n); a.setAttribute("aria-label","Referencia "+n+": ver la fuente"); a.setAttribute("role","button"); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u,SEMANAS.SOURCES[n-1].k)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
+      a.addEventListener("click",e=>{ e.preventDefault(); abrirCita(k,a.dataset.page,a); });
+      a.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); abrirCita(k,a.dataset.page,a); } }); } } });
     const ol=$("#refs"); if(ol&&!ol.children.length){ ol.innerHTML=SEMANAS.SOURCES.map((s,i)=>{
       const pv=isPDF(s.u,s.k)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
       return `<li id="ref-${i+1}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}${pv}</li>`;
     }).join("");
       $$("#refs .pdfbtn").forEach(b=>b.onclick=()=>openPDF(b.dataset.pdfk)); }
   }
-  document.addEventListener("click",e=>{ if(pop&&pop.classList.contains("show")&&!e.target.closest(".pop")&&!e.target.closest(".cite")){ pinned=false; hidePop(); } });
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ pinned=false; hidePop(); closePDF(); $("#modal")?.classList.remove("open"); $("#drawer")?.classList.remove("open"); } });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closePDF(); $("#modal")?.classList.remove("open"); $("#drawer")?.classList.remove("open"); } });
 
   /* ---------- Animaciones ---------- */
   function reveal(){ const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); if(e.target.dataset.count) countUp(e.target); } }); },{threshold:.1}); $$(".reveal").forEach(el=>io.observe(el)); $$("[data-count]").forEach(el=>io.observe(el)); }
@@ -499,20 +524,47 @@
      (lo resuelve el CSS). Se cierra con la ×, tocando fuera o con Escape. */
   function glosario(){
     const G=SEMANAS.GLOSARIO||{};
-    const caj=$("#gloss"), veil=$("#gloss-veil"), cuerpo=$("#gloss-body"), ttl=$("#gloss-term");
+    const caj=$("#gloss"), veil=$("#gloss-veil"), cuerpo=$("#gloss-body"), ttl=$("#gloss-term"), kick=$("#gloss-kicker");
     const items=(SEMANAS.glosarioOrdenado?SEMANAS.glosarioOrdenado():[]);
     let ultimo=null, actual=null, filtro="";
 
-    /* La ficha ocupa la parte de arriba; el buscador con todos los términos
-       va siempre debajo, para saltar a otra palabra sin cerrar nada. */
+    /* --- El cajón, genérico: lo usan el glosario y las citas --- */
+    function mostrar(){
+      if(caj.hidden){ caj.hidden=false; veil.hidden=false; }
+      requestAnimationFrame(()=>{ caj.classList.add("open"); veil.classList.add("open"); });
+      document.body.classList.add("gloss-abierto");
+    }
+    function cerrar(){
+      if(!caj||caj.hidden) return;
+      caj.classList.remove("open"); veil.classList.remove("open");
+      document.body.classList.remove("gloss-abierto");
+      $$(".term.on, .cite.on").forEach(x=>x.classList.remove("on"));
+      setTimeout(()=>{ if(!caj.classList.contains("open")){ caj.hidden=true; veil.hidden=true; } },260);
+      if(ultimo){ ultimo.focus(); ultimo=null; }
+    }
+    function abrirPanel({kicker,titulo,html,origen}){
+      if(origen) ultimo=origen;
+      if(kick) kick.textContent=kicker||"";
+      ttl.textContent=titulo||"";
+      cuerpo.innerHTML=html||"";
+      cuerpo.scrollTop=0;
+      mostrar();
+      renderCites();
+      $("#gloss-close").focus();
+    }
+    SEMANAS.panel={abrir:abrirPanel, cerrar};
+
+    /* --- Ficha de un término: definición, por qué importa, ejemplo --- */
     const ficha=k=>{
       const g=G[k]; if(!g) return "";
       return (g.a?`<p class="gloss-alias">${g.a}</p>`:"")+
         `<p class="gloss-def">${g.d}</p>`+
+        (g.i&&g.i.length?`<div class="gloss-puntos"><h4>Lo importante</h4><ul>${g.i.map(x=>`<li>${x}</li>`).join("")}</ul></div>`:"")+
         (g.e?`<div class="gloss-ej"><h4>Ejemplo</h4><p>${g.e}</p></div>`:"")+
         (g.k?`<p class="gloss-src">Fuente: ${cite(g.k)}</p>`:"");
     };
 
+    /* El índice completo va siempre debajo, para saltar a otra palabra. */
     const filas=()=>{
       const q=filtro.trim().toLowerCase();
       const hits=items.filter(g=>!q||(g.t+" "+(g.a||"")+" "+g.d).toLowerCase().includes(q));
@@ -521,73 +573,48 @@
         `<li><button data-t="${g.k}"${g.k===actual?' class="es"':""}>${g.t}`+
         `${g.a?`<small>${g.a}</small>`:""}</button></li>`).join("")}</ul>`;
     };
-
     function pintarLista(){
       const cont=$("#gloss-filas"); if(!cont) return;
       cont.innerHTML=filas();
       $$("button[data-t]",cont).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
     }
-
-    function pintar(){
-      ttl.textContent=actual?G[actual].t:"Glosario";
-      cuerpo.innerHTML=
-        (actual?`<div class="gloss-ficha">${ficha(actual)}</div>`:"")+
-        `<div class="gloss-indice">
-           <div class="gloss-buscar">
-             <span class="searchbar"><input type="search" id="gloss-q" autocomplete="off"
-               placeholder="Buscar otro término…" aria-label="Buscar en el glosario"></span>
-           </div>
-           <div id="gloss-filas"></div>
-         </div>`;
+    function pintar(origen){
+      abrirPanel({
+        kicker:"Glosario",
+        titulo: actual?G[actual].t:"Glosario del sistema",
+        html: (actual?`<div class="gloss-ficha">${ficha(actual)}</div>`:"")+
+          `<div class="gloss-indice">
+             <div class="gloss-buscar">
+               <span class="searchbar"><input type="search" id="gloss-q" autocomplete="off"
+                 placeholder="Buscar otro término…" aria-label="Buscar en el glosario"></span>
+             </div>
+             <div id="gloss-filas"></div>
+           </div>`,
+        origen});
       pintarLista();
-      renderCites();
+      /* Dentro de la ficha, las demás palabras del glosario también se enlazan. */
+      const fi=$(".gloss-ficha",cuerpo); if(fi) automarcar(fi,[actual]);
       const q=$("#gloss-q");
-      if(q){
-        q.value=filtro;
-        q.addEventListener("input",()=>{ filtro=q.value; pintarLista(); });
-      }
+      if(q){ q.value=filtro; q.addEventListener("input",()=>{ filtro=q.value; pintarLista(); }); }
     }
-
-    function mostrar(){
-      if(caj.hidden){ caj.hidden=false; veil.hidden=false; }
-      requestAnimationFrame(()=>{ caj.classList.add("open"); veil.classList.add("open"); });
-      document.body.classList.add("gloss-abierto");
-    }
-
     function abrir(k,origen){
       if(!caj||!G[k]) return;
-      if(origen) ultimo=origen;
       actual=k;
-      pintar();
-      cuerpo.scrollTop=0;
-      mostrar();
+      pintar(origen);
       $$(".term.on").forEach(x=>x.classList.remove("on"));
       if(origen) origen.classList.add("on");
-      $("#gloss-close").focus();
     }
-
     function indice(){
       if(!caj) return;
       actual=null; filtro="";
       pintar();
-      cuerpo.scrollTop=0;
-      mostrar();
       $("#gloss-q")?.focus();
-    }
-
-    function cerrar(){
-      if(!caj||caj.hidden) return;
-      caj.classList.remove("open"); veil.classList.remove("open");
-      document.body.classList.remove("gloss-abierto");
-      $$(".term.on").forEach(x=>x.classList.remove("on"));
-      setTimeout(()=>{ if(!caj.classList.contains("open")){ caj.hidden=true; veil.hidden=true; } },260);
-      if(ultimo){ ultimo.focus(); ultimo=null; }
     }
     SEMANAS.abrirTermino=abrir;
     SEMANAS.abrirGlosario=indice;
 
     /* Un solo oyente en el documento: sirve también para el texto que se
-       pinta después (línea de tiempo, artículos, fichas del glosario). */
+       pinta después (línea de tiempo, artículos, fichas del cajón). */
     document.addEventListener("click",e=>{
       const boton=e.target.closest("[data-glosario], .abre-glosario");
       if(boton){ e.preventDefault(); indice(); return; }
@@ -616,15 +643,15 @@
     /* Marcado automático: recorre el texto de la página y subraya la
        primera aparición de cada término. Evita títulos, enlaces, citas,
        botones, código y lo que ya venga marcado a mano en el HTML. */
-    function automarcar(){
+    function automarcar(raiz, excluir){
       const F=SEMANAS.TERM_FRASES||{};
-      const usados=new Set($$(".term[data-t]",$("main")||document).map(t=>t.dataset.t));
+      raiz=raiz||$("main"); if(!raiz) return;
+      const usados=new Set($$(".term[data-t]",raiz).map(t=>t.dataset.t).concat(excluir||[]));
       const entradas=[];
       Object.keys(F).forEach(k=>{ if(G[k]) F[k].forEach(f=>entradas.push([k,f])); });
       /* Frases largas primero: «régimen de prima media» antes que «prima media». */
       entradas.sort((a,b)=>b[1].length-a[1].length);
-      const raiz=$("main"); if(!raiz) return;
-      const VETADO="a,button,h1,h2,h3,h4,code,pre,script,style,select,option,textarea,label,.cite,.term,.chapter,.tag,.seg,.tabs,.chips,.gloss,.kpi .v,.stat-strip";
+      const VETADO="a,button,h1,h2,h3,h4,code,pre,script,style,select,option,textarea,label,.cite,.term,.chapter,.tag,.seg,.tabs,.chips,.gloss-indice,.gloss-alias,.cita-ficha,.kpi .v,.stat-strip";
 
       entradas.forEach(([k,frase])=>{
         if(usados.has(k)) return;

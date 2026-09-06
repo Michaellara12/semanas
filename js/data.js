@@ -429,3 +429,24 @@ SEMANAS.SANABRIA = {
     {a:"Contrarreforma: eliminar el semicontributivo, hacer opcional el contributivo, Colpensiones hasta 2,3 SMLMV para quien lo elija.", b:"El CARF advirtió que el arbitraje entre regímenes (elegir el que más subsidio da) es una de las fuentes del costo actual y que un umbral más bajo reduce el costo (≈20 % del PIB con 1 SMLMV); ANIF/Fedesarrollo muestran que el 76,8 % de los subsidios del RPM va al quintil más rico. Restaurar la libre elección con umbral de 2,3 mantendría el subsidio para quien elija reparto y devolvería el riesgo de selección adversa a Colpensiones. La propuesta no ha sido costeada públicamente.", v:2, k:["carf24","carf23","anifFedes","sContra"], vt:"Propuesta política sin evaluación fiscal publicada"}
   ]
 };
+
+/* ---------- Copias locales de los PDF citados ----------
+   Varios servidores bloquean que su PDF se muestre dentro de otra página, y
+   otros lo sirven sin extensión o forzando la descarga. Por eso el visor
+   carga la copia guardada en pdf/<clave>.pdf y deja siempre a la vista el
+   enlace a la fuente original. Si una fuente no está aquí, el visor intenta
+   con la URL remota. Regenerar la lista al agregar un archivo a pdf/. */
+SEMANAS.PDFLOCAL = {
+  abece: "pdf/abece.pdf",
+  bosch15: "pdf/bosch15.pdf",
+  carf24u: "pdf/carf24u.pdf",
+  conpes3975: "pdf/conpes3975.pdf",
+  conpes4144: "pdf/conpes4144.pdf",
+  daneMayores: "pdf/daneMayores.pdf",
+  danePPED: "pdf/danePPED.pdf",
+  farne17: "pdf/farne17.pdf",
+  gmyrek24: "pdf/gmyrek24.pdf",
+  gmyrek25: "pdf/gmyrek25.pdf",
+  oecd23: "pdf/oecd23.pdf",
+  oit25: "pdf/oit25.pdf"
+};

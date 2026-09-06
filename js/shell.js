@@ -89,7 +89,7 @@
 <aside class="gloss" id="gloss" role="dialog" aria-modal="false" aria-labelledby="gloss-term" hidden>
   <div class="gloss-head">
     <div>
-      <small>Glosario</small>
+      <small id="gloss-kicker">Glosario</small>
       <h3 id="gloss-term"></h3>
     </div>
     <button class="gloss-close" id="gloss-close" aria-label="Cerrar el glosario">×</button>

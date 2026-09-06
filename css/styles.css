@@ -637,18 +637,6 @@ td.num{font-size:.88rem}
 .cite:hover,.cite.on{background:var(--magenta);color:#fff;text-decoration:none;transform:translateY(-1px)}
 .cite.pdf::after{content:"◈";font-size:.85em;margin-left:2px;opacity:.75}
 .card.k .cite,.band.ink .cite,.section.ink .cite,.slab .cite{background:rgba(255,255,255,.18);color:var(--yellow)}
-.pop{position:fixed;z-index:210;width:min(370px,calc(100vw - 20px));background:#fff;border:var(--bd);border-radius:var(--r-lg);box-shadow:var(--pop);padding:15px 17px;font-size:.84rem;line-height:1.5;color:var(--ink-2);opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .18s,transform .18s var(--ease)}
-.pop.show{opacity:1;pointer-events:auto;transform:none}
-.pop .pn{font-size:.66rem;color:var(--magenta);font-weight:800;letter-spacing:.1em;margin-bottom:7px;display:flex;justify-content:space-between;gap:10px;align-items:center}
-.pop .pn button{border:0;background:transparent;font-size:1.1rem;cursor:pointer;color:var(--ink-3);line-height:1;padding:0 2px}
-.pop .pn button:hover{color:var(--ink)}
-.pop b{color:var(--ink)}
-.pop .loc{margin-top:9px;font-size:.72rem;font-weight:800;letter-spacing:.04em;color:var(--wine);background:var(--pale-yellow);border-radius:var(--pill);padding:4px 11px;display:inline-block}
-.pop .pl{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.pop .pl a,.pop .pl button{font-family:var(--font);font-size:.74rem;font-weight:800;padding:7px 13px;border-radius:var(--pill);border:1.5px solid var(--ink);color:var(--ink);background:#fff;cursor:pointer;transition:background .2s,transform .2s var(--bounce)}
-.pop .pl .pri{background:var(--magenta);color:#fff;border-color:var(--ink)}
-.pop .pl a:hover,.pop .pl button:hover{text-decoration:none;transform:translateY(-2px);box-shadow:var(--pop-sm)}
-.pop .host{font-size:.68rem;color:var(--ink-3);margin-top:7px;word-break:break-all}
 
 /* Visor de PDF a pantalla completa */
 .pdfview{position:fixed;inset:0;z-index:320;display:none;flex-direction:column;background:rgba(0,0,0,.62);backdrop-filter:blur(5px)}
@@ -1113,12 +1101,39 @@ input[type=range]:focus-visible{outline:none}
    ===================================================================== */
 .term{
   border-bottom:2px dotted var(--violet);cursor:help;font-weight:700;
-  color:inherit;transition:background .18s,border-color .18s;border-radius:.15em;
-  padding:0 .06em}
+  color:inherit;transition:background .18s,border-color .18s;
+  padding:0 .06em;white-space:nowrap}
+.term::before{
+  content:"";display:inline-block;width:.6em;height:.6em;margin:0 .3em 0 .05em;
+  vertical-align:.05em;background:var(--yellow);border:1.5px solid var(--ink);
+  box-shadow:1px 1px 0 var(--ink)}
 .term:hover,.term:focus-visible{background:var(--pale-yellow);border-bottom-style:solid;outline:none}
 .term.on{background:var(--yellow);border-bottom-color:var(--ink)}
-.term::after{content:"?";font-size:.62em;font-weight:800;vertical-align:super;color:var(--violet);margin-left:.12em}
 .term-huerfano{border-bottom-color:var(--bad)}
+.cite.on{background:var(--ink);color:#fff}
+
+/* Ficha de una referencia dentro del cajón */
+.cita-ficha{padding:16px 18px 18px}
+.cita-texto{font-size:.95rem;line-height:1.55;margin:0 0 10px}
+.cita-loc{font-size:.88rem;margin:0 0 6px;padding:10px 14px;background:var(--pale-yellow);border-left:4px solid var(--ink)}
+.cita-host{font-family:var(--mono);font-size:.72rem;color:var(--ink-3);margin:0 0 12px;word-break:break-all}
+.cita-acciones{display:flex;gap:8px;flex-wrap:wrap}
+.cita-paginas{margin-top:18px;border-top:1.5px solid var(--line);padding-top:12px}
+.cita-paginas h4{margin-bottom:6px}
+.cita-lista{list-style:none;margin:0;padding:0}
+.cita-lista li{border-bottom:1.5px solid var(--line)}
+.cita-lista button{display:grid;grid-template-columns:52px 1fr;gap:10px;width:100%;text-align:left;
+  font:inherit;font-size:.85rem;font-weight:600;background:none;border:0;padding:9px 4px;cursor:pointer;color:var(--ink-2)}
+.cita-lista button .pg{font-family:var(--mono);font-size:.74rem;color:var(--magenta);font-weight:600}
+.cita-lista button:hover{background:var(--pale-yellow);color:var(--ink)}
+.cita-lista button.es{background:var(--paper-2);color:var(--ink);font-weight:800}
+
+/* «Lo importante»: puntos cortos que dan contexto al término */
+.gloss-puntos{margin:12px 0 0;padding:10px 14px 4px;border-left:4px solid var(--magenta);background:var(--soft-pink)}
+.gloss-puntos h4{margin:0 0 6px;color:var(--wine);font-size:.66rem}
+.gloss-puntos ul{margin:0;padding:0 0 0 1.1em;font-size:.88rem;line-height:1.45}
+.gloss-puntos li{margin-bottom:6px}
+.gloss-ficha .term{white-space:normal}
 
 .gloss-veil{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.34);opacity:0;transition:opacity .25s var(--ease)}
 .gloss-veil.open{opacity:1}
@@ -1214,3 +1229,5 @@ body.gloss-abierto{overflow:hidden}
 
 /* Subtítulo de nivel 2 dentro de una sección larga. */
 .h2-like{font-size:clamp(1.5rem,3vw,2rem);line-height:1.05}
+
+.reveal.d4{transition-delay:.32s}
