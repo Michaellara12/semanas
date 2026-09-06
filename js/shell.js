@@ -36,9 +36,6 @@
     ).join("");
   }
 
-  const glosarioBtn = `<button class="glosario-btn" data-glosario type="button">`+
-                      `<span>Glosario del sistema</span><i aria-hidden="true">→</i></button>`;
-
   const brand = `<a class="brand" href="${ROOT || "./"}"><span class="mark"></span>`+
                 `<span class="name">SEMANAS<small>Observatorio pensional</small></span></a>`;
 
@@ -52,11 +49,9 @@
 <aside class="side" id="side">
   ${brand}
   <nav id="sidenav" aria-label="Secciones"></nav>
-  ${glosarioBtn}
-  <div class="foot"><b>Corte:</b> 5 sep 2026 · Vigencia Ley 2381: 1 abr 2027 (C-264/26)<br>Datos oficiales citados en [n]; pase el cursor para ver la fuente.</div>
 </aside>
 <div class="topbar" id="topbar">${brand}<button class="burger" id="burger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div>
-<div class="drawer" id="drawer"><div class="panel">${brand}<nav id="drawernav" aria-label="Secciones"></nav>${glosarioBtn}</div></div>`;
+<div class="drawer" id="drawer"><div class="panel">${brand}<nav id="drawernav" aria-label="Secciones"></nav></div></div>`;
     body.insertBefore(chrome, body.firstChild);
 
     const tail = document.createElement("div");

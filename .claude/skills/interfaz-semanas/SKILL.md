@@ -87,7 +87,14 @@ para uso puntual.
   un `.grupo` con el tinte del color de la ruta (`--card-soft`) y sin líneas
   negras entre ellas. Las partes cuelgan de una línea de árbol (vertical con
   ramas cortas) que deja claro que son hijas; la que se está leyendo se pone
-  blanca.
+  en negrita, con su rama más gruesa y oscura: **sin fondo blanco**, para no
+  romper el bloque de color.
+- La vertical del árbol la dibuja cada fila (`::after`), y en la última se corta
+  a la altura de su rama: el árbol cierra en «L» en vez de seguir hacia abajo.
+- El menú lateral **solo lleva el menú**: ni botón de glosario ni pie con la
+  fecha de corte. El glosario se abre desde cualquier palabra marcada.
+- El menú muestra su barra de desplazamiento, con marca y algo más ancha que
+  las demás: es la única señal de que hay más secciones abajo.
 - El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
   el buscador con el índice completo en dos columnas (una en móvil). No lleva
   lista de «ver también» ni página propia: desde cualquier ficha se salta a otro
