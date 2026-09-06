@@ -17,18 +17,26 @@
 
   const esc = s => String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 
-  /* ---------- Menú: partes temáticas con sus rutas ---------- */
+  /* ---------- Menú: grupos, rutas y las partes de la ruta activa ---------- */
   function navHTML(){
-    return S.PARTS.map(([parte, ids]) =>
-      `<span class="part">${parte}</span>` +
+    return S.PARTS.map(([grupo, ids]) =>
+      `<span class="part">${grupo}</span>` +
       ids.map(id => {
         const r = S.ROUTE(id); if(!r) return "";
-        return `<a href="${S.href(id)}" data-s="${id}"${id===HERE?' aria-current="page"':""}>`+
-               `<span class="dot"></span><span class="nm">${r.label}</span>`+
-               `<span class="no">${r.n}</span></a>`;
+        const activa = id === HERE;
+        const subs = (activa && r.sub && r.sub.length)
+          ? `<div class="subs">${r.sub.map(([sid, lbl]) =>
+              `<a href="#${sid}" data-sub="${sid}">${lbl}</a>`).join("")}</div>`
+          : "";
+        return `<a class="ruta c-${r.color} ${activa?"active":""}" href="${S.href(id)}" data-s="${id}"`+
+               `${activa?' aria-current="page"':""}>`+
+               `<span class="no">${r.n}</span><span class="nm">${r.label}</span></a>` + subs;
       }).join("")
     ).join("");
   }
+
+  const glosarioBtn = `<button class="glosario-btn" data-glosario type="button">`+
+                      `<span>Glosario del sistema</span><i aria-hidden="true">→</i></button>`;
 
   const brand = `<a class="brand" href="${ROOT || "./"}"><span class="mark"></span>`+
                 `<span class="name">SEMANAS<small>Observatorio pensional</small></span></a>`;
@@ -43,10 +51,11 @@
 <aside class="side" id="side">
   ${brand}
   <nav id="sidenav" aria-label="Secciones"></nav>
+  ${glosarioBtn}
   <div class="foot"><b>Corte:</b> 5 sep 2026 · Vigencia Ley 2381: 1 abr 2027 (C-264/26)<br>Datos oficiales citados en [n]; pase el cursor para ver la fuente.</div>
 </aside>
 <div class="topbar" id="topbar">${brand}<button class="burger" id="burger" aria-label="Menú" aria-expanded="false"><span></span><span></span><span></span></button></div>
-<div class="drawer" id="drawer"><div class="panel">${brand}<nav id="drawernav" aria-label="Secciones"></nav></div></div>`;
+<div class="drawer" id="drawer"><div class="panel">${brand}<nav id="drawernav" aria-label="Secciones"></nav>${glosarioBtn}</div></div>`;
     body.insertBefore(chrome, body.firstChild);
 
     const tail = document.createElement("div");
@@ -86,7 +95,7 @@
     <button class="gloss-close" id="gloss-close" aria-label="Cerrar el glosario">×</button>
   </div>
   <div class="gloss-body" id="gloss-body"></div>
-  <div class="gloss-foot"><a id="gloss-all" href="${S.href("glosario")}">Ver el glosario completo →</a></div>
+  <div class="gloss-foot"><button class="gloss-volver" id="gloss-indice" type="button">← Ver todos los términos</button></div>
 </aside>
 <div class="gloss-veil" id="gloss-veil" hidden></div>
 
@@ -95,17 +104,34 @@
 
     document.getElementById("sidenav").innerHTML = navHTML();
     document.getElementById("drawernav").innerHTML = navHTML();
-    marcarActivo();
     wireBurger();
+    subrayarParte();
+    rejillaDeRutas();
     pieDeRuta();
   }
 
-  function marcarActivo(){
-    document.querySelectorAll("#sidenav a, #drawernav a").forEach(a=>{
-      a.classList.toggle("active", a.dataset.s === HERE);
-    });
-    const act = document.querySelector("#sidenav a.active");
-    if(act && !S.SINGLE) act.scrollIntoView({block:"nearest"});
+  /* Resalta la parte de la página en la que va el lector. Solo cambia
+     clases: nunca desplaza el menú por su cuenta (eso congelaba el menú
+     al llegar al final de la página en la versión anterior). */
+  function subrayarParte(){
+    if(!here || !here.sub || !here.sub.length) return;
+    const enlaces = Array.from(document.querySelectorAll('.subs a[data-sub]'));
+    const bloques = here.sub.map(([sid]) => document.getElementById(sid)).filter(Boolean);
+    if(!bloques.length) return;
+    let pendiente = false;
+    const marcar = () => {
+      pendiente = false;
+      const y = window.scrollY + 140;
+      let actual = bloques[0].id;
+      bloques.forEach(b => { if(b.offsetTop <= y) actual = b.id; });
+      enlaces.forEach(a => a.classList.toggle("en", a.dataset.sub === actual));
+    };
+    window.addEventListener("scroll", () => {
+      if(pendiente) return;
+      pendiente = true;
+      requestAnimationFrame(marcar);
+    }, {passive:true});
+    marcar();
   }
 
   function wireBurger(){
@@ -148,6 +174,25 @@
     const pie = document.createElement("footer");
     pie.innerHTML = `<div class="wrap inner"><div><b>SEMANAS</b> · Observatorio del Sistema Pensional Colombiano · <span id="year"></span></div><div>Contenido educativo y de análisis. No constituye asesoría legal, financiera ni una liquidación pensional.</div></div>`;
     main.appendChild(pie);
+  }
+
+  /* ---------- Portada: la rejilla de secciones sale del mismo mapa ---------- */
+  function rejillaDeRutas(){
+    const cont = document.getElementById("rutas");
+    if(!cont) return;
+    cont.innerHTML = S.ROUTES.map(r => {
+      const partes = (r.sub && r.sub.length)
+        ? `<div class="partes">${r.sub.map(([,l]) => esc(l)).join(" · ")}</div>`
+        : "";
+      return `<a class="ruta-card c-${r.color}" href="${S.href(r.id)}">
+        <div class="pat-band pat-${r.pat}" aria-hidden="true"></div>
+        <div class="cuerpo">
+          <div class="row"><span>${r.n}</span><span class="arrow" aria-hidden="true">↗</span></div>
+          <h3>${esc(r.label)}</h3>
+          <p>${esc(r.desc)}</p>
+          ${partes}
+        </div></a>`;
+    }).join("");
   }
 
   /* La barra de progreso solo tiene sentido dentro de una página larga. */

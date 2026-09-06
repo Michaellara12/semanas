@@ -535,15 +535,9 @@ ul.ticks b{color:var(--ink)}
 @keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
 /* 4· Buscador con lupa */
-.searchbar{position:relative;flex:1;min-width:200px;max-width:380px}
-.searchbar input{padding-left:40px!important;border-radius:var(--pill)!important}
-.searchbar::before{content:"⌕";position:absolute;left:15px;top:50%;transform:translateY(-52%);font-size:1.3rem;color:var(--ink-3);pointer-events:none;font-weight:700}
 
-/* 5· Selector nativo con marco */
-.select-wrap{display:inline-block}
-.select-wrap select{border-radius:var(--pill)!important;font-weight:700}
 
-/* 6· Interruptor */
+/* 5· Interruptor */
 .switch{display:inline-flex;align-items:center;gap:10px;font-size:.86rem;font-weight:700;cursor:pointer}
 .switch input{position:absolute;opacity:0;width:0;height:0}
 .switch .track{width:46px;height:26px;border-radius:var(--pill);background:var(--paper-2);border:var(--bd);position:relative;transition:background .25s}
@@ -557,11 +551,7 @@ ul.ticks b{color:var(--ink)}
 .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:16px}
 .field label{display:block;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);margin-bottom:7px}
 .field .hint{font-size:.72rem;color:var(--ink-3);margin-top:5px;line-height:1.4}
-input[type=number],input[type=text],input[type=date],select,textarea{width:100%;background:#fff;border:1.5px solid var(--ink);border-radius:var(--r-sm);color:var(--ink);padding:11px 14px;font-size:.95rem;font-family:var(--font);font-weight:600;outline:none;transition:box-shadow .2s,border-color .2s}
-input:focus,select:focus,textarea:focus{border-color:var(--magenta);box-shadow:var(--pop-sm)}
 textarea{min-height:120px;font-family:var(--mono);font-size:.8rem;font-weight:400}
-select{appearance:none;-webkit-appearance:none;padding-right:40px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 15px center;background-size:11px}
-input[type=range]{width:100%;accent-color:var(--magenta)}
 output{font-family:var(--mono);font-size:.8rem;color:var(--magenta);font-weight:700}
 .radio-row{display:flex;gap:8px;flex-wrap:wrap}
 .radio-row label{border:1.5px solid var(--ink);border-radius:var(--pill);padding:8px 15px;cursor:pointer;font-size:.85rem;font-weight:700;text-transform:none;letter-spacing:0;background:#fff;margin:0;transition:background .2s,box-shadow .2s,transform .2s var(--bounce)}
@@ -780,95 +770,182 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 @media print{.side,.topbar,.totop,.pdfview{display:none}main{margin-left:0}}
 
 /* =====================================================================
-   RUTAS · menú en bloques de color, patrones y navegación entre páginas
+   RUTAS · menú, patrones y navegación entre páginas
    ---------------------------------------------------------------------
-   Cada sección principal es una página propia. El menú lateral pasó de
-   lista de anclas a bloques de color con número, y la portada repite esos
-   mismos bloques en grande con la descripción de cada sección.
+   El observatorio son cuatro secciones grandes más las referencias. Cada
+   una es una página propia; el menú lateral despliega sus partes cuando
+   esa ruta está activa.
+
+   REGLA DE LOS PATRONES: un patrón nunca va debajo de texto. Vive en su
+   propia franja (`.pat-band`) separada por un borde; el texto siempre se
+   apoya en color plano. Es la única forma de que la tipografía no pelee
+   con la geometría.
    ===================================================================== */
 
-/* --- Paleta por ruta: un color de fondo y su tinta legible encima --- */
-.c-magenta{--card:var(--magenta);   --on:#fff;      --card-soft:var(--soft-pink)}
-.c-violet {--card:var(--violet);    --on:#fff;      --card-soft:var(--soft-peri)}
-.c-peri   {--card:var(--periwinkle);--on:#fff;      --card-soft:var(--soft-peri)}
-.c-cyan   {--card:var(--cyan);      --on:var(--ink);--card-soft:var(--soft-blue)}
-.c-yellow {--card:var(--yellow);    --on:var(--ink);--card-soft:var(--pale-yellow)}
-.c-green  {--card:var(--green);     --on:var(--ink);--card-soft:#D8FBD6}
-.c-orange {--card:var(--orange);    --on:var(--ink);--card-soft:var(--soft-orange)}
-.c-wine   {--card:var(--wine);      --on:#fff;      --card-soft:var(--soft-wine)}
+/* --- Paleta por ruta: color de bloque, tinta legible y tono de patrón --- */
+.c-magenta{--card:var(--magenta);   --on:#fff;      --card-soft:var(--soft-pink);  --pat-a:#FF57B0;--pat-b:#D10071}
+.c-violet {--card:var(--violet);    --on:#fff;      --card-soft:var(--soft-peri);  --pat-a:#5B4FB5;--pat-b:#2A2170}
+.c-peri   {--card:var(--periwinkle);--on:#fff;      --card-soft:var(--soft-peri);  --pat-a:#B4A3EA;--pat-b:#7A62C4}
+.c-cyan   {--card:var(--cyan);      --on:var(--ink);--card-soft:var(--soft-blue);  --pat-a:#7DF3F6;--pat-b:#12C2C7}
+.c-yellow {--card:var(--yellow);    --on:var(--ink);--card-soft:var(--pale-yellow);--pat-a:#FFE49A;--pat-b:#F2B71E}
+.c-green  {--card:var(--green);     --on:var(--ink);--card-soft:#D8FBD6;           --pat-a:#7FF07A;--pat-b:#1FBE18}
+.c-orange {--card:var(--orange);    --on:var(--ink);--card-soft:var(--soft-orange);--pat-a:#FFC066;--pat-b:#E07C05}
+.c-wine   {--card:var(--wine);      --on:#fff;      --card-soft:var(--soft-wine);  --pat-a:#96305A;--pat-b:#4A0620}
 
-/* --- Patrones geométricos ---------------------------------------------
-   Van en un ::before propio para poder bajarles la opacidad sin tocar el
-   texto. Se dibujan con gradientes: ni una imagen, ni una petición más. */
-.pat{position:relative;overflow:hidden;isolation:isolate}
-.pat::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.20;
-  background-repeat:repeat;pointer-events:none;transition:opacity .3s var(--ease),transform .5s var(--ease)}
-.pat:hover::before{opacity:.30;transform:scale(1.06)}
+/* --- Franja de patrón -------------------------------------------------
+   Adaptados de css-pattern.com a dos tonos de la paleta (--pat-a / --pat-b).
+   Solo decoran: no llevan texto encima nunca. */
+.pat-band{
+  height:104px;flex:none;border-bottom:var(--bd);
+  background-color:var(--pat-a);
+  transition:transform .4s var(--ease)}
+.ruta-card:hover .pat-band{transform:scale(1.03)}
+@media (prefers-reduced-motion:reduce){ .ruta-card:hover .pat-band{transform:none} }
 
-.pat-dots::before{background-image:radial-gradient(currentColor 1.6px,transparent 1.7px);background-size:14px 14px}
-.pat-halftone::before{background-image:radial-gradient(currentColor 3px,transparent 3.2px),radial-gradient(currentColor 1.2px,transparent 1.4px);background-size:26px 26px,26px 26px;background-position:0 0,13px 13px}
-.pat-diag::before{background-image:repeating-linear-gradient(45deg,currentColor 0 3px,transparent 3px 12px)}
-.pat-grid::before{background-image:repeating-linear-gradient(0deg,currentColor 0 1.5px,transparent 1.5px 16px),repeating-linear-gradient(90deg,currentColor 0 1.5px,transparent 1.5px 16px)}
-.pat-rings::before{background-image:repeating-radial-gradient(circle at 50% 50%,currentColor 0 2px,transparent 2px 13px);background-size:52px 52px}
-.pat-waves::before{background-image:repeating-radial-gradient(circle at 0 100%,transparent 0 8px,currentColor 8px 10px,transparent 10px 20px);background-size:40px 20px}
-.pat-chevron::before{background-image:repeating-linear-gradient(135deg,currentColor 0 2.5px,transparent 2.5px 11px),repeating-linear-gradient(45deg,currentColor 0 2.5px,transparent 2.5px 11px);background-size:22px 22px}
-.pat-cross::before{background-image:repeating-linear-gradient(0deg,currentColor 0 2px,transparent 2px 9px),repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 9px);background-size:18px 18px;background-position:center}
-.pat-bricks::before{background-image:repeating-linear-gradient(0deg,currentColor 0 1.6px,transparent 1.6px 14px),repeating-linear-gradient(90deg,currentColor 0 1.6px,transparent 1.6px 28px);background-size:28px 28px}
-.pat-zigzag::before{background-image:linear-gradient(135deg,currentColor 25%,transparent 25%),linear-gradient(225deg,currentColor 25%,transparent 25%);background-size:18px 18px}
-.pat-triangles::before{background-image:conic-gradient(from 90deg at 50% 0,currentColor 0 25%,transparent 25% 100%);background-size:20px 20px}
-@media (prefers-reduced-motion:reduce){ .pat:hover::before{transform:none} }
+/* Triángulos alternados */
+.pat-zigzag{
+  background-image:
+    conic-gradient(from 150deg at 50% 33%,#0000,var(--pat-b) .5deg 60deg,#0000 60.5deg),
+    conic-gradient(from -30deg at 50% 66%,#0000,var(--pat-b) .5deg 60deg,#0000 60.5deg);
+  background-position:30px 26px,0 0;
+  background-size:60px 52px}
+
+/* Escamas / abanicos */
+.pat-escamas{
+  background-image:
+    radial-gradient(farthest-side at -50% 50%,#0000 52%,var(--pat-b) 54% 57%,#0000 59%),
+    radial-gradient(farthest-side at 50% 150%,#0000 52%,var(--pat-b) 54% 57%,#0000 59%),
+    radial-gradient(farthest-side at 150% 50%,#0000 52%,var(--pat-b) 54% 57%,#0000 59%),
+    radial-gradient(farthest-side at 50% -50%,#0000 52%,var(--pat-b) 54% 57%,#0000 59%);
+  background-position:0 26px,26px 0,0 0,0 0;
+  background-size:12px 52px,52px 12px,12px 52px,52px 12px}
+
+/* Damero de círculos */
+.pat-damero{
+  background-image:
+    repeating-conic-gradient(at 33% 33%,var(--pat-b) 0 25%,#0000 0 50%),
+    repeating-conic-gradient(at 66% 66%,var(--pat-b) 0 25%,#0000 0 50%);
+  background-size:46px 46px}
+
+/* Arcos */
+.pat-arcos{
+  background-image:
+    radial-gradient(at 80% 80%,var(--pat-b) 25.4%,#0000 26%),
+    radial-gradient(at 20% 80%,var(--pat-b) 25.4%,#0000 26%),
+    conic-gradient(from -45deg at 50% 41%,var(--pat-b) 90deg,#0000 0);
+  background-position:0 0,0 0,27px 0;
+  background-size:54px 54px}
+
+/* Rayas diagonales anchas */
+.pat-rayas{
+  background-image:repeating-linear-gradient(45deg,var(--pat-b) 0 10px,#0000 0 26px)}
+
+/* Cubos isométricos */
+.pat-cubos{
+  background-image:
+    conic-gradient(at 83.33% 33.33%,var(--pat-b) 0 120deg,#0000 0),
+    conic-gradient(from -120deg at 16.67% 33.33%,var(--pat-b) 0 120deg,#0000 0),
+    conic-gradient(from 120deg at 33.33% 83.33%,var(--pat-a) 0 120deg,#0000 0),
+    conic-gradient(from 120deg at 66.67% 83.33%,var(--pat-a) 0 120deg,#0000 0),
+    conic-gradient(from -180deg at 33.33% 50%,var(--pat-b) 60deg,var(--pat-a) 0 120deg,#0000 0),
+    conic-gradient(from 60deg at 66.67% 50%,var(--pat-a) 60deg,var(--pat-b) 0 120deg,#0000 0);
+  background-size:56px 32px}
+
+/* Puntos en rejilla */
+.pat-puntos{
+  background-image:radial-gradient(var(--pat-b) 22%,#0000 24%);
+  background-size:22px 22px}
+
+/* Cruces */
+.pat-cruces{
+  background-image:
+    linear-gradient(var(--pat-b) 4px,#0000 0),
+    linear-gradient(90deg,var(--pat-b) 4px,#0000 0);
+  background-position:center;
+  background-size:26px 26px}
 
 /* =====================================================================
-   MENÚ LATERAL · bloques de color
+   MENÚ LATERAL · bloques de color, con las partes de la ruta activa
    ===================================================================== */
-:root{--side:272px}
-.side nav{gap:7px}
-.side nav .part{padding:15px 4px 5px}
+:root{--side:290px}
+.side nav{gap:8px}
+.side nav .part{padding:14px 4px 4px}
 .side nav a{
-  position:relative;display:grid;grid-template-columns:1fr auto;align-items:end;
-  gap:2px 8px;min-height:62px;padding:10px 12px;border-radius:var(--r-sm);
+  position:relative;display:grid;grid-template-columns:auto 1fr;align-items:center;
+  gap:2px 11px;padding:14px 15px;border-radius:var(--r-sm);
   border:var(--bd-thin);background:var(--paper);color:var(--ink);
-  font-size:.95rem;font-weight:800;line-height:1.15;letter-spacing:-.01em;
+  font-size:1.04rem;font-weight:800;line-height:1.12;letter-spacing:-.015em;
   box-shadow:2px 2px 0 var(--ink);
   transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s}
-.side nav a .nm{grid-column:1;align-self:end;padding-top:16px}
-.side nav a .no{grid-column:2;grid-row:1;font-family:var(--mono);font-size:.66rem;font-weight:600;opacity:.55;align-self:start}
-.side nav a .dot{position:absolute;top:11px;left:12px;width:9px;height:9px;border-radius:50%;
-  background:var(--card,var(--line-2));border:1.5px solid var(--ink)}
+.side nav a .no{
+  grid-row:1;grid-column:1;width:30px;height:30px;border-radius:.5em;
+  display:grid;place-items:center;border:1.5px solid var(--ink);
+  background:var(--card,var(--paper-2));color:var(--on,var(--ink));
+  font-family:var(--mono);font-size:.7rem;font-weight:600}
+.side nav a .nm{grid-row:1;grid-column:2}
+.side nav a .dot{display:none}
 .side nav a:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink);text-decoration:none;background:var(--card-soft,var(--paper-2))}
 .side nav a:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
 .side nav a.active{background:var(--card,var(--ink));color:var(--on,#fff);box-shadow:4px 4px 0 var(--ink)}
-.side nav a.active .no{opacity:.8}
-.side nav a.active .dot{background:var(--paper)}
-.side .foot{padding-top:4px}
+.side nav a.active .no{background:var(--paper);color:var(--ink)}
 
-/* En el cajón móvil los mismos bloques, más altos para el pulgar. */
-.drawer nav{gap:8px}
-.drawer nav a{position:relative;display:grid;grid-template-columns:1fr auto;align-items:end;min-height:70px;
-  padding:12px 14px;border-radius:var(--r-sm);border:var(--bd-thin);box-shadow:2px 2px 0 var(--ink);
-  background:var(--paper);color:var(--ink);font-weight:800;font-size:1.02rem}
-.drawer nav a .no{font-family:var(--mono);font-size:.68rem;font-weight:600;opacity:.55;grid-row:1;grid-column:2}
-.drawer nav a .nm{grid-column:1;padding-top:16px}
-.drawer nav a .dot{position:absolute;top:13px;left:14px;width:10px;height:10px;border-radius:50%;background:var(--card,var(--line-2));border:1.5px solid var(--ink)}
+/* Partes de la ruta activa, desplegadas bajo su bloque. */
+.side nav .subs{display:flex;flex-direction:column;gap:1px;margin:2px 0 4px 15px;
+  padding-left:12px;border-left:2px solid var(--line-2)}
+.side nav .subs a{
+  display:block;padding:7px 10px;border:0;border-radius:var(--r-xs);box-shadow:none;
+  background:none;font-size:.85rem;font-weight:600;color:var(--ink-2);letter-spacing:0}
+.side nav .subs a:hover{transform:none;box-shadow:none;background:var(--paper-2);color:var(--ink)}
+.side nav .subs a.en{background:var(--ink);color:#fff;font-weight:700}
+.side .glosario-btn{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
+  font:inherit;font-size:.86rem;font-weight:800;text-align:left;cursor:pointer;
+  padding:11px 14px;border:var(--bd-thin);border-radius:var(--pill);
+  background:var(--pale-yellow);color:var(--ink);box-shadow:var(--pop-sm);
+  transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
+.side .glosario-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
+.side .glosario-btn:active{transform:translate(2px,2px);box-shadow:none}
+.side .glosario-btn i{font-style:normal;font-size:1rem}
+.side .foot{padding-top:2px}
+
+/* Cajón móvil: los mismos bloques, más altos para el pulgar. */
+.drawer nav{gap:9px}
+.drawer nav a{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:12px;
+  padding:15px 16px;border-radius:var(--r-sm);border:var(--bd-thin);box-shadow:2px 2px 0 var(--ink);
+  background:var(--paper);color:var(--ink);font-weight:800;font-size:1.08rem}
+.drawer nav a .no{width:32px;height:32px;border-radius:.5em;display:grid;place-items:center;
+  border:1.5px solid var(--ink);background:var(--card,var(--paper-2));color:var(--on,var(--ink));
+  font-family:var(--mono);font-size:.72rem;font-weight:600}
+.drawer nav a .dot{display:none}
 .drawer nav a.active{background:var(--card,var(--ink));color:var(--on,#fff)}
+.drawer nav a.active .no{background:var(--paper);color:var(--ink)}
+.drawer nav .subs{margin:2px 0 6px 18px;padding-left:12px;border-left:2px solid var(--line-2);
+  display:flex;flex-direction:column;gap:1px}
+.drawer nav .subs a{display:block;padding:9px 10px;border:0;box-shadow:none;background:none;
+  font-size:.94rem;font-weight:600;color:var(--ink-2)}
+.drawer .glosario-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
+  font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:13px 16px;
+  border:var(--bd-thin);border-radius:var(--pill);background:var(--pale-yellow);box-shadow:var(--pop-sm)}
 
 /* =====================================================================
-   PORTADA · rejilla de secciones (bloque grande por ruta)
+   PORTADA · rejilla de secciones
    ===================================================================== */
-.rutas{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px}
+.rutas{display:grid;grid-template-columns:repeat(auto-fit,minmax(285px,1fr));gap:18px}
 .ruta-card{
-  display:flex;flex-direction:column;gap:10px;min-height:212px;padding:18px 20px 20px;
+  display:flex;flex-direction:column;overflow:hidden;min-height:322px;
   border:var(--bd);border-radius:var(--r-lg);box-shadow:var(--pop);
   background:var(--card,var(--paper));color:var(--on,var(--ink));text-decoration:none;
   transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
 .ruta-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);text-decoration:none;color:var(--on,var(--ink))}
 .ruta-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.ruta-card .cuerpo{display:flex;flex-direction:column;gap:9px;flex:1;padding:16px 20px 20px}
 .ruta-card .row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.78rem;font-weight:600}
-.ruta-card .arrow{font-size:1.25rem;line-height:1;transition:transform .22s var(--ease)}
+.ruta-card .arrow{font-size:1.3rem;line-height:1;transition:transform .22s var(--ease)}
 .ruta-card:hover .arrow{transform:translate(3px,-3px)}
-.ruta-card h3{margin:auto 0 0;font-size:clamp(1.3rem,2.1vw,1.65rem);line-height:1.02}
-.ruta-card p{margin:0;font-size:.86rem;font-weight:600;line-height:1.42;opacity:.86}
-.ruta-card .part{font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.ruta-card h3{margin:2px 0 0;font-size:clamp(1.35rem,2.2vw,1.7rem);line-height:1.02}
+.ruta-card p{margin:0;font-size:.87rem;font-weight:600;line-height:1.45;opacity:.9}
+.ruta-card .partes{margin-top:auto;padding-top:12px;border-top:1.5px solid currentColor;
+  font-size:.72rem;font-weight:700;letter-spacing:.02em;opacity:.82;line-height:1.5}
 
 /* =====================================================================
    PIE DE RUTA · anterior / siguiente
@@ -885,11 +962,74 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .ruta-nav-item b{font-family:var(--display);font-size:1.25rem;line-height:1.1;letter-spacing:-.02em}
 .ruta-nav-item em{font-style:normal;font-size:.82rem;font-weight:600;color:var(--ink-2);line-height:1.4}
 @media (max-width:640px){ .ruta-nav{grid-template-columns:1fr} .ruta-nav-item.next{text-align:left} }
-
-/* Encabezado de página de ruta */
-.ruta-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
-.ruta-head .num{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--ink-3)}
 .refs-local{background:var(--paper-2);border-top:1.5px solid var(--line)}
+
+/* =====================================================================
+   CONTROLES CON MARCA
+   ---------------------------------------------------------------------
+   Ningún control del sitio usa el aspecto por defecto del navegador.
+   Todos comparten borde negro, radio grande y sombra dura, y el estado
+   de foco es el mismo aro magenta en todos.
+   ===================================================================== */
+input[type=text],input[type=search],input[type=number],input[type=date],
+input[type=email],input[type=tel],select,textarea{
+  appearance:none;-webkit-appearance:none;
+  font:inherit;font-weight:600;color:var(--ink);
+  background:var(--paper);border:var(--bd-thin);border-radius:var(--r-sm);
+  padding:11px 14px;width:100%;box-shadow:2px 2px 0 var(--ink);
+  transition:border-color .16s,box-shadow .16s var(--ease),transform .16s var(--ease)}
+input::placeholder,textarea::placeholder{color:var(--ink-3);font-weight:500}
+input:hover,select:hover,textarea:hover{box-shadow:3px 3px 0 var(--ink)}
+input:focus-visible,select:focus-visible,textarea:focus-visible{
+  outline:none;border-color:var(--magenta);box-shadow:3px 3px 0 var(--magenta);transform:translate(-1px,-1px)}
+input[type=search]::-webkit-search-cancel-button{appearance:none;height:15px;width:15px;cursor:pointer;
+  background:var(--ink);mask:linear-gradient(45deg,#0000 45%,#000 45% 55%,#0000 55%),linear-gradient(-45deg,#0000 45%,#000 45% 55%,#0000 55%)}
+input[type=number]::-webkit-outer-spin-button,input[type=number]::-webkit-inner-spin-button{appearance:none;margin:0}
+input[type=number]{-moz-appearance:textfield}
+input[type=date]::-webkit-calendar-picker-indicator{
+  cursor:pointer;opacity:1;filter:none;
+  background:var(--yellow);border:1.5px solid var(--ink);border-radius:.35em;padding:2px}
+
+/* Desplegable: flecha propia, nunca la del sistema. */
+.select-wrap{position:relative;display:inline-block;min-width:180px}
+.select-wrap select{padding-right:40px;cursor:pointer;text-overflow:ellipsis}
+.select-wrap::after{
+  content:"";position:absolute;right:16px;top:50%;width:9px;height:9px;
+  border-right:2.5px solid var(--ink);border-bottom:2.5px solid var(--ink);
+  transform:translateY(-70%) rotate(45deg);pointer-events:none}
+select option{font-weight:600;background:var(--paper);color:var(--ink)}
+
+/* Buscador */
+.searchbar{position:relative;flex:1;min-width:200px;max-width:420px;display:inline-block}
+.searchbar input{padding-left:42px;border-radius:var(--pill)}
+.searchbar::before{content:"⌕";position:absolute;left:16px;top:50%;transform:translateY(-54%);
+  font-size:1.35rem;color:var(--ink);pointer-events:none;font-weight:700;z-index:1}
+
+/* Casilla y radio */
+input[type=checkbox],input[type=radio]{
+  appearance:none;-webkit-appearance:none;flex:none;
+  width:22px;height:22px;margin:0;cursor:pointer;
+  border:var(--bd-thin);background:var(--paper);box-shadow:2px 2px 0 var(--ink);
+  transition:background .16s,box-shadow .16s var(--ease),transform .16s var(--ease)}
+input[type=checkbox]{border-radius:.4em}
+input[type=radio]{border-radius:50%}
+input[type=checkbox]:checked{background:var(--yellow)}
+input[type=checkbox]:checked::after{content:"";display:block;width:6px;height:11px;margin:2px auto 0;
+  border-right:2.6px solid var(--ink);border-bottom:2.6px solid var(--ink);transform:rotate(42deg)}
+input[type=radio]:checked{background:var(--magenta);box-shadow:2px 2px 0 var(--ink),inset 0 0 0 3.5px var(--paper)}
+input[type=checkbox]:active,input[type=radio]:active{transform:translate(2px,2px);box-shadow:none}
+input[type=checkbox]:focus-visible,input[type=radio]:focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+
+/* Deslizador */
+input[type=range]{appearance:none;-webkit-appearance:none;width:100%;background:none;padding:0;border:0;box-shadow:none;cursor:pointer;height:26px}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:var(--pill);border:1.5px solid var(--ink);background:var(--paper-2)}
+input[type=range]::-moz-range-track{height:10px;border-radius:var(--pill);border:1.5px solid var(--ink);background:var(--paper-2)}
+input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin-top:-9px;
+  border-radius:50%;background:var(--yellow);border:var(--bd-thin);box-shadow:2px 2px 0 var(--ink);transition:transform .14s var(--ease)}
+input[type=range]::-moz-range-thumb{width:24px;height:24px;border-radius:50%;background:var(--yellow);border:var(--bd-thin);box-shadow:2px 2px 0 var(--ink)}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.1)}
+input[type=range]:focus-visible::-webkit-slider-thumb{background:var(--magenta);outline:none}
+input[type=range]:focus-visible{outline:none}
 
 /* =====================================================================
    GLOSARIO · término en el texto y cajón lateral
@@ -906,7 +1046,7 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .gloss-veil{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.34);opacity:0;transition:opacity .25s var(--ease)}
 .gloss-veil.open{opacity:1}
 .gloss{
-  position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(430px,92vw);
+  position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(440px,92vw);
   display:flex;flex-direction:column;background:var(--paper);
   border-left:var(--bd);box-shadow:-18px 0 44px rgba(0,0,0,.16);
   transform:translateX(102%);transition:transform .28s var(--ease)}
@@ -914,7 +1054,7 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .gloss-head{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
   padding:20px 22px 16px;border-bottom:var(--bd-thin);background:var(--pale-yellow)}
 .gloss-head small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
-.gloss-head h3{margin:0;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.05}
+.gloss-head h3{margin:0;font-size:clamp(1.3rem,3vw,1.75rem);line-height:1.05}
 .gloss-close{flex:none;width:40px;height:40px;border-radius:50%;border:var(--bd-thin);background:var(--paper);
   font-size:1.3rem;line-height:1;cursor:pointer;box-shadow:var(--pop-sm);transition:transform .16s var(--ease),box-shadow .16s}
 .gloss-close:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
@@ -931,11 +1071,22 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   border:var(--bd-thin);border-radius:var(--pill);background:var(--paper);cursor:pointer;
   transition:background .16s,transform .16s var(--ease)}
 .chip-term:hover{background:var(--pale-peri);transform:translateY(-1px)}
-.gloss-foot{padding:14px 22px;border-top:var(--bd-thin);background:var(--paper-2);font-size:.86rem;font-weight:700}
+.gloss-foot{padding:12px 22px;border-top:var(--bd-thin);background:var(--paper-2)}
+.gloss-volver{font:inherit;font-size:.84rem;font-weight:800;background:none;border:0;padding:0;cursor:pointer;color:var(--violet)}
+
+/* Índice A–Z dentro del cajón */
+.gloss-buscar{padding:14px 22px 12px;border-bottom:1.5px solid var(--line)}
+.gloss-lista{list-style:none;margin:0;padding:0}
+.gloss-lista li{border-bottom:1.5px solid var(--line)}
+.gloss-lista button{display:block;width:100%;text-align:left;font:inherit;font-weight:700;
+  background:none;border:0;padding:12px 4px;cursor:pointer;color:var(--ink)}
+.gloss-lista button:hover{background:var(--pale-yellow)}
+.gloss-lista small{display:block;font-weight:500;font-size:.78rem;color:var(--ink-3);margin-top:2px}
+.gloss-vacio{padding:20px 4px;color:var(--ink-3);font-size:.9rem}
 
 /* Móvil: media hoja desde abajo, ancho completo. */
 @media (max-width:720px){
-  .gloss{top:auto;left:0;right:0;bottom:0;width:100%;height:56vh;max-height:56vh;
+  .gloss{top:auto;left:0;right:0;bottom:0;width:100%;height:58vh;max-height:58vh;
     border-left:0;border-top:var(--bd);border-radius:var(--r-lg) var(--r-lg) 0 0;
     transform:translateY(102%);box-shadow:0 -14px 40px rgba(0,0,0,.2)}
   .gloss.open{transform:none}
@@ -943,13 +1094,34 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   .gloss-head::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
     width:44px;height:4px;border-radius:2px;background:rgba(0,0,0,.28)}
   .gloss-body{padding:16px 18px}
+  .gloss-buscar{padding:12px 18px}
 }
 body.gloss-abierto{overflow:hidden}
 
-/* Página del glosario */
-.gloss-item{padding:22px 0;border-top:1.5px solid var(--line)}
-.gloss-item h3{margin-bottom:.3em}
-.gloss-item h3 small{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--ink-3);letter-spacing:0;text-transform:none}
-.gloss-item p{font-size:.95rem;margin-bottom:.6em}
-.gloss-item-ej{color:var(--ink-2);font-size:.9rem}
-.gloss-item-rel{margin:0}
+/* =====================================================================
+   PORTADA EDUCATIVA · explicación del sistema
+   ===================================================================== */
+.explica{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.paso{display:flex;flex-direction:column;gap:8px;padding:20px;border:var(--bd-thin);
+  border-radius:var(--r);background:var(--paper);box-shadow:var(--pop-sm)}
+.paso .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  border:var(--bd-thin);background:var(--yellow);font-family:var(--mono);font-size:.8rem;font-weight:600}
+.paso h3{margin:0;font-size:1.12rem}
+.paso p{margin:0;font-size:.89rem;color:var(--ink-2);line-height:1.5}
+
+.pilar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.pilar-b{display:flex;flex-direction:column;overflow:hidden;border:var(--bd);border-radius:var(--r-lg);
+  box-shadow:var(--pop);background:var(--card);color:var(--on)}
+.pilar-b .cuerpo{padding:16px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.pilar-b .et{font-family:var(--mono);font-size:.72rem;font-weight:600;opacity:.8}
+.pilar-b h3{margin:0;font-size:1.28rem;line-height:1.05}
+.pilar-b p{margin:0;font-size:.87rem;font-weight:600;line-height:1.45;opacity:.92}
+.pilar-b .quien{margin-top:auto;padding-top:12px;border-top:1.5px solid currentColor;font-size:.78rem;font-weight:700;opacity:.85}
+
+/* Botón que se lee como enlace (abre el glosario desde el texto corrido). */
+.linkish{font:inherit;font-weight:800;color:var(--violet);background:none;border:0;padding:0;
+  cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.linkish:hover{color:var(--magenta)}
+
+/* Subtítulo de nivel 2 dentro de una sección larga. */
+.h2-like{font-size:clamp(1.5rem,3vw,2rem);line-height:1.05}

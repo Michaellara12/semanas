@@ -500,6 +500,7 @@
   function glosario(){
     const G=SEMANAS.GLOSARIO||{};
     const caj=$("#gloss"), veil=$("#gloss-veil"), cuerpo=$("#gloss-body"), ttl=$("#gloss-term");
+    const kicker=$("#gloss-head-kicker"), pieBtn=$("#gloss-indice");
     let ultimo=null;
 
     const ficha=k=>{
@@ -513,20 +514,50 @@
           rel.map(x=>`<button class="chip-term" data-t="${x}">${G[x].t}</button>`).join("")}</div>`:"");
     };
 
-    function abrir(k, origen){
-      const g=G[k]; if(!g||!caj) return;
-      ultimo=origen||ultimo;
-      ttl.textContent=g.t;
-      cuerpo.innerHTML=ficha(k);
-      caj.hidden=false; veil.hidden=false;
+    function mostrar(){
+      if(caj.hidden){ caj.hidden=false; veil.hidden=false; }
       requestAnimationFrame(()=>{ caj.classList.add("open"); veil.classList.add("open"); });
       document.body.classList.add("gloss-abierto");
-      renderCites(cuerpo);
+    }
+
+    /* Ficha de un término. */
+    function abrir(k, origen){
+      const g=G[k]; if(!g||!caj) return;
+      if(origen) ultimo=origen;
+      ttl.textContent=g.t;
+      cuerpo.innerHTML=ficha(k);
+      cuerpo.scrollTop=0;
+      if(pieBtn) pieBtn.hidden=false;
+      mostrar();
+      renderCites();
       $$(".chip-term",cuerpo).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
-      $("#gloss-close").focus();
       $$(".term.on").forEach(x=>x.classList.remove("on"));
       if(origen) origen.classList.add("on");
+      $("#gloss-close").focus();
     }
+
+    /* Índice A–Z con buscador, dentro del mismo cajón. */
+    const items=(SEMANAS.glosarioOrdenado?SEMANAS.glosarioOrdenado():[]);
+    function indice(filtro){
+      if(!caj) return;
+      ttl.textContent="Glosario";
+      const q=(filtro||"").trim().toLowerCase();
+      const hits=items.filter(g=>!q||(g.t+" "+(g.a||"")+" "+g.d).toLowerCase().includes(q));
+      cuerpo.innerHTML=
+        `<div class="gloss-buscar"><span class="searchbar"><input type="search" id="gloss-q" `+
+        `placeholder="Buscar un término…" aria-label="Buscar en el glosario" value="${(filtro||"").replace(/"/g,"&quot;")}"></span></div>`+
+        (hits.length
+          ? `<ul class="gloss-lista">${hits.map(g=>
+              `<li><button data-t="${g.k}">${g.t}${g.a?`<small>${g.a}</small>`:""}</button></li>`).join("")}</ul>`
+          : `<p class="gloss-vacio">Ningún término coincide con «${q}».</p>`);
+      if(pieBtn) pieBtn.hidden=true;
+      mostrar();
+      $$(".gloss-lista button",cuerpo).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
+      const q2=$("#gloss-q");
+      if(q2){ q2.addEventListener("input",()=>{ const v=q2.value; const pos=q2.selectionStart; indice(v);
+        const nuevo=$("#gloss-q"); if(nuevo){ nuevo.focus(); nuevo.setSelectionRange(pos,pos); } }); }
+    }
+
     function cerrar(){
       if(!caj||caj.hidden) return;
       caj.classList.remove("open"); veil.classList.remove("open");
@@ -536,10 +567,13 @@
       if(ultimo){ ultimo.focus(); ultimo=null; }
     }
     SEMANAS.abrirTermino=abrir;
+    SEMANAS.abrirGlosario=indice;
 
     /* Un solo oyente en el documento: sirve también para el texto que se
        pinta después (línea de tiempo, artículos, fichas del glosario). */
     document.addEventListener("click",e=>{
+      const boton=e.target.closest("[data-glosario], .abre-glosario");
+      if(boton){ e.preventDefault(); indice(""); return; }
       const t=e.target.closest(".term[data-t]");
       if(!t) return;
       e.preventDefault();
@@ -552,6 +586,7 @@
       if(e.key==="Escape") cerrar();
     });
     $("#gloss-close")?.addEventListener("click",cerrar);
+    pieBtn?.addEventListener("click",()=>indice(""));
     veil?.addEventListener("click",cerrar);
 
     /* Accesibilidad: cada término es un botón para el teclado. */
@@ -561,8 +596,6 @@
       const g=G[t.dataset.t];
       if(g) t.setAttribute("aria-label",g.t+": ver definición"); else t.classList.add("term-huerfano");
     });
-    marcar();
-    new MutationObserver(marcar).observe(document.body,{childList:true,subtree:true});
 
     /* Marcado automático: recorre el texto de la página y subraya la
        primera aparición de cada término. Evita títulos, enlaces, citas,
@@ -602,29 +635,7 @@
     }
     automarcar();
 
-    /* Página /glosario/: el listado completo, de la A a la Z. */
-    const lista=$("#gloss-list");
-    if(lista){
-      const items=SEMANAS.glosarioOrdenado();
-      lista.innerHTML=items.map(g=>`<article class="gloss-item" id="t-${g.k}">
-        <h3>${g.t}${g.a?` <small>${g.a}</small>`:""}</h3>
-        <p>${g.d}</p>${g.e?`<p class="gloss-item-ej"><b>Ejemplo.</b> ${g.e}</p>`:""}
-        <p class="gloss-item-rel">${(g.v||[]).filter(x=>G[x]).map(x=>`<button class="chip-term" data-t="${x}">${G[x].t}</button>`).join("")}</p>
-      </article>`).join("");
-      $$(".chip-term",lista).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
-      const q=$("#gloss-search");
-      if(q) q.addEventListener("input",()=>{
-        const v=q.value.trim().toLowerCase();
-        let n=0;
-        $$(".gloss-item",lista).forEach((el,i)=>{
-          const hit=!v||(items[i].t+" "+items[i].a+" "+items[i].d).toLowerCase().includes(v);
-          el.hidden=!hit; if(hit) n++;
-        });
-        setHTML("gloss-count",n+(n===1?" término":" términos"));
-      });
-      setHTML("gloss-count",items.length+" términos");
-    }
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); glosario(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); glosario(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();

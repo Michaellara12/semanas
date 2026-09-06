@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Observatorio SEMANAS</title>
-<meta name="description" content="Observatorio analítico e interactivo del sistema pensional colombiano: series históricas, Ley 2381 de 2024 artículo por artículo, calculadora antes/después, subsidios implícitos y TIR por perfil, modelos actuariales y demográficos, la crítica de Jerome Sanabria y la transición económica por IA.">
+<meta name="description" content="Qué es el sistema pensional colombiano y cómo funciona, explicado paso a paso: cotización, semanas, requisitos y mesada; los dos regímenes de la Ley 100 y los cuatro pilares de la Ley 2381 de 2024. Observatorio con datos oficiales, calculadora y modelos auditables.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
@@ -13,21 +13,19 @@
 <body>
 
 <main>
+<!-- ===== QUÉ ES ESTO ===== -->
 <section class="hero" id="inicio">
   <div class="wrap">
     <div class="top"><span class="meta">Análisis técnico · datos oficiales · Colombia</span><span class="tag yellow">Vigencia de la reforma: 1 de abril de 2027</span></div>
-    <div class="grid-hero">
-      <div>
-        <h1>La pensión se cuenta en <span class="hl">semanas</span>. La reforma, en supuestos.</h1>
-        <p class="sub">SEMANAS es un observatorio interactivo del sistema pensional colombiano: ochenta años de historia y veinticinco de series, la Ley 2381 de 2024 explicada artículo por artículo, una calculadora antes/después, modelos actuariales y demográficos auditables, la medición de los subsidios que nadie ve, la crítica de Jerome Sanabria contrastada con fuentes primarias y un capítulo sobre cómo la automatización cambia la base que financia las pensiones.</p>
-        <div class="flex"><a class="btn" href="calculadora/">Calcular mi caso</a><a class="btn ghost" href="analisis/">Ver los subsidios ocultos</a><a class="btn ghost" href="ley/">Explorar la ley</a></div>
-      </div>
-      <div class="hero-art reveal"><canvas id="hero-canvas" aria-label="1.300 semanas cotizadas representadas como puntos"></canvas><span class="badge">Ley 2381 · 95 artículos</span><span class="cap">Cada punto es una semana</span></div>
-    </div>
+    <h1>La pensión se cuenta en <span class="hl">semanas</span>. La reforma, en supuestos.</h1>
+    <p class="sub">SEMANAS es un observatorio del sistema pensional colombiano: explica cómo funciona el sistema, qué cambia con la Ley 2381 de 2024 y qué dicen los números. Todo con fuentes oficiales citadas, modelos que usted puede auditar y una calculadora para su propio caso. Si nunca ha entendido cómo se pensiona alguien en Colombia, empiece por aquí abajo.</p>
+    <div class="flex"><a class="btn" href="#como-funciona">Entender el sistema</a><a class="btn ghost" href="reforma/">Qué cambia con la reforma</a><a class="btn ghost" href="cifras/#calculadora">Calcular mi caso</a></div>
+
     <div class="marquee" aria-hidden="true"><div class="track">
       <span class="y">1.300 semanas</span><span>57 M / 62 H</span><span class="p">Umbral 2,3 SMLMV</span><span>r = 65,5 − 0,5·s</span><span class="b">Fondo en el Banco de la República</span><span>Renta vitalicia no heredable</span><span class="y">Transición 750 / 900</span><span>Pilar Solidario $230.000</span><span class="p">Sentencia C-264/26</span><span>121,5 % del PIB</span><span class="b">Informalidad 54,5 %</span><span>Agotamiento 2062</span>
       <span class="y">1.300 semanas</span><span>57 M / 62 H</span><span class="p">Umbral 2,3 SMLMV</span><span>r = 65,5 − 0,5·s</span><span class="b">Fondo en el Banco de la República</span><span>Renta vitalicia no heredable</span><span class="y">Transición 750 / 900</span><span>Pilar Solidario $230.000</span><span class="p">Sentencia C-264/26</span><span>121,5 % del PIB</span><span class="b">Informalidad 54,5 %</span><span>Agotamiento 2062</span>
     </div></div>
+
     <div class="kpis mt3 reveal">
       <div class="kpi p"><div class="v"><span data-count="7.24" data-dec="2">0</span><small>M</small></div><div class="l">Afiliados a Colpensiones (RPM), jun-2026</div><div class="s">Colpensiones <a class="cite" data-ref="colpJun26"></a></div></div>
       <div class="kpi"><div class="v"><span data-count="1.93" data-dec="2">0</span><small>M</small></div><div class="l">Pensionados de Colpensiones, jun-2026 (+90.000/año)</div><div class="s"><a class="cite" data-ref="colpJun26"></a> <a class="cite" data-ref="semanaMFMP"></a></div></div>
@@ -36,120 +34,132 @@
       <div class="kpi b"><div class="v"><span data-count="25.5" data-dec="1">0</span><small>%</small></div><div class="l">Personas en edad de pensión que reciben pensión (2020)</div><div class="s">DANE <a class="cite" data-ref="daneMayores"></a></div></div>
       <div class="kpi k"><div class="v"><span data-count="121.5" data-dec="1">0</span><small>% PIB</small></div><div class="l">Pasivo pensional (VPN) con reforma; 94,4 % sin ella</div><div class="s">MFMP 2026 <a class="cite" data-ref="mfmp26"></a></div></div>
     </div>
-    <div class="grid g3 mt2">
-      <div class="block rule-magenta reveal"><h4>Cómo leer esta plataforma</h4><p class="small muted">Dieciséis capítulos, cada uno con su propia página, del pasado al futuro. Cada cifra lleva un número entre corchetes: al pasar el cursor (o tocarlo en el celular) aparece la referencia completa con enlace a la fuente. Las gráficas son interactivas y los modelos corren en su navegador.</p></div>
-      <div class="block rule-cyan reveal d1"><h4>Tres niveles, nunca mezclados</h4><p class="small muted"><b>Hechos</b> (texto legal, cifras oficiales), <b>estimaciones</b> (modelos con supuestos explícitos y validación contra estudios publicados) y <b>opiniones</b> (posiciones de actores, incluida la crítica de Jerome Sanabria).</p></div>
+  </div>
+</section>
+
+<!-- ===== CÓMO FUNCIONA EL SISTEMA ===== -->
+<section class="section tint" id="como-funciona">
+  <div class="wrap">
+    <div class="chapter c-cyan"><span class="lbl">Lo básico</span><span class="part">Empiece por aquí</span></div>
+    <div class="section-head reveal">
+      <h2>Qué es una pensión y cómo se llega a ella</h2>
+      <p class="lead">Una pensión es un ingreso mensual de por vida que sustituye al salario cuando la persona deja de trabajar por edad, invalidez o muerte del familiar que la sostenía. En Colombia no se recibe por haber trabajado: se recibe por haber <b>cotizado</b>. Esa distinción explica casi todo lo demás.</p>
+    </div>
+
+    <div class="explica">
+      <div class="paso reveal"><span class="n">1</span><h3>Se cotiza</h3><p>Cada mes, el 16 % del ingreso reportado —el <span class="term" data-t="ibc">ingreso base de cotización</span>— va al sistema. El empleador pone 12 puntos y el trabajador 4. Un independiente cotiza sobre el 40 % de sus ingresos.</p></div>
+      <div class="paso reveal d1"><span class="n">2</span><h3>Se acumulan semanas</h3><p>Cada mes cotizado suma 4,29 <span class="term" data-t="semanas">semanas</span>. No cuenta el tiempo trabajado sino el aportado: los meses de informalidad, desempleo o mora del empleador no suman nada.</p></div>
+      <div class="paso reveal d2"><span class="n">3</span><h3>Se cumplen requisitos</h3><p>Hoy: 1.300 semanas y 57 años (mujeres) o 62 (hombres). Quien llega a la edad sin las semanas no se pensiona; recibe una devolución del dinero.</p></div>
+      <div class="paso reveal d3"><span class="n">4</span><h3>Se recibe una mesada</h3><p>El monto depende del régimen: una fórmula sobre el promedio cotizado, o el capital ahorrado convertido en renta. Nunca puede ser menor a un salario mínimo.</p></div>
+    </div>
+
+    <div class="grid g2 mt3">
+      <div class="listblock rule-violet reveal">
+        <h3>Las dos lógicas que conviven desde 1993</h3>
+        <p><b>Reparto (Colpensiones).</b> Lo que usted aporta hoy paga la mesada de quien ya está pensionado. A cambio, la ley promete de antemano una fórmula: la <span class="term" data-t="tasa-reemplazo">tasa de reemplazo</span>. Si la fórmula promete más de lo que el aporte financia, la diferencia la pone el Presupuesto.</p>
+        <p><b>Ahorro individual (las AFP).</b> Su aporte entra a una cuenta suya, se invierte y la pensión sale del capital acumulado y de cuánto se espera que viva. Nadie promete un monto: se promete que el saldo es suyo.</p>
+        <p class="small muted">Hasta hoy hay que <b>elegir uno</b> de los dos. Ese es el diseño que la Ley 2381 sustituye.</p>
+      </div>
+      <div class="listblock rule-orange reveal d1">
+        <h3>Por qué tan poca gente se pensiona</h3>
+        <p>No es un problema de fórmula sino de entrada: el sistema fue diseñado para un trabajador asalariado y estable, y más de la mitad del país no trabaja así.</p>
+        <ul class="list">
+          <li>Con <b>54,5 %</b> de <span class="term" data-t="informalidad">informalidad</span>, la mayoría de los ocupados no cotiza. <a class="cite" data-ref="daneGEIH"></a></li>
+          <li>Solo el <b>25,5 %</b> de las personas en edad de pensión recibe una. <a class="cite" data-ref="daneMayores"></a></li>
+          <li>Con una <span class="term" data-t="densidad">densidad de cotización</span> del 45 %, cuarenta años de vida laboral rinden unas 940 semanas: menos de las 1.300 exigidas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOS CUATRO PILARES ===== -->
+<section class="section" id="pilares">
+  <div class="wrap">
+    <div class="chapter c-violet"><span class="lbl">La nueva arquitectura</span><span class="part">Ley 2381 de 2024</span></div>
+    <div class="section-head reveal">
+      <h2>De dos regímenes que compiten a cuatro pilares que se suman</h2>
+      <p class="lead">La <span class="term" data-t="ley2381">Ley 2381 de 2024</span> no cambia la edad de pensión ni la tasa de cotización. Cambia hacia dónde va cada peso aportado: en vez de escoger entre Colpensiones y una AFP, cada trabajador pasa por varios componentes a la vez. Entra en vigencia el 1 de abril de 2027. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="c264"></a></p>
+    </div>
+
+    <div class="pilar-grid">
+      <article class="pilar-b c-orange reveal">
+        <div class="pat-band pat-puntos" aria-hidden="true"></div>
+        <div class="cuerpo">
+          <span class="et">Pilar 1</span>
+          <h3>Solidario</h3>
+          <p>Una transferencia mensual para personas mayores en pobreza que nunca alcanzaron una pensión. No exige haber cotizado y se paga con el presupuesto general.</p>
+          <div class="quien">Para quien nunca cotizó · ≈ $230.000 al mes <a class="cite" data-ref="pilarSol"></a></div>
+        </div>
+      </article>
+      <article class="pilar-b c-yellow reveal d1">
+        <div class="pat-band pat-cruces" aria-hidden="true"></div>
+        <div class="cuerpo">
+          <span class="et">Pilar 2</span>
+          <h3>Semicontributivo</h3>
+          <p>Para quien cotizó entre 300 y 1.000 semanas y llegó a la edad sin pensionarse. Convierte lo aportado en una renta vitalicia con subsidio estatal, en vez de devolver el dinero de una sola vez.</p>
+          <div class="quien">Para quien cotizó pero no alcanzó</div>
+        </div>
+      </article>
+      <article class="pilar-b c-cyan reveal d2">
+        <div class="pat-band pat-escamas" aria-hidden="true"></div>
+        <div class="cuerpo">
+          <span class="et">Pilar 3</span>
+          <h3>Contributivo</h3>
+          <p>El obligatorio, y el que concentra el debate. Los aportes sobre los primeros <b>2,3 salarios mínimos</b> van a Colpensiones; lo que exceda ese <span class="term" data-t="umbral">umbral</span> va a la cuenta individual en la AFP. Ya no se elige: se reparte.</p>
+          <div class="quien">Para todo el que cotiza</div>
+        </div>
+      </article>
+      <article class="pilar-b c-peri reveal d3">
+        <div class="pat-band pat-damero" aria-hidden="true"></div>
+        <div class="cuerpo">
+          <span class="et">Pilar 4</span>
+          <h3>Ahorro voluntario</h3>
+          <p>Aportes adicionales, por encima de lo obligatorio, para quien quiera y pueda mejorar su pensión. Sigue en manos de las administradoras privadas.</p>
+          <div class="quien">Opcional, para complementar</div>
+        </div>
+      </article>
+    </div>
+
+    <div class="grid g3 mt3">
+      <div class="panel yellow reveal">
+        <h4>Un ejemplo concreto</h4>
+        <p class="small">Alguien que gana 4 salarios mínimos cotizará por los primeros 2,3 a Colpensiones y por los 1,7 restantes a su AFP. Recibirá dos prestaciones que se suman, no una u otra. Quien gana menos de 2,3 cotiza todo al pilar público.</p>
+      </div>
+      <div class="block rule-cyan reveal d1">
+        <h4>Qué NO cambia</h4>
+        <p class="small muted">La edad (57 y 62 años), las 1.300 semanas, la tasa de cotización del 16 % y el tope de 25 salarios mínimos siguen iguales. Quien ya tenga 750 semanas (mujeres) o 900 (hombres) al 1 de abril de 2027 se queda con las reglas de la Ley 100. <span class="term" data-t="transicion">Régimen de transición</span>.</p>
+      </div>
+      <div class="block rule-magenta reveal d2">
+        <h4>Qué sigue sin resolverse</h4>
+        <p class="small muted">La reforma reordena los flujos entre pilares, pero no toca la informalidad, que es la razón de fondo por la que la mayoría no se pensiona. Ese es el punto donde coinciden casi todas las críticas, de un lado y del otro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CÓMO LEER ESTA PLATAFORMA ===== -->
+<section class="section tint" id="el-proyecto">
+  <div class="wrap">
+    <div class="chapter c-wine"><span class="lbl">El proyecto</span><span class="part">Cómo leerlo</span></div>
+    <div class="section-head reveal"><h2>Qué es SEMANAS y cómo está hecho</h2></div>
+    <div class="grid g3">
+      <div class="block rule-magenta reveal"><h4>Para qué sirve</h4><p class="small muted">Para entender el sistema pensional sin depender de titulares. Cada afirmación lleva su fuente entre corchetes: al pasar el cursor —o tocarla en el celular— aparece la referencia completa, y si es un PDF se abre en la página exacta que sustenta el dato.</p></div>
+      <div class="block rule-cyan reveal d1"><h4>Tres niveles, nunca mezclados</h4><p class="small muted"><b>Hechos</b> (texto legal, cifras oficiales), <b>estimaciones</b> (modelos con supuestos explícitos, validados contra estudios publicados) y <b>opiniones</b> (posiciones de actores, incluidas las críticas a la reforma). Nunca se presenta una estimación como cifra oficial.</p></div>
       <div class="panel yellow reveal d2"><h4>Estado procesal</h4><p class="small">La Sentencia C-264 de 2026 dejó en firme la mayor parte de la ley por vicios de forma, devolvió 3 artículos y 6 apartes a la Cámara y aplazó la vigencia al 1 de abril de 2027. Más de 100 demandas de fondo siguen pendientes. <a class="cite" data-ref="c264"></a></p></div>
     </div>
+    <p class="small muted mt2">¿Se topó con una palabra que no conoce? Todas las que van <span class="term" data-t="ibl">subrayadas</span> abren su definición, y el <button class="linkish" data-glosario type="button">glosario completo</button> está siempre a la mano en el menú.</p>
   </div>
 </section>
 
 <!-- ===== ÍNDICE DE SECCIONES ===== -->
-<section class="section tint" id="secciones">
+<section class="section" id="secciones">
   <div class="wrap">
-    <div class="chapter c-violet"><span class="lbl">Índice</span><span class="part">El observatorio completo</span></div>
-    <div class="section-head reveal"><h2>Dieciséis capítulos, dieciséis páginas</h2><p class="lead">Cada sección vive en su propia dirección: se puede compartir, guardar y volver a ella sin pasar por el resto. Empiece por donde le sirva.</p></div>
-    <div class="rutas">
-      <a class="ruta-card pat pat-dots c-magenta" href="historia/">
-        <div class="row"><span>01</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El sistema</span>
-        <h3>Historia</h3>
-        <p>De la Caja de Previsión de 1946 a la Ley 2381: cada norma, por qué se hizo y qué dejó rota.</p>
-      </a>
-      <a class="ruta-card pat pat-waves c-cyan" href="series/">
-        <div class="row"><span>02</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El sistema</span>
-        <h3>Series históricas</h3>
-        <p>Quién cotiza, quién cobra y quién paga, año por año, sin interpolar los huecos.</p>
-      </a>
-      <a class="ruta-card pat pat-diag c-orange" href="diagnostico/">
-        <div class="row"><span>03</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El sistema</span>
-        <h3>Diagnóstico</h3>
-        <p>Cobertura, informalidad, costo fiscal y demografía con cifras oficiales de 2026.</p>
-      </a>
-      <a class="ruta-card pat pat-grid c-violet" href="comparador/">
-        <div class="row"><span>04</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">La reforma</span>
-        <h3>Antes y después</h3>
-        <p>Comparación parámetro por parámetro entre la Ley 100 y la Ley 2381.</p>
-      </a>
-      <a class="ruta-card pat pat-rings c-yellow" href="umbral/">
-        <div class="row"><span>05</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">La reforma</span>
-        <h3>El umbral de 2,3</h3>
-        <p>De dónde salió el 2,3 SMLMV, cómo se calcula y qué pasaría con otro número.</p>
-      </a>
-      <a class="ruta-card pat pat-chevron c-green" href="calculadora/">
-        <div class="row"><span>06</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">La reforma</span>
-        <h3>Calculadora</h3>
-        <p>Estime su pensión bajo la Ley 100 y bajo la Ley 2381 con su historia laboral.</p>
-      </a>
-      <a class="ruta-card pat pat-halftone c-peri" href="analisis/">
-        <div class="row"><span>07</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">Modelos</span>
-        <h3>Análisis avanzado</h3>
-        <p>Subsidio implícito, TIR por perfil, punto de equilibrio de la renta vitalicia y brecha de edad.</p>
-      </a>
-      <a class="ruta-card pat pat-cross c-wine" href="modelos/">
-        <div class="row"><span>08</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">Modelos</span>
-        <h3>Modelos y algoritmos</h3>
-        <p>Los cinco motores auditables: ecuaciones, supuestos, calibración y limitaciones.</p>
-      </a>
-      <a class="ruta-card pat pat-bricks c-cyan" href="ley/">
-        <div class="row"><span>09</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">La ley 2381</span>
-        <h3>Artículo por artículo</h3>
-        <p>Cada artículo resumido, con etiqueta temática y estado procesal tras la Sentencia C-264.</p>
-      </a>
-      <a class="ruta-card pat pat-zigzag c-violet" href="jurisprudencia/">
-        <div class="row"><span>10</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">La ley 2381</span>
-        <h3>Corte Constitucional</h3>
-        <p>El recorrido judicial de la reforma y qué quedó pendiente hasta abril de 2027.</p>
-      </a>
-      <a class="ruta-card pat pat-triangles c-magenta" href="critica/">
-        <div class="row"><span>11</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El debate</span>
-        <h3>Jerome Sanabria</h3>
-        <p>Sus tesis contrastadas una por una con la ley, el CARF, MinHacienda y la OIT.</p>
-      </a>
-      <a class="ruta-card pat pat-dots c-orange" href="preguntas/">
-        <div class="row"><span>12</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El debate</span>
-        <h3>Preguntas abiertas</h3>
-        <p>La agenda de investigación que dejan las más de 100 demandas pendientes.</p>
-      </a>
-      <a class="ruta-card pat pat-diag c-green" href="ia/">
-        <div class="row"><span>13</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">El debate</span>
-        <h3>IA y trabajo</h3>
-        <p>Automatización, empleo formal y un simulador del Fondo de Ahorro bajo distintos escenarios.</p>
-      </a>
-      <a class="ruta-card pat pat-grid c-peri" href="glosario/">
-        <div class="row"><span>14</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">Referencias</span>
-        <h3>Glosario</h3>
-        <p>Cada término técnico del sitio, definido con ejemplos en pesos de 2026.</p>
-      </a>
-      <a class="ruta-card pat pat-waves c-yellow" href="fuentes/">
-        <div class="row"><span>15</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">Referencias</span>
-        <h3>Bibliografía</h3>
-        <p>Normas, sentencias, cifras institucionales y literatura académica citadas.</p>
-      </a>
-      <a class="ruta-card pat pat-rings c-violet" href="metodologia/">
-        <div class="row"><span>16</span><span class="arrow" aria-hidden="true">↗</span></div>
-        <span class="part">Referencias</span>
-        <h3>Metodología</h3>
-        <p>Jerarquía de fuentes, trazabilidad, validación de los modelos y limitaciones.</p>
-      </a>
-    </div>
+    <div class="chapter c-green"><span class="lbl">Índice</span><span class="part">El observatorio completo</span></div>
+    <div class="section-head reveal"><h2>Por dónde seguir</h2><p class="lead">Cuatro secciones y las referencias. Cada una vive en su propia dirección: se puede compartir, guardar y volver a ella sin pasar por el resto.</p></div>
+    <div class="rutas" id="rutas"></div>
   </div>
 </section>
-
 </main>
 
 <script src="js/data.js"></script>

@@ -1,0 +1,87 @@
+---
+name: interfaz-semanas
+description: Reglas de interfaz del observatorio SEMANAS. Úsala siempre que vayas a escribir o modificar HTML o CSS de este sitio, y en particular al agregar cualquier control de formulario (buscador, desplegable, selector de fecha, casilla, radio, deslizador), un menú, una ventana emergente, un cajón lateral, una tarjeta o un patrón de fondo.
+---
+
+# Interfaz de SEMANAS
+
+Reglas obligatorias de la capa visual. No son sugerencias: si un componente
+nuevo no las cumple, no entra.
+
+## 1. Ningún control con el aspecto por defecto del navegador
+
+El autor del sitio ha sido explícito: los controles nativos son feos y no se
+usan. **Todo** control lleva `appearance:none` y el lenguaje de la casa —borde
+negro de 1,5 px, radio grande, sombra dura `2px 2px 0`, foco magenta.
+
+Ya están resueltos en `css/styles.css` (bloque «CONTROLES CON MARCA»):
+
+| Control | Cómo se usa |
+|---|---|
+| Texto, número, correo, fecha | `<input type="...">` a secas: el estilo es global. |
+| Buscador | `<span class="searchbar"><input type="search"></span>` — la lupa la pone el CSS. |
+| Desplegable | `<span class="select-wrap"><select>…</select></span>` — la flecha la pone el CSS; nunca la del sistema. |
+| Casilla y radio | `<input type="checkbox">` / `<input type="radio">`: se dibujan con la marca propia. |
+| Deslizador | `<input type="range">`: pista con borde y pulsador amarillo. |
+| Fecha | `<input type="date">`: el icono del calendario va en amarillo con borde. |
+
+Si aparece un control que el bloque no cubre —selector de color, un calendario
+propio, un menú contextual, una ventana emergente— **hay que estilizarlo antes
+de usarlo** y añadirlo a ese bloque del CSS y a esta tabla. Nunca se deja el
+aspecto nativo «por ahora».
+
+Lo mismo aplica a lo emergente: el sitio no usa `alert()`, `confirm()` ni
+`window.prompt()`. Las ventanas se hacen con `.modal`, las fichas flotantes con
+`.pop` y los paneles laterales con el patrón de `.gloss`.
+
+## 2. Los patrones nunca van debajo del texto
+
+Es la regla que más se rompe y la que el autor pidió expresamente.
+
+- Un patrón vive en su propia franja, `.pat-band`, separada del contenido por
+  un borde. El texto siempre se apoya en **color plano**.
+- Nada de `opacity` baja para «poder leer encima»: si hace falta bajarle la
+  opacidad a un patrón para que se lea el texto, el patrón está en el lugar
+  equivocado.
+- Los patrones se dibujan con gradientes CSS (adaptados de css-pattern.com) y
+  usan `--pat-a` / `--pat-b`, los dos tonos que define la clase de color de la
+  ruta. Nunca imágenes.
+- Catálogo actual: `.pat-zigzag`, `.pat-escamas`, `.pat-damero`, `.pat-arcos`,
+  `.pat-rayas`, `.pat-cubos`, `.pat-puntos`, `.pat-cruces`.
+
+## 3. Color
+
+- Todo color sale de las variables de `css/styles.css`. Ningún valor suelto en
+  un componente.
+- Las clases `.c-magenta`, `.c-cyan`, `.c-violet`, `.c-peri`, `.c-yellow`,
+  `.c-green`, `.c-orange`, `.c-wine` definen `--card` (fondo), `--on` (tinta
+  legible encima) y `--card-soft` (tinte suave). Úsalas en vez de escoger
+  pareja de colores a mano: `--on` ya está calculada para contrastar.
+
+## 4. Bloques, no tarjetas
+
+El lenguaje es el de Aardvark Book Club: bloques de color plano, no una rejilla
+de tarjetas iguales. Alterna `.figure`, `.panel`, `.block`, `.listblock`,
+`.rows`, `.tiles`, `.stat-strip`, `.band`, `.callout`, `.steps`. `.card` es
+para uso puntual.
+
+## 5. Navegación
+
+- `js/routes.js` es la única fuente de verdad. El menú, la rejilla de la
+  portada y el pie anterior/siguiente se generan de ahí; no se escriben a mano.
+- El glosario **no tiene página propia**: vive en el cajón lateral y se abre
+  desde el botón del menú (`[data-glosario]`) o desde cualquier palabra
+  marcada. Cualquier enlace nuevo al glosario usa `data-glosario`, no una URL.
+- Nada de resaltado por desplazamiento que mueva el menú solo. Se pueden
+  cambiar clases con el scroll, pero jamás llamar `scrollIntoView` desde un
+  oyente de scroll: eso dejaba el menú congelado al final de la página.
+
+## 6. Móvil y accesibilidad
+
+- Móvil primero. Nada desborda en horizontal; lo ancho va en un contenedor con
+  desplazamiento propio.
+- Los paneles laterales entran por la derecha en escritorio y como media hoja
+  desde abajo en móvil (ver `.gloss` bajo `@media (max-width:720px)`).
+- Foco visible siempre, con el mismo aro magenta.
+- Las animaciones parten de un estado de reposo visible y respetan
+  `prefers-reduced-motion`.

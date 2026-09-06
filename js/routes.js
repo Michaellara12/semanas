@@ -1,99 +1,71 @@
 /* =====================================================================
    SEMANAS · Mapa de rutas
    ---------------------------------------------------------------------
-   Única fuente de verdad de la navegación. Cada sección principal es una
-   página propia (carpeta con index.html), no un ancla del mismo documento.
-   Este archivo lo consumen:
+   Única fuente de verdad de la navegación. El observatorio son cuatro
+   secciones temáticas grandes más las referencias; cada una es una página
+   propia (carpeta con index.html) dividida internamente en partes que el
+   menú lateral despliega cuando esa ruta está activa.
+
+   Lo consumen:
      · js/shell.js  → menú lateral, cajón móvil, anterior/siguiente
      · index.html   → rejilla de tarjetas de la portada
-   Al agregar una sección: cree la carpeta con su index.html y añada aquí
-   una entrada. El número, el color y el patrón se propagan solos.
+     · build.py     → orden del documento único
+
+   Al agregar una parte a una sección: cree el <section id="…"> en la
+   página y añádalo a `sub` aquí. El menú se actualiza solo.
    ===================================================================== */
 (function(){
   "use strict";
   const S = window.SEMANAS = window.SEMANAS || {};
 
-  /* Partes temáticas: agrupan las rutas en el menú. El orden manda. */
+  /* Grupos del menú lateral. El orden manda. */
   S.PARTS = [
-    ["El sistema",   ["historia","series","diagnostico"]],
-    ["La reforma",   ["comparador","umbral","calculadora"]],
-    ["Modelos",      ["analisis","modelos"]],
-    ["La ley 2381",  ["ley","jurisprudencia"]],
-    ["El debate",    ["critica","preguntas","ia"]],
-    ["Referencias",  ["glosario","fuentes","metodologia"]]
+    ["El observatorio", ["historia","reforma","cifras","ia"]],
+    ["Referencias",     ["fuentes","metodologia"]]
   ];
 
   /* n:      número que se pinta en la tarjeta
-     id:     carpeta de la ruta (id/index.html) y ancla histórica
+     id:     carpeta de la ruta (id/index.html)
      label:  nombre corto en el menú lateral
-     title:  título de la pestaña y del encabezado de página
-     desc:   qué hay en la sección (se muestra en la tarjeta de portada)
+     title:  título de la pestaña
+     desc:   qué hay en la sección (tarjeta de portada)
      color:  token de la paleta (ver css/styles.css)
-     pat:    patrón geométrico de fondo (ver .pat-* en css/styles.css)   */
+     pat:    patrón geométrico de la franja superior (.pat-* en el CSS)
+     sub:    partes internas: [id del <section>, etiqueta]              */
   S.ROUTES = [
-    { n:"01", id:"historia",     label:"Historia",            title:"Ochenta años de sistema pensional colombiano",
-      desc:"De la Caja de Previsión de 1946 a la Ley 2381: cada norma, por qué se hizo y qué dejó rota.",
-      color:"magenta", pat:"dots" },
+    { n:"01", id:"historia", label:"Historia", title:"Ochenta años de sistema pensional colombiano",
+      desc:"De las cajas de previsión de 1945 a la Ley 2381: cada norma, por qué se hizo y qué dejó sin resolver.",
+      color:"magenta", pat:"zigzag",
+      sub:[["origen","1945–1966 · El origen"],["deterioro","1967–1992 · El deterioro"],
+           ["ley100","1993 · La Ley 100"],["parametricas","2003–2014 · Los ajustes"],
+           ["diagnostico-comun","2015–2022 · El diagnóstico"],["hacia2381","2023–2027 · La Ley 2381"],
+           ["cronologia","La cronología completa"]] },
 
-    { n:"02", id:"series",       label:"Series históricas",   title:"Veinticinco años en datos",
-      desc:"Quién cotiza, quién cobra y quién paga, año por año, sin interpolar los huecos.",
-      color:"cyan", pat:"waves" },
+    { n:"02", id:"reforma", label:"La reforma", title:"La Ley 2381 de 2024, entera",
+      desc:"Qué cambia y qué sigue igual, el umbral de 2,3, los 95 artículos, la Corte, las críticas y lo que quedó sin responder.",
+      color:"cyan", pat:"escamas",
+      sub:[["comparador","Antes y después"],["umbral","El umbral de 2,3"],
+           ["ley","Artículo por artículo"],["jurisprudencia","La Corte y el estado actual"],
+           ["critica","Las críticas"],["preguntas","Preguntas abiertas"]] },
 
-    { n:"03", id:"diagnostico",  label:"Diagnóstico",         title:"El sistema hoy, en cinco tableros",
-      desc:"Cobertura, informalidad, costo fiscal y demografía con cifras oficiales de 2026.",
-      color:"orange", pat:"diag" },
+    { n:"03", id:"cifras", label:"Cifras y cálculos", title:"Cifras, cálculos y estadísticas del sistema",
+      desc:"El estado del sistema en datos, las series de veinticinco años, la calculadora de su caso y los modelos que hay detrás.",
+      color:"orange", pat:"damero",
+      sub:[["diagnostico","El sistema hoy"],["series","Series históricas"],
+           ["calculadora","Calculadora"],["analisis","Análisis avanzado"],
+           ["modelos","Modelos y algoritmos"]] },
 
-    { n:"04", id:"comparador",   label:"Antes y después",     title:"De dos regímenes a cuatro pilares",
-      desc:"Comparación parámetro por parámetro entre la Ley 100 y la Ley 2381.",
-      color:"violet", pat:"grid" },
+    { n:"04", id:"ia", label:"IA y trabajo", title:"Automatización, empleo y pensiones",
+      desc:"Qué pasa con un sistema de reparto cuando la base que cotiza cambia de forma: productividad, desplazamiento y desempleo.",
+      color:"green", pat:"arcos", sub:[] },
 
-    { n:"05", id:"umbral",       label:"El umbral de 2,3",    title:"El número que parte el sistema en dos",
-      desc:"De dónde salió el 2,3 SMLMV, cómo se calcula y qué pasaría con otro número.",
-      color:"yellow", pat:"rings" },
-
-    { n:"06", id:"calculadora",  label:"Calculadora",         title:"Su caso, antes y después de la reforma",
-      desc:"Estime su pensión bajo la Ley 100 y bajo la Ley 2381 con su historia laboral.",
-      color:"green", pat:"chevron" },
-
-    { n:"07", id:"analisis",     label:"Análisis avanzado",   title:"Los subsidios que nadie ve, medidos",
-      desc:"Subsidio implícito, TIR por perfil, punto de equilibrio de la renta vitalicia y brecha de edad.",
-      color:"peri", pat:"halftone" },
-
-    { n:"08", id:"modelos",      label:"Modelos y algoritmos",title:"Cómo se calcula lo que usted ve",
-      desc:"Los cinco motores auditables: ecuaciones, supuestos, calibración y limitaciones.",
-      color:"wine", pat:"cross" },
-
-    { n:"09", id:"ley",          label:"Artículo por artículo",title:"Los 95 artículos de la Ley 2381",
-      desc:"Cada artículo resumido, con etiqueta temática y estado procesal tras la Sentencia C-264.",
-      color:"cyan", pat:"bricks" },
-
-    { n:"10", id:"jurisprudencia",label:"Corte Constitucional",title:"Del Auto 841 a la Sentencia C-264",
-      desc:"El recorrido judicial de la reforma y qué quedó pendiente hasta abril de 2027.",
-      color:"violet", pat:"zigzag" },
-
-    { n:"11", id:"critica",      label:"Jerome Sanabria",     title:"Jerome Sanabria y el movimiento #NoConMiAhorro",
-      desc:"Sus tesis contrastadas una por una con la ley, el CARF, MinHacienda y la OIT.",
-      color:"magenta", pat:"triangles" },
-
-    { n:"12", id:"preguntas",    label:"Preguntas abiertas",  title:"Lo que la evidencia aún no cierra",
-      desc:"La agenda de investigación que dejan las más de 100 demandas pendientes.",
-      color:"orange", pat:"dots" },
-
-    { n:"13", id:"ia",           label:"IA y trabajo",        title:"Cuando la base que cotiza cambia de forma",
-      desc:"Automatización, empleo formal y un simulador del Fondo de Ahorro bajo distintos escenarios.",
-      color:"green", pat:"diag" },
-
-    { n:"14", id:"glosario",     label:"Glosario",            title:"Glosario del sistema pensional",
-      desc:"Cada término técnico del sitio, definido con ejemplos en pesos de 2026.",
-      color:"peri", pat:"grid" },
-
-    { n:"15", id:"fuentes",      label:"Bibliografía",        title:"Bibliografía",
+    { n:"05", id:"fuentes", label:"Bibliografía", title:"Bibliografía",
       desc:"Normas, sentencias, cifras institucionales y literatura académica citadas.",
-      color:"yellow", pat:"waves" },
+      color:"yellow", pat:"rayas", sub:[] },
 
-    { n:"16", id:"metodologia",  label:"Metodología",         title:"Cómo se construyó y qué no hace",
+    { n:"06", id:"metodologia", label:"Metodología", title:"Cómo se construyó y qué no hace",
       desc:"Jerarquía de fuentes, trazabilidad, validación de los modelos y limitaciones.",
-      color:"violet", pat:"rings" }
+      color:"violet", pat:"cubos", sub:[] }
   ];
 
   S.ROUTE = id => S.ROUTES.find(r => r.id === id) || null;

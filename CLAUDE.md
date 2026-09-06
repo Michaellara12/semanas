@@ -2,7 +2,11 @@
 
 Sitio web estático de análisis técnico e interactivo sobre el sistema pensional de Colombia y la Ley 2381 de 2024. Se publica solo en GitHub Pages desde la rama `main`, carpeta raíz. **No hay compilación**: lo que está en el repositorio es exactamente lo que se sirve. Un cambio en cualquier `index.html`, en `css/` o en `js/` aparece en el sitio en menos de un minuto tras el merge.
 
-**Cada sección es una ruta propia** (`historia/index.html`, `umbral/index.html`, …). La página solo contiene su `<main>`; el menú lateral, la barra móvil, el cajón de navegación, el visor de PDF, el cajón del glosario, el modal de artículos y el pie los inyecta `js/shell.js` a partir de `js/routes.js`.
+**El observatorio son cuatro secciones grandes más las referencias**, y cada una es una ruta propia: `historia/`, `reforma/`, `cifras/`, `ia/`, `fuentes/`, `metodologia/`. La portada explica qué es el sistema pensional y cómo funciona. Cada página contiene solo su `<main>`; el menú lateral, la barra móvil, el cajón de navegación, el visor de PDF, el cajón del glosario, el modal de artículos, la rejilla de la portada y el pie los inyecta `js/shell.js` a partir de `js/routes.js`.
+
+Dentro de una ruta, cada parte es un `<section id="…">` declarado en el campo `sub` de esa ruta. El menú lateral despliega esas partes cuando la ruta está activa.
+
+**Antes de tocar HTML o CSS, lea `.claude/skills/interfaz-semanas/SKILL.md`.** Ahí están las reglas que no se negocian: ningún control con el aspecto por defecto del navegador y ningún patrón debajo del texto.
 
 ## Estado del proyecto (actualizar si cambia)
 
@@ -14,11 +18,12 @@ Sitio web estático de análisis técnico e interactivo sobre el sistema pension
 
 | Ruta | Contenido |
 |---|---|
-| `index.html` | Portada: héroe y la rejilla de tarjetas con las 16 secciones. |
+| `index.html` | Portada: qué es el proyecto, cómo funciona el sistema pensional, los cuatro pilares y la rejilla de secciones. |
 | `<seccion>/index.html` | Una carpeta por ruta. Contiene solo su `<main>`; declara `data-root="../"` y `data-route="<seccion>"` en `<html>`. |
-| `js/routes.js` | **Única fuente de verdad de la navegación**: número, título, descripción, color y patrón de cada ruta, y las partes temáticas del menú (`PARTS`). Agregar una sección = crear la carpeta + añadir la entrada aquí. |
+| `js/routes.js` | **Única fuente de verdad de la navegación**: número, título, descripción, color, patrón y partes internas (`sub`) de cada ruta, más los grupos del menú (`PARTS`). Agregar una parte = crear el `<section id>` + añadirlo a `sub`. |
 | `js/shell.js` | Inyecta el armazón compartido y el pie anterior/siguiente. |
-| `js/glossary.js` | `GLOSARIO` (definición, ejemplo y términos relacionados) y `TERM_FRASES` (frases que disparan el marcado automático). |
+| `js/glossary.js` | `GLOSARIO` (definición, ejemplo y términos relacionados) y `TERM_FRASES` (frases que disparan el marcado automático). El glosario no tiene página: vive en el cajón lateral. |
+| `.claude/skills/interfaz-semanas/` | Reglas de interfaz obligatorias: controles con marca, patrones fuera del texto, color, navegación. |
 | `css/styles.css` | Identidad visual completa en variables CSS. |
 | `js/data.js` | Fuentes numeradas, series de datos, línea de tiempo, los 95 artículos de la ley, columnas y tesis de Jerome Sanabria. |
 | `js/models.js` | Motores de cálculo: actuarial, demográfico, Monte Carlo, fiscal y de subsidios. |
@@ -45,15 +50,17 @@ La identidad visual v3 toma como referencia el lenguaje gráfico de **Aardvark B
 - Las gráficas leen la paleta desde esas variables (`--c1` a `--c8`), así que un cambio de tema se propaga solo. `--c4`, `--c7` y `--cyan-ink` son las versiones oscurecidas del cian y el verde: los tonos plenos no tienen contraste suficiente sobre blanco.
 - **No meter todo en tarjetas.** Hay un catálogo de bloques para alternar: `.figure` (gráfica con regla superior de color, o en variante `boxed` / `tinted`), `.panel` (herramienta interactiva sobre fondo tintado), `.block` (solo una regla arriba), `.listblock` (barra de color a la izquierda), `.rows` (filas separadas por reglas), `.tiles` (mosaico de color plano), `.stat-strip` / `.kpis` (cifras separadas por reglas, nunca por cajas), `.band` (franja a sangre), `.callout`, `.slab` y `.steps`. `.card` sigue existiendo, pero es para uso puntual.
 - **Los filtros no se repiten.** Cada control tiene su propio estilo: `.seg` (segmentado, línea de tiempo), `.chips` (fichas conmutables), `.tabs` (pestañas subrayadas) y `.tabs.pill` (pestañas píldora), `.searchbar` (buscador con lupa), `.select-wrap` y `.switch`.
-- El menú lateral son **bloques de color con número**, agrupados por partes temáticas (`PARTS` en `js/routes.js`). La ruta activa se marca desde `data-route`, no por desplazamiento: no hay scrollspy.
-- Cada ruta tiene un color de la paleta (`.c-magenta`, `.c-cyan`, …, que definen `--card`, `--on` y `--card-soft`) y un patrón geométrico (`.pat` + `.pat-dots`, `.pat-waves`, `.pat-rings`…). Los patrones se dibujan con gradientes CSS sobre un `::before`: sin imágenes ni peticiones extra.
+- El menú lateral son **bloques de color con número**. La ruta activa se marca desde `data-route`; dentro de ella se despliegan sus partes y se resaltan con el desplazamiento, pero **sin mover el menú**: nunca `scrollIntoView` desde un oyente de scroll (eso lo congelaba al final de la página).
+- Cada ruta tiene un color de la paleta (`.c-magenta`, `.c-cyan`, … que definen `--card`, `--on`, `--card-soft`, `--pat-a` y `--pat-b`).
+- **Los patrones nunca van debajo del texto.** Viven en su propia franja `.pat-band`, separada por un borde; el texto se apoya siempre en color plano. Catálogo: `.pat-zigzag`, `.pat-escamas`, `.pat-damero`, `.pat-arcos`, `.pat-rayas`, `.pat-cubos`, `.pat-puntos`, `.pat-cruces`. Se dibujan con gradientes CSS, sin imágenes.
+- **Ningún control usa el aspecto por defecto del navegador.** El bloque «CONTROLES CON MARCA» de `css/styles.css` cubre texto, número, fecha, búsqueda, desplegable, casilla, radio y deslizador. Un desplegable va dentro de `.select-wrap`; un buscador, dentro de `.searchbar`. Si aparece un control nuevo, se estiliza antes de usarlo.
 - Los bloques con clase `.illus` y el `.avatar` son espacios reservados para ilustraciones y animaciones que el autor agregará después. No borrarlos.
 - Mobile primero. Nada debe desbordar horizontalmente; tablas y gráficas anchas van dentro de un contenedor con desplazamiento propio.
 - Las animaciones parten de un estado de reposo visible (nunca `opacity: 0` esperando un observador) y respetan `prefers-reduced-motion`.
 
 ## Glosario: términos con cajón lateral
 
-Las palabras técnicas abren su ficha en un cajón sin sacar al lector de la página: por la derecha en escritorio, como media hoja desde abajo en móvil (`@media (max-width:720px)`).
+Las palabras técnicas abren su ficha en un cajón sin sacar al lector de la página: por la derecha en escritorio, como media hoja desde abajo en móvil (`@media (max-width:720px)`). **No hay página de glosario**: el mismo cajón trae el índice A–Z con buscador, y se abre desde el botón del menú lateral (`[data-glosario]`) o desde cualquier palabra marcada.
 
 - Las fichas viven en `SEMANAS.GLOSARIO` (`js/glossary.js`): definición, ejemplo con números de 2026, términos relacionados y, si aplica, clave de fuente.
 - **El marcado es automático.** `automarcar()` en `js/app.js` recorre el texto de `<main>` y subraya la primera aparición de cada frase de `SEMANAS.TERM_FRASES`, saltando títulos, enlaces, citas, botones y código. Solo hay que marcar a mano (`<span class="term" data-t="clave">`) cuando se quiera una aparición concreta.
