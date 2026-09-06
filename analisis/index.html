@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" data-root="../" data-route="analisis">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los subsidios que nadie ve, medidos · SEMANAS</title>
+<meta name="description" content="Subsidio implícito, TIR por perfil, punto de equilibrio de la renta vitalicia y brecha de edad.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"},options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};</script>
+<script src="../vendor/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<main>
+<section class="section tint-peri" id="analisis">
+  <div class="wrap">
+    <div class="chapter c-orange"><span class="lbl">Análisis avanzado</span><span class="part">Modelos</span></div>
+    <div class="section-head reveal"><h2>Los subsidios que nadie ve, medidos</h2><p class="lead">Cinco análisis que no aparecen en el debate público con números: cuánto subsidia el reparto a cada perfil y a qué tasa de retorno; cuándo conviene una renta vitalicia frente a un pago único; cuánto se autofinancia Colpensiones; qué parámetro mueve más el agotamiento del fondo; y cuánto cuesta la brecha de edad entre mujeres y hombres.</p></div>
+
+    <div class="block rule-cyan reveal"><h3>A. Subsidio implícito y tasa interna de retorno del Régimen de Prima Media</h3>
+      <p class="small muted">Metodología de Farné y Nieto (Externado, 2017) y Bosch et al. (BID, 2015): se acumula un <b>capital nocional</b> con las cotizaciones (share · IBC, densidad d, rendimiento real r) y se compara con la <b>reserva actuarial</b> necesaria para pagar la pensión legal como renta vitalicia conjunta con el cónyuge (100 % de sobrevivencia), a la tasa técnica i, con 5 % de gastos y 0,6 % de seguridad (Res. 3099/2015). La pensión mínima crece con el salario mínimo (g); las demás, con el IPC. <a class="cite" data-ref="farne17"></a> <a class="cite" data-ref="bosch15"></a> <a class="cite" data-ref="rv08"></a></p>
+      <div class="math">\[ S = R - K,\qquad R = 13\cdot P\cdot \ddot{a}^{(12)}_{xy}(i_{ef})\cdot 1{,}056,\qquad K=\sum_{m} \text{share}\cdot IBC_m\,(1+r)^{\frac{T-m}{12}},\qquad \text{TIR}: K(\rho)=R(\rho) \]</div>
+      <div class="grid g2 mt2">
+        <div>
+          <div class="form-grid">
+            <div class="field"><label>Sexo del afiliado</label><div class="radio-row"><label><input type="radio" name="an-sex" value="M" checked><span>Hombre (62)</span></label><label><input type="radio" name="an-sex" value="F"><span>Mujer (57)</span></label></div></div>
+            <div class="field"><label>Rendimiento real del capital nocional · <output id="an-r-o"></output></label><input type="range" id="an-r" min="2" max="6" step="0.5" value="4"></div>
+            <div class="field"><label>Tasa técnica de la renta · <output id="an-i-o"></output></label><input type="range" id="an-i" min="2" max="6" step="0.5" value="4"></div>
+            <div class="field"><label>Densidad de cotización · <output id="an-dens-o"></output></label><input type="range" id="an-dens" min="50" max="100" step="1" value="87"></div>
+            <div class="field"><label>Puntos de cotización acumulados</label><select id="an-share"><option value="0.13">13 (Farné–Nieto)</option><option value="0.115">11,5 (cuenta RAIS)</option><option value="0.16">16 (toda la cotización)</option></select></div>
+          </div>
+          <div id="an-table" class="mt2"></div>
+        </div>
+        <div class="figure rule-violet"><div class="chart-title"><h3>Subsidio como % de la reserva actuarial</h3><span class="tag">IBC × semanas</span></div><div class="chart" id="an-heat"></div><div class="chart-src">Filas: ingreso base en salarios mínimos; columnas: semanas cotizadas. El porcentaje cae con el ingreso (la fórmula 65,5 − 0,5·s es decreciente) y con más semanas (más aportes), pero el subsidio <b>absoluto</b> crece con el ingreso.</div></div>
+      </div>
+      <div class="grid g2 mt2">
+        <div class="figure tinted pink"><div class="chart-title"><h3>Subsidio absoluto por pensión (1.300 semanas)</h3></div><div class="chart" id="an-abs"></div><div class="chart-src">Con los parámetros base, un hombre con 1 SMMLV recibe ≈ $361 millones de subsidio (66 % de su reserva) y uno con 2,3 SMMLV ≈ $195 millones (32 %); por encima de 2,3 SMLMV el subsidio absoluto vuelve a crecer con el ingreso. La Ley 2381 elimina esos subsidios por encima del umbral (el CCAI es actuarialmente neutro) pero extiende el de 1–2,3 SMLMV a todos los cotizantes.</div></div>
+        <div class="figure rule-magenta"><div class="chart-title"><h3>Tasa interna de retorno real de cotizar al RPM</h3></div><div class="chart" id="an-tir"></div><div class="chart-src">Retorno real implícito que iguala aportes y beneficios. Cuando la TIR supera el rendimiento de mercado (4–5 % real), el afiliado gana trasladándose al RPM: esa es la raíz del «arbitraje» que el CARF identifica como fuente del costo. Las mujeres obtienen 1–1,5 pp más por retirarse 5 años antes y vivir más. <a class="cite" data-ref="carf24"></a></div></div>
+      </div>
+      <div class="note mt2 small"><b>Lectura.</b> El reparto colombiano paga a sus pensionados entre 4,5 % y 8 % real sobre sus aportes, muy por encima de lo que rinde el ahorro. Ese exceso lo cubre el Presupuesto ($33,78 bn en 2026). Reducir el umbral (CARF) o subir edades (Farné–Nieto: +3 años bajan el subsidio del hombre de 1 SMMLV de 71 % a 67 % y el de 20 SMMLV de 33 % a 22 %) reduce la TIR hacia el mercado; el pilar solidario y el semicontributivo, en cambio, son transferencias explícitas que sí llegan a quienes nunca se pensionarán. <a class="cite" data-ref="farne17"></a> <a class="cite" data-ref="banrep1271"></a></div>
+    </div>
+
+    <div class="grid g2 mt2">
+      <div class="panel yellow reveal"><h3>B. Renta semicontributiva vs. devolución de saldos: ¿a qué edad se empata?</h3><p class="small muted">La tesis de Sanabria («chichigua vitalicia» frente a devolución) y la de la OIT (una prestación periódica protege mejor) se pueden poner en una sola gráfica: la renta mensual acumulada y capitalizada frente al pago único capitalizado a la misma tasa. El cruce es la edad de equilibrio; si la esperanza de vida la supera, la renta gana en valor esperado, pero pierde en herencia y en liquidez. <a class="cite" data-ref="sMini"></a> <a class="cite" data-ref="oit25"></a></p>
+        <div class="form-grid">
+          <div class="field"><label>Sexo</label><div class="radio-row"><label><input type="radio" name="be-sex" value="M" checked><span>Hombre</span></label><label><input type="radio" name="be-sex" value="F"><span>Mujer</span></label></div></div>
+          <div class="field"><label>Semanas cotizadas · <output id="be-semanas-o"></output></label><input type="range" id="be-semanas" min="300" max="999" step="1" value="600"></div>
+          <div class="field"><label>Ingreso (SMMLV) · <output id="be-ibc-o"></output></label><input type="range" id="be-ibc" min="1" max="4" step="0.1" value="1"></div>
+          <div class="field"><label>Tasa real de descuento · <output id="be-r-o"></output></label><input type="range" id="be-r" min="0" max="6" step="0.5" value="3"></div>
+          <div class="field"><label>&nbsp;</label><label class="check"><input type="checkbox" id="be-pobre"> Elegible al Pilar Solidario (sin 3 % ni subsidio)</label></div>
+        </div>
+        <div id="be-out" class="mt2"></div></div>
+      <div class="figure tinted peri reveal"><div class="chart-title"><h3>Acumulado de la renta vs. pago único capitalizado</h3></div><div class="chart" id="be-chart"></div><div class="chart-src">Devolución RAIS calculada con 11,5 puntos al 4 % real; renta semicontributiva con 16 puntos indexados + 3 % real + subsidio de 20/30 % (art. 18 b), pagada 13 veces al año desde los 65/60 con mortalidad de rentistas. Ambas en pesos de 2026.</div></div>
+    </div>
+
+    <div class="grid g2 mt2">
+      <div class="figure rule-cyan reveal"><div class="chart-title"><h3>C. ¿Cuánto se autofinancia Colpensiones?</h3></div><div class="chart" id="an-deficit"></div><div class="chart-src">En 2025 las cotizaciones ($21 bn) cubrieron el 32 % de las prestaciones ($64,8 bn); el resto lo aportan la Nación y los traslados desde AFP ($13,5 bn en 2025). Con 1,57 cotizantes por pensionado y una mesada promedio de 1,8 SMMLV, cada pensionado necesita el aporte de ≈ 11 cotizantes de salario mínimo. <a class="cite" data-ref="colpRC25"></a> <a class="cite" data-ref="semanaMFMP"></a></div></div>
+      <div class="figure rule-orange reveal"><div class="chart-title"><h3>D. Sensibilidad del año de agotamiento del Fondo de Ahorro</h3></div><div class="chart" id="an-tornado"></div><div class="chart-src">Modelo reducido de esta plataforma (ver Modelos). El umbral y las subcuentas generacionales dominan; el rendimiento importa menos aquí que en el modelo CEDE del CARF (que estima 9 años por punto). Escenario base: agotamiento 2063 (CARF: 2062). <a class="cite" data-ref="carf24"></a></div></div>
+    </div>
+
+    <div class="grid g2 mt2">
+      <div class="figure boxed reveal"><div class="chart-title"><h3>E. La brecha de edad tiene precio actuarial</h3></div><div class="chart" id="an-genero"></div><div class="chart-src">Reserva necesaria para la misma pensión legal: una mujer se pensiona 5 años antes y vive más (esperanza de vida de rentistas a los 57: 28,2 años, frente a 20,4 a los 62 para hombres), de modo que recibe la mesada durante 38 % más tiempo. Con igual IBC su reserva —y su subsidio— es 20–40 % mayor.</div></div>
+      <div class="panel yellow reveal"><h3>Equidad y costo, sin caricaturas</h3><p class="small">La brecha favorece a las mujeres que <b>logran pensionarse</b>, pero solo el 22,4 % de las mujeres en edad de pensión lo logra (frente a 25,5 % del total) por menores densidades y salarios. La Ley 2381 ataca esa segunda brecha (1.000 semanas en 2036, −50 por hijo) a un costo que el CARF señala como el mayor de la reforma. El análisis honesto exige mostrar ambos lados: el subsidio actuarial por edad y la exclusión por informalidad. <a class="cite" data-ref="daneMayores"></a> <a class="cite" data-ref="carf24"></a> <a class="cite" data-ref="oecd23"></a></p><p class="small">La OCDE señala que Colombia es de los pocos países con brecha de género en la edad de retiro; igualar edades subiendo la de las mujeres reduciría el costo, pero ampliaría la exclusión si no se acompaña de medidas de cuidado y formalización. <a class="cite" data-ref="oecd23"></a></p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="../js/data.js"></script>
+<script src="../js/glossary.js"></script>
+<script src="../js/routes.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

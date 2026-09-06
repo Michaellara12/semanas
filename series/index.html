@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es" data-root="../" data-route="series">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Veinticinco años en datos · SEMANAS</title>
+<meta name="description" content="Quién cotiza, quién cobra y quién paga, año por año, sin interpolar los huecos.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<main>
+<section class="section tint" id="series">
+  <div class="wrap">
+    <div class="chapter c-cyan"><span class="lbl">Series históricas</span><span class="part">El sistema</span></div>
+    <div class="section-head reveal"><h2>Veinticinco años en datos: quién cotiza, quién cobra, quién paga</h2><p class="lead">Series reconstruidas a partir de boletines de Colpensiones, comunicados de Asofondos, la Superintendencia Financiera, el Ministerio de Hacienda, el DANE y el estudio de la CEPAL (Azuero, 2020). Cuando un año no tiene dato oficial publicado, el punto no se interpola.</p></div>
+    <div class="grid g2">
+      <div class="figure rule-magenta span2"><div class="chart-title"><h3>Pensionados y afiliados de Colpensiones, 2015–2026</h3><span class="tag">RPM</span></div><div class="chart" id="h-pens"></div><div class="chart-src">Los pensionados crecieron 54 % entre 2015 y 2025 (4,4 % anual, de 1,21 a 1,86 millones) mientras los afiliados subieron 6 % entre 2018 y 2025 (6,70 → 7,13 millones): el denominador del reparto crece más lento que el numerador. <a class="cite" data-ref="bloomberg21"></a> <a class="cite" data-ref="port2018"></a> <a class="cite" data-ref="colpDic21"></a> <a class="cite" data-ref="port2022"></a> <a class="cite" data-ref="colp2023"></a> <a class="cite" data-ref="colpDic24"></a> <a class="cite" data-ref="colpRC25"></a> <a class="cite" data-ref="colpJun26"></a></div></div>
+      <div class="figure rule-cyan"><div class="chart-title"><h3>Relación de soporte del RPM</h3></div><div class="chart" id="h-ratio"></div><div class="chart-src">Cotizantes activos por pensionado: de ≈ 2,1 (2018) a 1,57 (jun-2026). Cotizantes = afiliados × proporción que cotizó el último mes (42 %, 40 %, 38,4 %, 43 %, 41,8 %). Un reparto puro con 16 % de cotización financia con 1,57 cotizantes solo el 25 % del salario promedio. <a class="cite" data-ref="port2022"></a> <a class="cite" data-ref="colpDic24"></a> <a class="cite" data-ref="colpJun26"></a></div></div>
+      <div class="figure tinted"><div class="chart-title"><h3>Ahorro en fondos privados, 2017–2026</h3><span class="tag">RAIS</span></div><div class="chart" id="h-fondo"></div><div class="chart-src">De $227 billones (2017, 24,7 % del PIB) a $548 billones (abr-2026, ≈ 28 %). La caída de 2022 (−$12,8 bn) refleja la volatilidad de mercado que asume el afiliado. PIB nominal del DANE (cifras redondeadas). <a class="cite" data-ref="lafm2017"></a> <a class="cite" data-ref="asof2022"></a> <a class="cite" data-ref="asof25"></a> <a class="cite" data-ref="asof26"></a> <a class="cite" data-ref="danePIB"></a></div></div>
+      <div class="figure rule-violet"><div class="chart-title"><h3>Gasto del Gobierno Central en pensiones, 2000–2018</h3><span class="tag">% PIB</span></div><div class="chart" id="h-gasto"></div><div class="chart-src">De 1,9 % (2000) a 3,4 % (2018); el salto de 2005 coincide con el agotamiento de las reservas del ISS y el Acto Legislativo 01. Incluye giros al RPM y programas no contributivos; el gobierno general suma 4,4 % en 2018. Estimaciones recientes: ≈ 3,5 % (MFMP). <a class="cite" data-ref="cepal20"></a> <a class="cite" data-ref="semanaMFMP"></a></div></div>
+      <div class="figure rule-green"><div class="chart-title"><h3>Cobertura de activos: afiliados activos / PEA</h3></div><div class="chart" id="h-cob"></div><div class="chart-src">Quienes cotizaron al menos una vez en los últimos 6 meses pasaron de 30 % a 37 % de la población económicamente activa entre 2007 y 2018 (9,3 millones). En 2024 la SFC reporta 12,6 millones de cotizantes activos (49 % de 25,8 millones de afiliados). <a class="cite" data-ref="cepal20"></a> <a class="cite" data-ref="sfc30"></a></div></div>
+      <div class="figure boxed"><div class="chart-title"><h3>Salario mínimo real, 1994–2026</h3></div><div class="chart" id="h-smmlv"></div><div class="chart-src">Deflactado con el IPC a pesos de 2026: el mínimo real creció 73 % desde 1994 y 59 % desde 2010; el alza de 23 % en 2026 es la mayor real del período. Como la pensión mínima está atada al mínimo, cada punto real encarece el capital de una renta vitalicia. <a class="cite" data-ref="smmlv"></a> <a class="cite" data-ref="ipc"></a> <a class="cite" data-ref="d1469"></a></div></div>
+      <div class="figure rule-cyan"><div class="chart-title"><h3>Distribución de mesadas en Colpensiones (2020)</h3></div><div class="chart" id="h-mesadas"></div><div class="chart-src">Mesada promedio ponderada: <b id="h-mesada-avg"></b> (1,81 SMMLV). El 77 % recibe menos de 2 SMMLV y el 1 % más de 10 SMMLV; en dic-2024, 54,8 % recibe exactamente 1 SMMLV. <a class="cite" data-ref="bloomberg21"></a> <a class="cite" data-ref="colpDic24"></a> <a class="cite" data-ref="lr2020"></a></div></div>
+      <div class="figure rule-orange"><div class="chart-title"><h3>Aporte de la Nación al faltante del RPM</h3></div><div class="chart" id="h-aportes"></div><div class="chart-src">Las cotizaciones ($21 bn en 2025) cubren un tercio de las prestaciones ($64,8 bn); el resto lo aporta el Presupuesto: $15,4 bn (2023), $25,1 bn (PGN 2024), $33,78 bn (PGN 2026). <a class="cite" data-ref="etRegimenes"></a> <a class="cite" data-ref="etAportes"></a> <a class="cite" data-ref="semanaMFMP"></a> <a class="cite" data-ref="colpRC25"></a></div></div>
+      <div class="panel peri span2"><h3>Qué dicen las series en conjunto</h3><div class="grid g3"><div><h4>Demografía contra reparto</h4><p class="small muted">Pensionados +4,4 % anual frente a afiliados +1 % anual: la relación de soporte cae medio punto por década. Es el mismo diagnóstico del Banco de la República (BE 1271): el riesgo fiscal está en el crecimiento y en los subsidios implícitos, no solo en la longevidad. <a class="cite" data-ref="banrep1271"></a></p></div><div><h4>Capitalización que no pensiona</h4><p class="small muted">El RAIS acumula 28 % del PIB pero solo 395.058 pensionados (1,5 % de 26 millones de afiliados) frente a 1,9 millones en Colpensiones: 8 de cada 10 pensionados son del RPM. Baja densidad (570 semanas promedio al llegar a la edad) y traslados al RPM explican la brecha. <a class="cite" data-ref="lr2026rais"></a> <a class="cite" data-ref="cepal20"></a></p></div><div><h4>El mínimo manda</h4><p class="small muted">Más de la mitad de las mesadas del RPM y 84 % de los cotizantes están en 1–2 SMMLV; cada alza real del mínimo mueve a la vez la pensión mínima, el capital requerido en el RAIS y el umbral de 2,3 SMLMV de la reforma. <a class="cite" data-ref="colpDic24"></a> <a class="cite" data-ref="sfc30"></a></p></div></div></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="../js/data.js"></script>
+<script src="../js/glossary.js"></script>
+<script src="../js/routes.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

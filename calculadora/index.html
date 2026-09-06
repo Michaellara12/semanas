@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es" data-root="../" data-route="calculadora">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Su caso, antes y después de la reforma · SEMANAS</title>
+<meta name="description" content="Estime su pensión bajo la Ley 100 y bajo la Ley 2381 con su historia laboral.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<main>
+<section class="section" id="calculadora">
+  <div class="wrap">
+    <div class="chapter c-magenta"><span class="lbl">Calculadora</span><span class="part">La reforma</span></div>
+    <div class="section-head reveal"><h2>Su caso, antes y después de la reforma</h2><p class="lead">Ingrese sus datos o pegue su historia laboral (la que aparece en la respuesta de Colpensiones o de su AFP a un derecho de petición). La herramienta determina si queda en transición y estima la prestación bajo la Ley 100 y bajo la Ley 2381, incluido el pilar semicontributivo con su punto de equilibrio frente a la devolución de saldos. Cálculo educativo en pesos constantes de 2026.</p></div>
+    <div class="grid g2">
+      <div class="panel peri">
+        <h3>Datos básicos</h3>
+        <div class="form-grid">
+          <div class="field"><label>Sexo</label><div class="radio-row"><label><input type="radio" name="c-sexo" value="F" checked><span>Mujer</span></label><label><input type="radio" name="c-sexo" value="M"><span>Hombre</span></label></div></div>
+          <div class="field"><label>Edad actual</label><input type="number" id="c-edad" value="42" min="16" max="80"></div>
+          <div class="field"><label>Semanas cotizadas hoy</label><input type="number" id="c-semanas" value="620" min="0" max="3000"><div class="hint">RPM + RAIS + tiempos públicos (art. 75).</div></div>
+          <div class="field"><label>Semanas al 1-abr-2027 (opcional)</label><input type="number" id="c-semanas2027" placeholder="auto" min="0" max="3000"><div class="hint">Umbral de transición: 750 M / 900 H.</div></div>
+          <div class="field"><label>IBC mensual (COP)</label><input type="number" id="c-ibc" value="2500000" step="50000"><div class="hint">SMLMV 2026: $1.750.905 · umbral 2,3 SMLMV = $4.027.082.</div></div>
+          <div class="field"><label>IBL estimado (COP, opcional)</label><input type="number" id="c-ibl" placeholder="= IBC" step="50000"><div class="hint">Promedio indexado de los últimos 10 años.</div></div>
+          <div class="field"><label>Régimen actual (Ley 100)</label><select id="c-regimen"><option value="RAIS">Fondo privado (RAIS)</option><option value="RPM">Colpensiones (RPM)</option></select></div>
+          <div class="field"><label>Saldo en cuenta individual (COP)</label><input type="number" id="c-saldo" value="60000000" step="1000000"></div>
+          <div class="field"><label>Hijos nacidos vivos o adoptivos</label><input type="number" id="c-hijos" value="0" min="0" max="10"><div class="hint">Art. 36 (solo mujeres; devuelto a la Cámara).</div></div>
+          <div class="field"><label>Años sin cotizar antes de la renta semicontributiva</label><input type="number" id="c-gap" value="0" min="0" max="30"></div>
+        </div>
+        <h3 class="mt2">Supuestos técnicos</h3>
+        <div class="form-grid">
+          <div class="field"><label>Rendimiento real del ahorro · <output id="c-rend-o"></output></label><input type="range" id="c-rend" min="0" max="8" step="0.5" value="4"><div class="hint">Multifondos ≈ 8 % real histórico (Asofondos); CARF usa 4,3 % (TES). <a class="cite" data-ref="asof25"></a> <a class="cite" data-ref="carf24"></a></div></div>
+          <div class="field"><label>Tasa técnica de la renta vitalicia · <output id="c-itec-o"></output></label><input type="range" id="c-itec" min="0" max="6" step="0.5" value="3"></div>
+          <div class="field"><label>Deslizamiento real del mínimo · <output id="c-gmin-o"></output></label><input type="range" id="c-gmin" min="0" max="4" step="0.5" value="1.5"><div class="hint">Crecimiento real esperado de la pensión mínima (Decreto 1485/25). <a class="cite" data-ref="d1485"></a></div></div>
+          <div class="field"><label>Tabla de mortalidad</label><select id="c-mort"><option value="rentistas">Rentistas (≈ RV08)</option><option value="poblacional">Poblacional (DANE)</option></select></div>
+          <div class="field"><label>Cotizaciones computadas (semicontributivo)</label><select id="c-tasacot"><option value="0.16">16 puntos (toda la cotización)</option><option value="0.13">13 puntos (los que van al fondo)</option></select></div>
+          <div class="field"><label>Opciones</label><label class="check"><input type="checkbox" id="c-benef" checked> Renta con cónyuge beneficiario (sobrevivencia 100 %)</label><label class="check"><input type="checkbox" id="c-pobre"> Elegible al Pilar Solidario (pobreza/vulnerabilidad)</label></div>
+        </div>
+        <details class="acc mt2"><summary>Pegar historia laboral (derecho de petición)</summary><div class="body"><p class="small">Una línea por período: <code>inicio, fin, IBC mensual</code> en pesos del período (AAAA-MM-DD). Se calculan semanas (días/7) y se indexa cada IBC con el IPC del DANE para obtener el IBL de los últimos 10 años y el de toda la vida (art. 21 Ley 100 / art. 32 Ley 2381). Los datos no salen de su navegador.</p><textarea id="c-historia" placeholder="2015-01-15,2019-12-31,1000000&#10;2020-02-01,2025-12-31,1600000"></textarea><div class="flex mt1"><button class="btn sm" id="c-parse">Calcular semanas e IBL</button><button class="btn sm ghost" id="c-demo">Cargar ejemplo</button></div><div class="mt1 small" id="c-hist-out"></div></div></details>
+      </div>
+      <div>
+        <div class="panel grey"><h3>Resultado</h3><div id="c-status" class="muted small mb1"></div><div class="result-grid" id="c-out"></div><div class="note mt2 xs" id="c-assump"></div><p class="muted xs mt1">Año estimado de pensión: <b id="c-anio-o"></b>. Para una liquidación oficial consulte a Colpensiones o su AFP con doble asesoría (Ley 1748 de 2014). <a class="cite" data-ref="ley1748"></a></p></div>
+        <div class="panel peri mt2"><h3>Cómo leer el resultado</h3><ul class="list small"><li><b>En transición</b> (≥ 750/900 semanas al 1-abr-2027): la Ley 100 sigue aplicando íntegramente.</li><li><b>Nuevo sistema</b>: si cumple semanas a la edad de pensión, ve la Pensión Integral (prima media + anualidad del CCAI); con 300–999 semanas, la renta semicontributiva frente a la devolución o indemnización y la edad a la que la renta acumulada la iguala; con > 1.000 semanas y 62/65 años antes de 2036, la prestación anticipada.</li><li>En el RAIS la pensión depende del capital, la tasa técnica, la mortalidad y el <b>cónyuge beneficiario</b> (una renta conjunta de último sobreviviente cuesta ≈ 32 % más para un hombre de 62 con cónyuge de 57). Con tasa técnica 3 % y deslizamiento 1,5 %, financiar 1 SMLMV de 2026 exige ≈ $552 millones: el mismo orden de magnitud que Asofondos ($560 millones) citó tras el alza del mínimo. <a class="cite" data-ref="sSeguro"></a></li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="../js/data.js"></script>
+<script src="../js/glossary.js"></script>
+<script src="../js/routes.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

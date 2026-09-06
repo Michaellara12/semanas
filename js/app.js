@@ -15,28 +15,13 @@
   const setHTML=(id,h)=>{ const e=document.getElementById(id); if(e) e.innerHTML=h; };
   const T=()=>Charts.theme().pal;
 
-  /* ---------- Secciones (menú lateral y cajón móvil) ---------- */
-  /* El menú ya no es una secuencia de 01 a 15: son partes temáticas.
-     El orden respeta el del documento para que el resaltado por scroll no salte. */
-  const PARTS=[
-    ["El sistema", [["inicio","Inicio"],["historia","Historia"],["series","Series históricas"],["diagnostico","Diagnóstico"]]],
-    ["La reforma", [["comparador","Antes y después"],["umbral","El umbral de 2,3"],["calculadora","Calculadora"]]],
-    ["Modelos",    [["analisis","Análisis avanzado"],["modelos","Modelos y algoritmos"]]],
-    ["La ley 2381",[["ley","Artículo por artículo"],["jurisprudencia","Corte Constitucional"]]],
-    ["El debate",  [["critica","Jerome Sanabria"],["preguntas","Preguntas abiertas"],["ia","IA y trabajo"]]],
-    ["Referencias",[["fuentes","Fuentes"],["metodologia","Metodología"]]]
-  ];
-  const SECTIONS=PARTS.reduce((a,[,ss])=>a.concat(ss),[]);
-  function nav(){
-    const html=PARTS.map(([parte,ss])=>`<span class="part">${parte}</span>`+ss.map(([id,l])=>
-      `<a href="#${id}" data-s="${id}"><span class="dot"></span><span>${l}</span></a>`).join("")).join("");
-    setHTML("sidenav",html); setHTML("drawernav",html);
-    const burger=$("#burger"), drawer=$("#drawer"); if(burger){ burger.addEventListener("click",()=>drawer.classList.add("open")); drawer.addEventListener("click",e=>{ if(e.target===drawer||e.target.closest("a")) drawer.classList.remove("open"); }); }
-    const secs=SECTIONS.map(([id])=>document.getElementById(id)).filter(Boolean); const prog=$("#sideprog i"); const top=$("#totop");
-    const onScroll=()=>{ const y=window.scrollY; const h=document.documentElement.scrollHeight-window.innerHeight; if(prog) prog.style.width=(h>0?y/h*100:0)+"%"; if(top) top.classList.toggle("show",y>700);
-      let cur=secs[0]?.id; secs.forEach(s=>{ if(s.offsetTop-160<=y) cur=s.id; }); $$("#sidenav a, #drawernav a").forEach(a=>a.classList.toggle("active",a.dataset.s===cur)); const act=$("#sidenav a.active"); if(act){ const nv=$("#sidenav"); const r=act.getBoundingClientRect(), nr=nv.getBoundingClientRect(); if(r.top<nr.top||r.bottom>nr.bottom) act.scrollIntoView({block:"nearest"}); } };
-    window.addEventListener("scroll",onScroll,{passive:true}); onScroll(); if(top) top.addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
-  }
+  /* ---------- Navegación ----------
+     El menú, el cajón móvil y el pie anterior/siguiente los inyecta
+     js/shell.js a partir de js/routes.js. Aquí ya no hay resaltado por
+     desplazamiento: cada sección es su propia ruta y la marca activa la
+     decide la página, no la posición del scroll. */
+  const ROOT=SEMANAS.ROOT, HERE=SEMANAS.HERE;
+  const hrefRef=n=>(SEMANAS.SINGLE||HERE==="fuentes"?"":ROOT+"fuentes/")+"#ref-"+n;
 
   /* ---------- Visor de PDF dentro de la aplicación ----------
      Las fuentes en PDF se previsualizan aquí, abiertas en la página exacta
@@ -110,10 +95,10 @@
     $$(".cite.on").forEach(x=>x.classList.remove("on")); a.classList.add("on");
     p.querySelector("[data-close]").onclick=()=>{ pinned=false; hidePop(); };
     const pv=p.querySelector("[data-pdf]"); if(pv) pv.onclick=()=>{ pinned=false; hidePop(); openPDF(k,page); };
-    const g=p.querySelector("[data-goto]"); if(g) g.onclick=(e)=>{ e.preventDefault(); pinned=false; hidePop(); const li=document.getElementById("ref-"+n); if(li){ li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500);} }; }
+    const g=p.querySelector("[data-goto]"); if(g) g.onclick=(e)=>{ const li=document.getElementById("ref-"+n); if(!li) return; e.preventDefault(); pinned=false; hidePop(); li.scrollIntoView({behavior:"smooth",block:"center"}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); }; }
   function hidePop(){ if(pop){ pop.classList.remove("show"); } $$(".cite.on").forEach(x=>x.classList.remove("on")); }
   function renderCites(){
-    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href="#ref-"+n; a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u,SEMANAS.SOURCES[n-1].k)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
+    $$(".cite[data-ref]").forEach(a=>{ const k=a.dataset.ref; const n=SRC[k]; if(n){ a.textContent="["+n+"]"; a.href=hrefRef(n); a.setAttribute("aria-label","Referencia "+n); a.setAttribute("tabindex","0"); if(isPDF(SEMANAS.SOURCES[n-1].u,SEMANAS.SOURCES[n-1].k)) a.classList.add("pdf"); if(!a._wired){ a._wired=true;
       a.addEventListener("mouseenter",()=>{ clearTimeout(popTimer); if(!pinned) showPop(a); }); a.addEventListener("mouseleave",()=>{ if(!pinned) popTimer=setTimeout(hidePop,260); });
       a.addEventListener("focus",()=>showPop(a)); a.addEventListener("click",e=>{ e.preventDefault(); if(pinned && a.classList.contains("on")){ pinned=false; hidePop(); } else { pinned=true; showPop(a); } }); } } });
     const ol=$("#refs"); if(ol&&!ol.children.length){ ol.innerHTML=SEMANAS.SOURCES.map((s,i)=>{
@@ -483,5 +468,163 @@
     pintarSplit(); pintarFormulas(); correr();
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{ nav(); pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  /* ---------- Bibliografía de la sección ----------
+     La numeración [n] es global (el orden de SEMANAS.SOURCES), así que una
+     cita significa lo mismo en todas las rutas. Al final de cada página se
+     lista solo lo que esa página cita; la lista completa vive en /fuentes/. */
+  function refsLocales(){
+    if(SEMANAS.SINGLE||HERE==="fuentes"||HERE==="inicio") return;
+    const main=$("main"); if(!main) return;
+    const nums=[...new Set($$(".cite[data-ref]",main).map(a=>SRC[a.dataset.ref]).filter(Boolean))].sort((a,b)=>a-b);
+    if(!nums.length) return;
+    const sec=document.createElement("section");
+    sec.className="section refs-local";
+    sec.innerHTML=`<div class="wrap">
+      <div class="section-head"><h2>Fuentes citadas en esta sección</h2>
+      <p class="lead">Los números corresponden a la numeración global del observatorio. La bibliografía completa está en <a href="${ROOT}fuentes/">Bibliografía</a>.</p></div>
+      <ol class="refs">${nums.map(n=>{
+        const s=SEMANAS.SOURCES[n-1];
+        const pv=isPDF(s.u,s.k)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
+        return `<li value="${n}" id="ref-${n}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}${pv}</li>`;
+      }).join("")}</ol></div>`;
+    const antes=$(".ruta-foot",main);
+    antes?main.insertBefore(sec,antes):main.appendChild(sec);
+    $$(".refs-local .pdfbtn").forEach(b=>b.onclick=()=>openPDF(b.dataset.pdfk));
+  }
+
+  /* ---------- Glosario: cajón lateral ----------
+     Las palabras marcadas con <span class="term" data-t="clave"> abren la
+     ficha del término sin sacar al lector de donde está. En escritorio el
+     cajón entra por la derecha; en móvil sube desde abajo a media pantalla
+     (lo resuelve el CSS). Se cierra con la ×, tocando fuera o con Escape. */
+  function glosario(){
+    const G=SEMANAS.GLOSARIO||{};
+    const caj=$("#gloss"), veil=$("#gloss-veil"), cuerpo=$("#gloss-body"), ttl=$("#gloss-term");
+    let ultimo=null;
+
+    const ficha=k=>{
+      const g=G[k]; if(!g) return "";
+      const rel=(g.v||[]).filter(x=>G[x]);
+      return (g.a?`<p class="gloss-alias">${g.a}</p>`:"")+
+        `<p class="gloss-def">${g.d}</p>`+
+        (g.e?`<div class="gloss-ej"><h4>Ejemplo</h4><p>${g.e}</p></div>`:"")+
+        (g.k?`<p class="gloss-src">Fuente: ${cite(g.k)}</p>`:"")+
+        (rel.length?`<div class="gloss-rel"><h4>Ver también</h4>${
+          rel.map(x=>`<button class="chip-term" data-t="${x}">${G[x].t}</button>`).join("")}</div>`:"");
+    };
+
+    function abrir(k, origen){
+      const g=G[k]; if(!g||!caj) return;
+      ultimo=origen||ultimo;
+      ttl.textContent=g.t;
+      cuerpo.innerHTML=ficha(k);
+      caj.hidden=false; veil.hidden=false;
+      requestAnimationFrame(()=>{ caj.classList.add("open"); veil.classList.add("open"); });
+      document.body.classList.add("gloss-abierto");
+      renderCites(cuerpo);
+      $$(".chip-term",cuerpo).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
+      $("#gloss-close").focus();
+      $$(".term.on").forEach(x=>x.classList.remove("on"));
+      if(origen) origen.classList.add("on");
+    }
+    function cerrar(){
+      if(!caj||caj.hidden) return;
+      caj.classList.remove("open"); veil.classList.remove("open");
+      document.body.classList.remove("gloss-abierto");
+      $$(".term.on").forEach(x=>x.classList.remove("on"));
+      setTimeout(()=>{ if(!caj.classList.contains("open")){ caj.hidden=true; veil.hidden=true; } },260);
+      if(ultimo){ ultimo.focus(); ultimo=null; }
+    }
+    SEMANAS.abrirTermino=abrir;
+
+    /* Un solo oyente en el documento: sirve también para el texto que se
+       pinta después (línea de tiempo, artículos, fichas del glosario). */
+    document.addEventListener("click",e=>{
+      const t=e.target.closest(".term[data-t]");
+      if(!t) return;
+      e.preventDefault();
+      if(!G[t.dataset.t]) return;
+      abrir(t.dataset.t,t);
+    });
+    document.addEventListener("keydown",e=>{
+      const t=e.target.closest?.(".term[data-t]");
+      if(t&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); abrir(t.dataset.t,t); }
+      if(e.key==="Escape") cerrar();
+    });
+    $("#gloss-close")?.addEventListener("click",cerrar);
+    veil?.addEventListener("click",cerrar);
+
+    /* Accesibilidad: cada término es un botón para el teclado. */
+    const marcar=()=>$$(".term[data-t]").forEach(t=>{
+      if(t._g) return; t._g=true;
+      t.setAttribute("role","button"); t.setAttribute("tabindex","0");
+      const g=G[t.dataset.t];
+      if(g) t.setAttribute("aria-label",g.t+": ver definición"); else t.classList.add("term-huerfano");
+    });
+    marcar();
+    new MutationObserver(marcar).observe(document.body,{childList:true,subtree:true});
+
+    /* Marcado automático: recorre el texto de la página y subraya la
+       primera aparición de cada término. Evita títulos, enlaces, citas,
+       botones, código y lo que ya venga marcado a mano en el HTML. */
+    function automarcar(){
+      const F=SEMANAS.TERM_FRASES||{};
+      const usados=new Set($$(".term[data-t]",$("main")||document).map(t=>t.dataset.t));
+      const entradas=[];
+      Object.keys(F).forEach(k=>{ if(G[k]) F[k].forEach(f=>entradas.push([k,f])); });
+      /* Frases largas primero: «régimen de prima media» antes que «prima media». */
+      entradas.sort((a,b)=>b[1].length-a[1].length);
+      const raiz=$("main"); if(!raiz) return;
+      const VETADO="a,button,h1,h2,h3,h4,code,pre,script,style,select,option,textarea,label,.cite,.term,.chapter,.tag,.seg,.tabs,.chips,.gloss,.kpi .v,.stat-strip";
+
+      entradas.forEach(([k,frase])=>{
+        if(usados.has(k)) return;
+        const exacta=frase.startsWith("/")&&frase.endsWith("/");
+        const texto=exacta?frase.slice(1,-1):frase;
+        const re=new RegExp("(^|[^\\p{L}\\p{N}])("+texto.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")(?![\\p{L}\\p{N}])",
+                            exacta?"u":"iu");
+        const it=document.createNodeIterator(raiz,NodeFilter.SHOW_TEXT);
+        let n;
+        while((n=it.nextNode())){
+          if(!n.nodeValue||n.nodeValue.length<texto.length) continue;
+          if(n.parentElement.closest(VETADO)) continue;
+          const m=re.exec(n.nodeValue); if(!m) continue;
+          const ini=m.index+m[1].length;
+          const medio=n.splitText(ini); medio.splitText(m[2].length);
+          const sp=document.createElement("span");
+          sp.className="term"; sp.dataset.t=k;
+          medio.parentNode.replaceChild(sp,medio); sp.appendChild(medio);
+          usados.add(k);
+          break;
+        }
+      });
+      marcar();
+    }
+    automarcar();
+
+    /* Página /glosario/: el listado completo, de la A a la Z. */
+    const lista=$("#gloss-list");
+    if(lista){
+      const items=SEMANAS.glosarioOrdenado();
+      lista.innerHTML=items.map(g=>`<article class="gloss-item" id="t-${g.k}">
+        <h3>${g.t}${g.a?` <small>${g.a}</small>`:""}</h3>
+        <p>${g.d}</p>${g.e?`<p class="gloss-item-ej"><b>Ejemplo.</b> ${g.e}</p>`:""}
+        <p class="gloss-item-rel">${(g.v||[]).filter(x=>G[x]).map(x=>`<button class="chip-term" data-t="${x}">${G[x].t}</button>`).join("")}</p>
+      </article>`).join("");
+      $$(".chip-term",lista).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
+      const q=$("#gloss-search");
+      if(q) q.addEventListener("input",()=>{
+        const v=q.value.trim().toLowerCase();
+        let n=0;
+        $$(".gloss-item",lista).forEach((el,i)=>{
+          const hit=!v||(items[i].t+" "+items[i].a+" "+items[i].d).toLowerCase().includes(v);
+          el.hidden=!hit; if(hit) n++;
+        });
+        setHTML("gloss-count",n+(n===1?" término":" términos"));
+      });
+      setHTML("gloss-count",items.length+" términos");
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); glosario(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();

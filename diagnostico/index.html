@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es" data-root="../" data-route="diagnostico">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El sistema hoy, en cinco tableros · SEMANAS</title>
+<meta name="description" content="Cobertura, informalidad, costo fiscal y demografía con cifras oficiales de 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<main>
+<section class="section" id="diagnostico">
+  <div class="wrap">
+    <div class="chapter c-violet"><span class="lbl">Diagnóstico</span><span class="part">El sistema</span></div>
+    <div class="section-head reveal"><h2>El sistema hoy, en cinco tableros</h2><p class="lead">Cifras de Colpensiones, Superintendencia Financiera, Asofondos, Ministerio de Hacienda (MFMP), CARF, DANE y OCDE. Pase el cursor sobre las gráficas.</p></div>
+    <div class="tabs"><button class="active" data-tab="d1">Afiliación y pensiones</button><button data-tab="d2">Fiscal</button><button data-tab="d3">Demografía</button><button data-tab="d4">Mercado laboral</button><button data-tab="d5">Colombia vs. OCDE</button></div>
+    <div class="tabpanel active" data-tab="d1"><div class="grid g2">
+      <div class="figure tinted pink"><div class="chart-title"><h3>Afiliados por régimen</h3><span class="tag">2026</span></div><div class="chart" id="ch-afiliados"></div><div class="chart-src">Colpensiones jun-2026: 7.244.330 afiliados, 3.026.073 cotizantes activos (41,8 %). AFP: 19,42 millones (Asofondos, jun-2026). <a class="cite" data-ref="colpJun26"></a> <a class="cite" data-ref="asofCifras"></a></div></div>
+      <div class="figure rule-green"><div class="chart-title"><h3>Pensionados de Colpensiones</h3><span class="tag">sep-25 → jun-26</span></div><div class="chart" id="ch-pensionados"></div><div class="chart-src">1.833.099 → 1.864.080 → 1.928.774. Nómina mensual $7,37 billones en junio (incluye mesada adicional). <a class="cite" data-ref="colpSep25"></a> <a class="cite" data-ref="colpRC25"></a> <a class="cite" data-ref="colpJun26"></a></div></div>
+      <div class="figure rule-magenta"><div class="chart-title"><h3>Tipo de pensión (RPM)</h3></div><div class="chart" id="ch-tipo"></div><div class="chart-src">Vejez 1.430.639 · Sobrevivientes 405.694 · Invalidez 92.441 (jun-2026). <a class="cite" data-ref="colpJun26"></a></div></div>
+      <div class="figure rule-cyan"><div class="chart-title"><h3>Cuantía de las pensiones (RPM)</h3></div><div class="chart" id="ch-rango"></div><div class="chart-src">79 % de los pensionados recibe entre 1 y 2 SMMLV; 84 % de los cotizantes cotiza sobre 1–2 SMMLV. <a class="cite" data-ref="colpSep25"></a></div></div>
+      <div class="block rule-violet span2"><h3>Efectos de la Ley 2381 ya observables</h3><div class="stat-strip"><div class="kpi y"><div class="v">280.212</div><div class="l">Solicitudes de doble asesoría (jul-2024 a jun-2026)</div><div class="s"><a class="cite" data-ref="colpJun26"></a></div></div><div class="kpi p"><div class="v">145.815</div><div class="l">Traslados efectivos a Colpensiones por la ventana del art. 76; 26.693 ya pensionados</div><div class="s"><a class="cite" data-ref="colpJun26"></a></div></div><div class="kpi b"><div class="v">$25 bn</div><div class="l">Saldos que el Decreto 0415 de 2026 ordenó girar desde las AFP (70 % estaba en TES)</div><div class="s"><a class="cite" data-ref="d0415"></a></div></div></div></div>
+    </div></div>
+    <div class="tabpanel" data-tab="d2"><div class="grid g2">
+      <div class="figure rule-orange"><div class="chart-title"><h3>¿A dónde va el presupuesto de pensiones?</h3><span class="tag">PGN 2023</span></div><div class="chart" id="ch-fiscal"></div><div class="chart-src">Total $54,6 bn: Colpensiones $15,4 bn (28 %); regímenes exceptuados (Fuerzas Militares y Policía: 288.044 pensionados; Fonprecon: 2.312 con mesada promedio $9,3 M; FOMAG: 236.450, $8,1 bn) y regímenes en extinción. <a class="cite" data-ref="etRegimenes"></a></div></div>
+      <div class="figure rule-violet"><div class="chart-title"><h3>Valor presente del pasivo pensional</h3><span class="tag">% PIB</span></div><div class="chart" id="ch-vpn"></div><div class="chart-src">Aval fiscal (jun-2024): 87,67 % sin reforma vs 121,13 % con reforma (2025–2100). MFMP 2026: 94,4 % vs 121,5 %. El CARF (2023) estimó −132,5 % vs −160,5 % con el proyecto original. <a class="cite" data-ref="aval24"></a> <a class="cite" data-ref="mfmp26"></a> <a class="cite" data-ref="carf23"></a></div></div>
+      <div class="figure tinted yellow span2"><div class="chart-title"><h3>Trayectorias del CARF (modelo CEDE–Uniandes)</h3><span class="tag">jun-2024</span></div><div class="chart" id="ch-carf"></div><div class="chart-src">Necesidades de Colpensiones 3,0 % (2025) → 4,9 % (2065). Ingresos del Fondo de Ahorro 0,6 % → 1,2 % (2051) → 0,1 % (2100). Agotado el fondo (2062, escenario base), la transferencia de la Nación sube de 1,3 % a 3,8 % del PIB. Aumento del VPN a 2100: 62,3 % del PIB. Con subcuentas generacionales no se agota antes de 2100. <a class="cite" data-ref="carf24"></a></div></div>
+      <div class="listblock"><h3>Lo que dice el MFMP 2026</h3><ul class="list small"><li>Ingresos propios del RPM ≈ <b>2,3 % del PIB</b> frente a un gasto de <b>4,6 %</b> en la década, que llegará a 4,9 %.</li><li>El pilar semicontributivo agrega obligaciones por <b>0,4 % del PIB</b>.</li><li>Nómina de 1.864.080 pensionados con aumentos de ~90.000 al año; gasto esperado +12 % en 2027.</li><li>Afiliados esperados con la reforma: 24 millones. <a class="cite" data-ref="mfmp26"></a> <a class="cite" data-ref="semanaMFMP"></a></li></ul></div>
+      <div class="listblock cyan"><h3>Lo que dice el CARF</h3><ul class="list small"><li>Pilar Solidario: 0,3 % del PIB al año (≈ $4,8 bn); semicontributivo: 0,2 % (2025) → 0,8 % (2065), VPN 35,6 % del PIB.</li><li>Cuatro fuentes del mayor costo: se ahorra menos del 50 % de las nuevas cotizaciones; más pensionados (semanas de mujeres, prestación anticipada); menores aportes; la Nación asume las pensiones que antes cubría el Fondo de Garantía de Pensión Mínima.</li><li>Pensionados: 1,8 → 2,1 M en 2040; 2,5 → 2,8 M en 2050; 4,0 → 4,2 M en 2090 (sin → con reforma).</li><li>Umbral de 1 SMMLV: ahorro ≈ 20 % del PIB en VPN; −1 pp de rentabilidad: hasta 12 % del PIB y 9 años menos de fondo. <a class="cite" data-ref="carf24"></a> <a class="cite" data-ref="carf23"></a></li></ul></div>
+    </div></div>
+    <div class="tabpanel" data-tab="d3"><div class="grid g2">
+      <div class="figure rule-magenta"><div class="chart-title"><h3>Población total</h3><span class="tag">2025–2070</span></div><div class="chart" id="ch-demo"></div><div class="chart-src">DANE (PPED, jul-2025): 53,0 M en 2025; máximo > 56 M en 2043; 50,5 M en 2070; en 2036 habrá más mayores de 60 que menores de 15. La línea continua es el modelo de componentes de esta plataforma. <a class="cite" data-ref="danePPED"></a> <a class="cite" data-ref="dane2036"></a></div></div>
+      <div class="figure rule-cyan"><div class="chart-title"><h3>Envejecimiento y relación de soporte</h3></div><div class="chart" id="ch-dep"></div><div class="chart-src">65+ pasa de 10,1 % (2025) a ≈ 29 % (2070); dependencia de mayores de 14 % a 48,2 %; índice de envejecimiento 36,7 (2018) → 135,9 (2050) → 164,3 (2055). <a class="cite" data-ref="danePPED"></a> <a class="cite" data-ref="port2070"></a></div></div>
+      <div class="figure rule-orange span2"><div class="chart-title"><h3>Pirámide poblacional 2025 (estructura del modelo)</h3></div><div class="chart" id="ch-piramide"></div><div class="chart-src">Estructura por edad simple reescalada a los grandes grupos DANE (0–14: 22,6 %; 15–64: 67,3 %; 65+: 10,1 %). 2018 → 2050: 0–14 de 25,2 % a 13,6 %; 60+ de 13,2 % a 24,6 %. <a class="cite" data-ref="danePPED" data-page="21"></a></div></div>
+    </div></div>
+    <div class="tabpanel" data-tab="d4"><div class="grid g2">
+      <div class="figure rule-violet"><div class="chart-title"><h3>Informalidad laboral</h3><span class="tag">GEIH</span></div><div class="chart" id="ch-informalidad"></div><div class="chart-src">55,9 % (abr–jun 2025) → 54,5 % (abr–jun 2026); 23 ciudades 41,9 %; rural 83,2 %; 12,7 millones de informales. <a class="cite" data-ref="daneGEIH"></a> <a class="cite" data-ref="infobaeInf"></a></div></div>
+      <div class="block rule-green"><h3>Cobertura en la vejez</h3><p class="small muted">En 2020 solo el 25,5 % de los hombres de 62+ y mujeres de 57+ recibía pensión (mesada promedio $1.565.922 mujeres y $1.891.004 hombres). <a class="cite" data-ref="daneMayores" data-page="41"></a> Colombia Mayor cubría 1,7 millones con $80.000; el Pilar Solidario lo amplía a 3,1 millones con $230.000 (2026), sujeto al presupuesto anual. <a class="cite" data-ref="pilarSol"></a> La OIT estima que el componente de prima media cubriría ≈ 72 % de los asalariados, sobre el 50 % del Convenio 102. <a class="cite" data-ref="oit25"></a></p><div class="note yellow small"><b>Implicación:</b> la reforma no cambia la informalidad; cambia lo que reciben quienes cotizaron poco (semicontributivo) y quienes no cotizaron (solidario). El vínculo entre formalización y sostenibilidad se explora en <a href="../ia/">IA y trabajo</a>.</div></div>
+    </div></div>
+    <div class="tabpanel" data-tab="d5"><div class="grid g2">
+      <div class="figure rule-green"><div class="chart-title"><h3>Indicadores OCDE</h3><span class="tag">Pensions at a Glance 2023</span></div><div class="chart" id="ch-oecd"></div><div class="chart-src">Colombia gasta 5,7 % del PIB en pensiones públicas con una población mayor mucho más pequeña (14,5 % vs 31,3 % de la población en edad de trabajar): gasta menos que la OCDE, pero mucho más por cada mayor cubierto. <a class="cite" data-ref="oecd23"></a></div></div>
+      <div class="block rule-magenta"><h3>Tasas de reemplazo modeladas por la OCDE</h3><p class="small muted">Trabajador que entra a los 22 años en 2022 y se retira a los 65 con reglas de Ley 100: tasa neta 73,1 % para el salario promedio y 103,5 % para 0,64 del promedio (efecto de la pensión mínima). <a class="cite" data-ref="oecd23" data-page="5"></a></p><div class="table-wrap"><table><thead><tr><th>Ingreso (múltiplo del promedio)</th><th class="num">0,64</th><th class="num">1,0</th><th class="num">1,5</th><th class="num">2,0</th></tr></thead><tbody><tr><td>Tasa de reemplazo bruta</td><td class="num">99,2 %</td><td class="num">74,8 %</td><td class="num">74,8 %</td><td class="num">74,8 %</td></tr><tr><td>Tasa de reemplazo neta</td><td class="num">103,5 %</td><td class="num">73,1 %</td><td class="num">73,1 %</td><td class="num">71,5 %</td></tr></tbody></table></div></div>
+    </div></div>
+  </div>
+</section>
+</main>
+
+<script src="../js/data.js"></script>
+<script src="../js/glossary.js"></script>
+<script src="../js/routes.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>

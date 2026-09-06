@@ -778,3 +778,178 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .totop.show{opacity:1;pointer-events:auto}
 .totop:hover{transform:translateY(-3px);box-shadow:var(--pop)}
 @media print{.side,.topbar,.totop,.pdfview{display:none}main{margin-left:0}}
+
+/* =====================================================================
+   RUTAS · menú en bloques de color, patrones y navegación entre páginas
+   ---------------------------------------------------------------------
+   Cada sección principal es una página propia. El menú lateral pasó de
+   lista de anclas a bloques de color con número, y la portada repite esos
+   mismos bloques en grande con la descripción de cada sección.
+   ===================================================================== */
+
+/* --- Paleta por ruta: un color de fondo y su tinta legible encima --- */
+.c-magenta{--card:var(--magenta);   --on:#fff;      --card-soft:var(--soft-pink)}
+.c-violet {--card:var(--violet);    --on:#fff;      --card-soft:var(--soft-peri)}
+.c-peri   {--card:var(--periwinkle);--on:#fff;      --card-soft:var(--soft-peri)}
+.c-cyan   {--card:var(--cyan);      --on:var(--ink);--card-soft:var(--soft-blue)}
+.c-yellow {--card:var(--yellow);    --on:var(--ink);--card-soft:var(--pale-yellow)}
+.c-green  {--card:var(--green);     --on:var(--ink);--card-soft:#D8FBD6}
+.c-orange {--card:var(--orange);    --on:var(--ink);--card-soft:var(--soft-orange)}
+.c-wine   {--card:var(--wine);      --on:#fff;      --card-soft:var(--soft-wine)}
+
+/* --- Patrones geométricos ---------------------------------------------
+   Van en un ::before propio para poder bajarles la opacidad sin tocar el
+   texto. Se dibujan con gradientes: ni una imagen, ni una petición más. */
+.pat{position:relative;overflow:hidden;isolation:isolate}
+.pat::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.20;
+  background-repeat:repeat;pointer-events:none;transition:opacity .3s var(--ease),transform .5s var(--ease)}
+.pat:hover::before{opacity:.30;transform:scale(1.06)}
+
+.pat-dots::before{background-image:radial-gradient(currentColor 1.6px,transparent 1.7px);background-size:14px 14px}
+.pat-halftone::before{background-image:radial-gradient(currentColor 3px,transparent 3.2px),radial-gradient(currentColor 1.2px,transparent 1.4px);background-size:26px 26px,26px 26px;background-position:0 0,13px 13px}
+.pat-diag::before{background-image:repeating-linear-gradient(45deg,currentColor 0 3px,transparent 3px 12px)}
+.pat-grid::before{background-image:repeating-linear-gradient(0deg,currentColor 0 1.5px,transparent 1.5px 16px),repeating-linear-gradient(90deg,currentColor 0 1.5px,transparent 1.5px 16px)}
+.pat-rings::before{background-image:repeating-radial-gradient(circle at 50% 50%,currentColor 0 2px,transparent 2px 13px);background-size:52px 52px}
+.pat-waves::before{background-image:repeating-radial-gradient(circle at 0 100%,transparent 0 8px,currentColor 8px 10px,transparent 10px 20px);background-size:40px 20px}
+.pat-chevron::before{background-image:repeating-linear-gradient(135deg,currentColor 0 2.5px,transparent 2.5px 11px),repeating-linear-gradient(45deg,currentColor 0 2.5px,transparent 2.5px 11px);background-size:22px 22px}
+.pat-cross::before{background-image:repeating-linear-gradient(0deg,currentColor 0 2px,transparent 2px 9px),repeating-linear-gradient(90deg,currentColor 0 2px,transparent 2px 9px);background-size:18px 18px;background-position:center}
+.pat-bricks::before{background-image:repeating-linear-gradient(0deg,currentColor 0 1.6px,transparent 1.6px 14px),repeating-linear-gradient(90deg,currentColor 0 1.6px,transparent 1.6px 28px);background-size:28px 28px}
+.pat-zigzag::before{background-image:linear-gradient(135deg,currentColor 25%,transparent 25%),linear-gradient(225deg,currentColor 25%,transparent 25%);background-size:18px 18px}
+.pat-triangles::before{background-image:conic-gradient(from 90deg at 50% 0,currentColor 0 25%,transparent 25% 100%);background-size:20px 20px}
+@media (prefers-reduced-motion:reduce){ .pat:hover::before{transform:none} }
+
+/* =====================================================================
+   MENÚ LATERAL · bloques de color
+   ===================================================================== */
+:root{--side:272px}
+.side nav{gap:7px}
+.side nav .part{padding:15px 4px 5px}
+.side nav a{
+  position:relative;display:grid;grid-template-columns:1fr auto;align-items:end;
+  gap:2px 8px;min-height:62px;padding:10px 12px;border-radius:var(--r-sm);
+  border:var(--bd-thin);background:var(--paper);color:var(--ink);
+  font-size:.95rem;font-weight:800;line-height:1.15;letter-spacing:-.01em;
+  box-shadow:2px 2px 0 var(--ink);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease),background .18s}
+.side nav a .nm{grid-column:1;align-self:end;padding-top:16px}
+.side nav a .no{grid-column:2;grid-row:1;font-family:var(--mono);font-size:.66rem;font-weight:600;opacity:.55;align-self:start}
+.side nav a .dot{position:absolute;top:11px;left:12px;width:9px;height:9px;border-radius:50%;
+  background:var(--card,var(--line-2));border:1.5px solid var(--ink)}
+.side nav a:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink);text-decoration:none;background:var(--card-soft,var(--paper-2))}
+.side nav a:active{transform:translate(1px,1px);box-shadow:1px 1px 0 var(--ink)}
+.side nav a.active{background:var(--card,var(--ink));color:var(--on,#fff);box-shadow:4px 4px 0 var(--ink)}
+.side nav a.active .no{opacity:.8}
+.side nav a.active .dot{background:var(--paper)}
+.side .foot{padding-top:4px}
+
+/* En el cajón móvil los mismos bloques, más altos para el pulgar. */
+.drawer nav{gap:8px}
+.drawer nav a{position:relative;display:grid;grid-template-columns:1fr auto;align-items:end;min-height:70px;
+  padding:12px 14px;border-radius:var(--r-sm);border:var(--bd-thin);box-shadow:2px 2px 0 var(--ink);
+  background:var(--paper);color:var(--ink);font-weight:800;font-size:1.02rem}
+.drawer nav a .no{font-family:var(--mono);font-size:.68rem;font-weight:600;opacity:.55;grid-row:1;grid-column:2}
+.drawer nav a .nm{grid-column:1;padding-top:16px}
+.drawer nav a .dot{position:absolute;top:13px;left:14px;width:10px;height:10px;border-radius:50%;background:var(--card,var(--line-2));border:1.5px solid var(--ink)}
+.drawer nav a.active{background:var(--card,var(--ink));color:var(--on,#fff)}
+
+/* =====================================================================
+   PORTADA · rejilla de secciones (bloque grande por ruta)
+   ===================================================================== */
+.rutas{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px}
+.ruta-card{
+  display:flex;flex-direction:column;gap:10px;min-height:212px;padding:18px 20px 20px;
+  border:var(--bd);border-radius:var(--r-lg);box-shadow:var(--pop);
+  background:var(--card,var(--paper));color:var(--on,var(--ink));text-decoration:none;
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease)}
+.ruta-card:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--ink);text-decoration:none;color:var(--on,var(--ink))}
+.ruta-card:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+.ruta-card .row{display:flex;align-items:center;justify-content:space-between;font-family:var(--mono);font-size:.78rem;font-weight:600}
+.ruta-card .arrow{font-size:1.25rem;line-height:1;transition:transform .22s var(--ease)}
+.ruta-card:hover .arrow{transform:translate(3px,-3px)}
+.ruta-card h3{margin:auto 0 0;font-size:clamp(1.3rem,2.1vw,1.65rem);line-height:1.02}
+.ruta-card p{margin:0;font-size:.86rem;font-weight:600;line-height:1.42;opacity:.86}
+.ruta-card .part{font-size:.6rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+
+/* =====================================================================
+   PIE DE RUTA · anterior / siguiente
+   ===================================================================== */
+.ruta-foot{border-top:1.5px solid var(--line);padding:clamp(34px,5vw,60px) 0}
+.ruta-nav{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ruta-nav-item{display:grid;gap:4px;padding:18px 20px;border:var(--bd-thin);border-radius:var(--r);
+  background:var(--paper);color:var(--ink);box-shadow:var(--pop-sm);
+  transition:transform .18s var(--ease),box-shadow .18s var(--ease)}
+.ruta-nav-item:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink);text-decoration:none;background:var(--paper-2)}
+.ruta-nav-item.next{text-align:right}
+.ruta-nav-item small{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.ruta-nav-item .no{font-family:var(--mono);font-size:.7rem;color:var(--ink-3)}
+.ruta-nav-item b{font-family:var(--display);font-size:1.25rem;line-height:1.1;letter-spacing:-.02em}
+.ruta-nav-item em{font-style:normal;font-size:.82rem;font-weight:600;color:var(--ink-2);line-height:1.4}
+@media (max-width:640px){ .ruta-nav{grid-template-columns:1fr} .ruta-nav-item.next{text-align:left} }
+
+/* Encabezado de página de ruta */
+.ruta-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.ruta-head .num{font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--ink-3)}
+.refs-local{background:var(--paper-2);border-top:1.5px solid var(--line)}
+
+/* =====================================================================
+   GLOSARIO · término en el texto y cajón lateral
+   ===================================================================== */
+.term{
+  border-bottom:2px dotted var(--violet);cursor:help;font-weight:700;
+  color:inherit;transition:background .18s,border-color .18s;border-radius:.15em;
+  padding:0 .06em}
+.term:hover,.term:focus-visible{background:var(--pale-yellow);border-bottom-style:solid;outline:none}
+.term.on{background:var(--yellow);border-bottom-color:var(--ink)}
+.term::after{content:"?";font-size:.62em;font-weight:800;vertical-align:super;color:var(--violet);margin-left:.12em}
+.term-huerfano{border-bottom-color:var(--bad)}
+
+.gloss-veil{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.34);opacity:0;transition:opacity .25s var(--ease)}
+.gloss-veil.open{opacity:1}
+.gloss{
+  position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(430px,92vw);
+  display:flex;flex-direction:column;background:var(--paper);
+  border-left:var(--bd);box-shadow:-18px 0 44px rgba(0,0,0,.16);
+  transform:translateX(102%);transition:transform .28s var(--ease)}
+.gloss.open{transform:none}
+.gloss-head{position:relative;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
+  padding:20px 22px 16px;border-bottom:var(--bd-thin);background:var(--pale-yellow)}
+.gloss-head small{display:block;font-size:.62rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:6px}
+.gloss-head h3{margin:0;font-size:clamp(1.35rem,3vw,1.8rem);line-height:1.05}
+.gloss-close{flex:none;width:40px;height:40px;border-radius:50%;border:var(--bd-thin);background:var(--paper);
+  font-size:1.3rem;line-height:1;cursor:pointer;box-shadow:var(--pop-sm);transition:transform .16s var(--ease),box-shadow .16s}
+.gloss-close:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
+.gloss-close:active{transform:translate(2px,2px);box-shadow:none}
+.gloss-body{flex:1;overflow:auto;padding:20px 22px;overscroll-behavior:contain}
+.gloss-alias{font-family:var(--mono);font-size:.76rem;color:var(--ink-3);margin:0 0 12px}
+.gloss-def{font-size:.97rem;line-height:1.6}
+.gloss-ej{border-left:4px solid var(--cyan);background:var(--soft-blue);padding:12px 16px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin:16px 0}
+.gloss-ej h4{margin:0 0 6px;color:var(--cyan-ink)}
+.gloss-ej p{margin:0;font-size:.9rem}
+.gloss-src{font-size:.8rem;color:var(--ink-3)}
+.gloss-rel h4{margin:18px 0 8px}
+.chip-term{font:inherit;font-size:.8rem;font-weight:700;padding:6px 13px;margin:0 6px 6px 0;
+  border:var(--bd-thin);border-radius:var(--pill);background:var(--paper);cursor:pointer;
+  transition:background .16s,transform .16s var(--ease)}
+.chip-term:hover{background:var(--pale-peri);transform:translateY(-1px)}
+.gloss-foot{padding:14px 22px;border-top:var(--bd-thin);background:var(--paper-2);font-size:.86rem;font-weight:700}
+
+/* Móvil: media hoja desde abajo, ancho completo. */
+@media (max-width:720px){
+  .gloss{top:auto;left:0;right:0;bottom:0;width:100%;height:56vh;max-height:56vh;
+    border-left:0;border-top:var(--bd);border-radius:var(--r-lg) var(--r-lg) 0 0;
+    transform:translateY(102%);box-shadow:0 -14px 40px rgba(0,0,0,.2)}
+  .gloss.open{transform:none}
+  .gloss-head{border-radius:var(--r-lg) var(--r-lg) 0 0;padding:20px 18px 14px}
+  .gloss-head::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
+    width:44px;height:4px;border-radius:2px;background:rgba(0,0,0,.28)}
+  .gloss-body{padding:16px 18px}
+}
+body.gloss-abierto{overflow:hidden}
+
+/* Página del glosario */
+.gloss-item{padding:22px 0;border-top:1.5px solid var(--line)}
+.gloss-item h3{margin-bottom:.3em}
+.gloss-item h3 small{font-family:var(--mono);font-size:.62rem;font-weight:600;color:var(--ink-3);letter-spacing:0;text-transform:none}
+.gloss-item p{font-size:.95rem;margin-bottom:.6em}
+.gloss-item-ej{color:var(--ink-2);font-size:.9rem}
+.gloss-item-rel{margin:0}

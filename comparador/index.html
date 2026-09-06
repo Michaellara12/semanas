@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es" data-root="../" data-route="comparador">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>De dos regímenes a cuatro pilares · SEMANAS</title>
+<meta name="description" content="Comparación parámetro por parámetro entre la Ley 100 y la Ley 2381.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
+<script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"},options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};</script>
+<script src="../vendor/tex-svg.js" id="MathJax-script" async></script>
+</head>
+<body>
+
+<main>
+<section class="section tint-blue" id="comparador">
+  <div class="wrap">
+    <div class="chapter c-yellow"><span class="lbl">Antes y después</span><span class="part">La reforma</span></div>
+    <div class="section-head reveal"><h2>De dos regímenes en competencia a cuatro pilares articulados</h2><p class="lead">Haga clic en cada pilar. Debajo, la comparación parámetro por parámetro entre la Ley 100 de 1993 (con la Ley 797 de 2003) y la Ley 2381 de 2024.</p></div>
+    <div class="pillars reveal">
+      <div class="pillar" data-p="solidario" tabindex="0"><div class="num">PILAR 1</div><h3>Solidario</h3><p>Renta Básica Solidaria para mayores en pobreza. No contributivo.</p></div>
+      <div class="pillar" data-p="semicontributivo" tabindex="0"><div class="num">PILAR 2</div><h3>Semicontributivo</h3><p>Renta vitalicia para quien cotizó 300–999 semanas.</p></div>
+      <div class="pillar" data-p="contributivo" tabindex="0"><div class="num">PILAR 3</div><h3>Contributivo</h3><p>Prima media hasta 2,3 SMLMV + ahorro individual por encima.</p></div>
+      <div class="pillar" data-p="voluntario" tabindex="0"><div class="num">PILAR 4</div><h3>Ahorro voluntario</h3><p>Aportes adicionales con beneficios tributarios.</p></div>
+    </div>
+    <div class="pillar-detail reveal" id="pillar-detail"></div>
+    <div class="compare mt3 reveal">
+      <div class="col before"><h3><span class="tag">Antes</span> Ley 100 de 1993 / Ley 797 de 2003</h3>
+        <div class="row"><div class="k">Arquitectura</div><div class="v">Dos regímenes excluyentes y en competencia: RPM (Colpensiones) y RAIS (AFP). Traslado cada 5 años hasta 10 antes de la edad. <a class="cite" data-ref="ley100"></a></div></div>
+        <div class="row"><div class="k">Requisitos RPM</div><div class="v">57 (M) / 62 (H) años y 1.300 semanas. <a class="cite" data-ref="ley797"></a></div></div>
+        <div class="row"><div class="k">Fórmula RPM</div><div class="v">\( r = 65{,}5 - 0{,}5\,s \) sobre el IBL (10 años); +1,5 % por cada 50 semanas extra; máximo 80 % (70,5 % en ingresos altos); mínimo 1 SMMLV; tope 25 SMMLV.</div></div>
+        <div class="row"><div class="k">Requisitos RAIS</div><div class="v">Capital que financie ≥ 110 % del SMMLV, a cualquier edad; o Garantía de Pensión Mínima a 57/62 con 1.150 semanas.</div></div>
+        <div class="row"><div class="k">Si no alcanza</div><div class="v">Indemnización sustitutiva (RPM) o devolución de saldos con rendimientos (RAIS), en un solo pago, heredable.</div></div>
+        <div class="row"><div class="k">Cotización</div><div class="v">16 % del IBC (75/25). RAIS: 11,5 pts a la cuenta, 1,5 al FGPM, 3 a administración y seguros.</div></div>
+        <div class="row"><div class="k">Subsidio</div><div class="v">Implícito en el RPM para todas las pensiones hasta 25 SMMLV; regresivo (76,8 % al quintil más rico). <a class="cite" data-ref="anifFedes"></a></div></div>
+        <div class="row"><div class="k">Vejez sin pensión</div><div class="v">Colombia Mayor: $80.000 para ~1,7 millones. BEPS voluntarios.</div></div>
+        <div class="row"><div class="k">Fondo de reserva</div><div class="v">FGPM (RAIS) y reservas de Colpensiones agotadas: el faltante lo paga el PGN ($33,78 bn en 2026).</div></div>
+      </div>
+      <div class="col after"><h3><span class="tag purple">Después</span> Ley 2381 de 2024 (vigencia 1 abr 2027)</h3>
+        <div class="row"><div class="k">Arquitectura</div><div class="v">Cuatro pilares. Un solo Pilar Contributivo con dos componentes complementarios. Traslado solo entre administradoras del CCAI. <a class="cite" data-ref="ley2381"></a></div></div>
+        <div class="row"><div class="k">Requisitos</div><div class="v">57/62 años; 1.300 semanas; mujeres bajan 25 semanas por año hasta 1.000 en 2036; −50 semanas por hijo (máx. 3, piso 850; art. 36 devuelto a la Cámara).</div></div>
+        <div class="row"><div class="k">Fórmula</div><div class="v">Misma \( r = 65{,}5 - 0{,}5\,s \) pero sobre el IBL topado a 2,3 SMLMV (r ≈ 64,4–65 %); +1,5 % por 50 semanas; máximo 80 %. Encima de 2,3 SMLMV: anualidad vitalicia del CCAI.</div></div>
+        <div class="row"><div class="k">Prestación anticipada</div><div class="v">> 1.000 semanas y 62 (M) / 65 (H) antes de 2036: pensión proporcional con descuento de cotizaciones faltantes (art. 37).</div></div>
+        <div class="row"><div class="k">Si no alcanza</div><div class="v">300–999 semanas: Renta Vitalicia semicontributiva a los 60/65, tope 80 % SMLMV, no heredable. &lt; 300: devolución / indemnización.</div></div>
+        <div class="row"><div class="k">Cotización</div><div class="v">16 %: 13 pts al fondo común y al Fondo de Ahorro (CPM); 13,2 pts a la cuenta + 1 pt solidario (CCAI). Comisión AFP máx. 0,7 % sobre saldos (parágrafo devuelto).</div></div>
+        <div class="row"><div class="k">Subsidio</div><div class="v">Limitado a 2,3 SMLMV pero extendido a todos los cotizantes; el CARF calcula que el efecto neto eleva el costo. <a class="cite" data-ref="carf24"></a></div></div>
+        <div class="row"><div class="k">Vejez sin pensión</div><div class="v">Renta Básica Solidaria ≈ línea de pobreza extrema ($230.000, 2026) para ~3,1 millones; sujeta al PGN. <a class="cite" data-ref="pilarSol"></a></div></div>
+        <div class="row"><div class="k">Fondo de reserva</div><div class="v">Fondo de Ahorro del Pilar Contributivo en el Banco de la República con subcuentas generacionales; agotamiento estimado 2062 (CARF, escenario base).</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="../js/data.js"></script>
+<script src="../js/glossary.js"></script>
+<script src="../js/routes.js"></script>
+<script src="../js/shell.js"></script>
+<script src="../js/charts.js"></script>
+<script src="../js/models.js"></script>
+<script src="../js/app.js"></script>
+</body>
+</html>
