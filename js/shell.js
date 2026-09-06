@@ -24,13 +24,14 @@
       ids.map(id => {
         const r = S.ROUTE(id); if(!r) return "";
         const activa = id === HERE;
-        const subs = (activa && r.sub && r.sub.length)
-          ? `<div class="subs">${r.sub.map(([sid, lbl]) =>
-              `<a href="#${sid}" data-sub="${sid}">${lbl}</a>`).join("")}</div>`
-          : "";
-        return `<a class="ruta c-${r.color} ${activa?"active":""}" href="${S.href(id)}" data-s="${id}"`+
-               `${activa?' aria-current="page"':""}>`+
-               `<span class="no">${r.n}</span><span class="nm">${r.label}</span></a>` + subs;
+        const fila = `<a class="ruta c-${r.color} ${activa?"active":""}" href="${S.href(id)}" data-s="${id}"`+
+                     `${activa?' aria-current="page"':""}>`+
+                     `<span class="no">${r.n}</span><span class="nm">${r.label}</span></a>`;
+        if(!activa || !r.sub || !r.sub.length) return fila;
+        /* Una sola caja: la ruta abierta y sus partes no se separan. */
+        return `<div class="grupo c-${r.color}">${fila}<div class="subs">${
+          r.sub.map(([sid, lbl]) => `<a href="#${sid}" data-sub="${sid}">${lbl}</a>`).join("")
+        }</div></div>`;
       }).join("")
     ).join("");
   }

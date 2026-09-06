@@ -41,7 +41,7 @@
            ["diagnostico-comun","2015–2022 · El diagnóstico"],["hacia2381","2023–2027 · La Ley 2381"],
            ["cronologia","La cronología completa"]] },
 
-    { n:"02", id:"reforma", label:"La reforma", title:"La Ley 2381 de 2024, entera",
+    { n:"02", id:"reforma", label:"Reforma 2381 de 2024", title:"La Ley 2381 de 2024, entera",
       desc:"Qué cambia y qué sigue igual, el umbral de 2,3, los 95 artículos, la Corte, las críticas y lo que quedó sin responder.",
       color:"cyan", pat:"escamas",
       sub:[["comparador","Antes y después"],["umbral","El umbral de 2,3"],

@@ -83,8 +83,11 @@ para uso puntual.
   propio, sin radios y sin sombra. Las celdas van **a sangre**, de borde a borde
   del menú: nada de una cajita con su propia barra de desplazamiento dentro de
   otra. Quien se desplaza es `.side` entero, y su barra va oculta.
-- Las partes de la ruta abierta son celdas hijas, un tono más grises y con
-  sangría; la que se está leyendo se pone blanca.
+- **La ruta abierta y sus partes son una sola celda**, no varias: van dentro de
+  un `.grupo` con el tinte del color de la ruta (`--card-soft`) y sin líneas
+  negras entre ellas. Las partes cuelgan de una línea de árbol (vertical con
+  ramas cortas) que deja claro que son hijas; la que se está leyendo se pone
+  blanca.
 - El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
   el buscador con el índice completo en dos columnas (una en móvil). No lleva
   lista de «ver también» ni página propia: desde cualquier ficha se salta a otro
