@@ -87,6 +87,19 @@ de tarjetas iguales. Alterna `.figure`, `.panel`, `.block`, `.listblock`,
 `.rows`, `.tiles`, `.stat-strip`, `.band`, `.callout`, `.steps`. `.card` es
 para uso puntual.
 
+**Cada bloque tiene su marcado exacto; copiarlo mal lo deja crudo.** El que más
+se equivoca es `.rows`, que va así —fíjese en `.r` y en `.v`, no `.row` ni un
+`<div>` pelado—:
+
+```html
+<div class="rows">
+  <div class="r"><div class="k">Etiqueta</div><div class="v">Contenido</div></div>
+</div>
+```
+
+`.row` sí existe, pero es de `.compare` y no es intercambiable. Antes de usar un
+bloque, busque su selector en `css/styles.css` y copie la estructura que espera.
+
 ## 7. Menú, glosario y barras de desplazamiento
 
 - El menú lateral usa **el mismo lenguaje de celdas que la rejilla de «artículo
