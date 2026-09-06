@@ -118,10 +118,11 @@ para uso puntual.
   y dibujan la onda con un `::before` enmascarado por un SVG (bloque «RAYAS
   ONDULADAS»). El color va en `--raya`. Un componente nuevo con raya lateral se
   suma a esa lista; no se le pone un `border-left` recto.
-- **Artículo por artículo es un acordeón paginado** (10 por página). Cada fila
-  se abre en el sitio con dos columnas: «En palabras sencillas» (interpretación
-  para quien no maneja lenguaje jurídico) y «Texto exacto del artículo»
-  (transcripción de Función Pública en `js/ley-texto.js`). Nada de modales.
+- **Artículo por artículo es la cuadrícula de tarjetas de siempre**, paginada de
+  diez en diez. Al hacer clic, el detalle se abre en la ventana (`.modal`) con
+  dos columnas: «En palabras sencillas» (interpretación para quien no maneja
+  lenguaje jurídico) y «Texto exacto del artículo» (transcripción de Función
+  Pública en `js/ley-texto.js`). El buscador también busca en el texto oficial.
 - **Las citas no muestran nada al pasar el cursor.** Se hace clic en `[n]` y se
   abre el mismo cajón (`SEMANAS.abrirCita`) con la ficha: qué documento es, en
   qué página o artículo está el dato, la lista de páginas citadas, «Ver el PDF

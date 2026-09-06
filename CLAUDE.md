@@ -29,7 +29,7 @@ Dentro de una ruta, cada parte es un `<section id="…">` declarado en el campo 
 | `js/data.js` | Fuentes numeradas, series de datos, línea de tiempo, los 95 artículos de la ley, columnas y tesis de Jerome Sanabria. |
 | `js/models.js` | Motores de cálculo: actuarial, demográfico, Monte Carlo, fiscal y de subsidios. |
 | `js/charts.js` | Librería propia de gráficas SVG (línea, barras, doble eje, dona, pirámide, histograma, mapa de calor, tornado). |
-| `js/app.js` | Interfaz: citas en el cajón, bibliografía por sección, glosario, calculadora, simuladores, acordeón paginado de artículos. |
+| `js/app.js` | Interfaz: citas en el cajón, bibliografía por sección, glosario, calculadora, simuladores, cuadrícula paginada de artículos con el detalle en la ventana. |
 | `tests/test_models.js` | Casos de calibración. Correr con `node tests/test_models.js`. |
 | `build.py` | Concatena todas las rutas en `dist/semanas.html` (archivo único) y `dist/semanas-artifact.html`. Marca `<html data-single>` para que los enlaces vuelvan a ser anclas. Opcional; el sitio no lo necesita. |
 | `vendor/tex-svg.js` | MathJax local para que las fórmulas funcionen sin internet. |

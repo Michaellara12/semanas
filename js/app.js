@@ -189,35 +189,67 @@
   /* ---------- Artículos ---------- */
   const ST={ex:["Exequible (C-264/26)","ok"],dev:["Devuelto a la Cámara","bad"],parc:["Exequible salvo aparte devuelto","warn"],cond:["Exequible condicionado","purple"]};
   const PL={general:"General",solidario:"Pilar Solidario",semicontributivo:"Semicontributivo",contributivo:"Contributivo",ccai:"Ahorro individual (CCAI)",fondo:"Fondo de Ahorro (BanRep)",transicion:"Transición",beneficios:"Beneficios especiales",invalidez:"Invalidez",sobrevivientes:"Sobrevivientes",institucional:"Institucional",tributario:"Tributario"};
-  /* ---------- Artículo por artículo: acordeón paginado ----------
-     Cada fila se abre en el sitio y muestra dos cosas, separadas: la
-     interpretación en palabras sencillas (el resumen que ya teníamos) y el
-     texto exacto del artículo tal como lo publica Función Pública. Diez
-     artículos por página para que la sección no se coma la pantalla. */
+  /* ---------- Artículo por artículo ----------
+     La cuadrícula de siempre, ahora paginada de diez en diez para que la
+     sección no se coma la pantalla. Al hacer clic, el detalle se abre en la
+     ventana: la interpretación en palabras sencillas y, al lado, el texto
+     exacto tal como lo publica Función Pública (SEMANAS.LEYTEXTO). */
   const POR_PAGINA=10;
   function articulos(){
     const list=$("#art-list"); if(!list) return;
     const sel=$("#art-filter"), st=$("#art-status"), q=$("#art-search"), pag=$("#art-pages");
     const TX=SEMANAS.LEYTEXTO||{};
     sel.innerHTML=`<option value="all">Todos los temas</option>`+Object.keys(PL).map(k=>`<option value="${k}">${PL[k]}</option>`).join("");
-    let pagina=1, abierto=null;
+    let pagina=1;
 
     const filtrados=()=>{ const f=sel.value,s=st.value,qq=(q.value||"").toLowerCase();
       return SEMANAS.ARTICULOS.filter(a=>(f==="all"||a.p===f)&&(s==="all"||a.st===s)&&
         (!qq||(a.t+" "+a.s+" "+a.n+" "+((TX[a.n]||{}).x||"")).toLowerCase().includes(qq))); };
 
-    const textoOficial=a=>{ const t=TX[a.n];
-      if(!t) return `<p class="art-sin">El texto de este artículo no aparece con su encabezado en la publicación de Función Pública que se transcribió. Consúltelo en la fuente oficial: <a class="cite" data-ref="ley2381"></a></p>`;
-      return (t.h?`<p class="art-h">Artículo ${a.n}. ${t.h}.</p>`:"")+t.x.split("\n").map(x=>`<p>${x}</p>`).join(""); };
+    const render=()=>{
+      const items=filtrados(); const total=Math.max(1,Math.ceil(items.length/POR_PAGINA));
+      if(pagina>total) pagina=total;
+      $("#art-count").textContent=items.length+" artículos";
+      const desde=(pagina-1)*POR_PAGINA;
+      const pagina_items=items.slice(desde,desde+POR_PAGINA);
+      list.innerHTML=pagina_items.map(a=>`<div class="art" data-n="${a.n}" tabindex="0" role="button"><div class="n">ART. ${a.n}</div><div class="t">${a.t}</div><div class="p">${a.s}</div><div class="tags"><span class="tag">${PL[a.p]}</span><span class="tag ${ST[a.st][1]}">${ST[a.st][0]}</span></div></div>`).join("")
+        || `<p class="art-sin">Ningún artículo coincide con la búsqueda.</p>`;
+      $$(".art",list).forEach(el=>{ el.addEventListener("click",()=>openArt(+el.dataset.n));
+        el.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openArt(+el.dataset.n); } }); });
+      pintarPaginas(total,desde,items.length);
+    };
 
-    const fila=a=>`<div class="art-item${abierto===a.n?" abierto":""}" data-n="${a.n}">
-      <button class="art-head" aria-expanded="${abierto===a.n}" aria-controls="art-body-${a.n}">
-        <span class="art-n">Art. ${a.n}</span>
-        <span class="art-t">${a.t}</span>
-        <span class="art-tags"><span class="tag">${PL[a.p]}</span><span class="tag ${ST[a.st][1]}">${ST[a.st][0]}</span></span>
-        <span class="art-caret" aria-hidden="true"></span>
-      </button>
-      <div class="art-body" id="art-body-${a.n}"${abierto===a.n?"":" hidden"}>
+    function pintarPaginas(total,desde,cuantos){
+      if(!pag) return;
+      if(total<=1){ pag.innerHTML=""; return; }
+      const btn=(n,l,dis,act)=>`<button class="pg${act?" es":""}" data-p="${n}"${dis?" disabled":""}>${l}</button>`;
+      const nums=[]; for(let i=1;i<=total;i++){ if(i===1||i===total||Math.abs(i-pagina)<=1) nums.push(i); else if(nums[nums.length-1]!=="…") nums.push("…"); }
+      pag.innerHTML=btn(pagina-1,"← Anterior",pagina===1)+
+        `<span class="pg-nums">${nums.map(x=>x==="…"?`<span class="pg-dots">…</span>`:btn(x,x,false,x===pagina)).join("")}</span>`+
+        btn(pagina+1,"Siguiente →",pagina===total)+
+        `<span class="pg-info">Página ${pagina} de ${total} · artículos ${desde+1}–${Math.min(desde+POR_PAGINA,cuantos)}</span>`;
+      $$("button.pg",pag).forEach(b=>b.addEventListener("click",()=>{ pagina=+b.dataset.p; render(); $("#ley")?.scrollIntoView({block:"start",behavior:"smooth"}); }));
+    }
+
+    [sel,st].forEach(e=>e.addEventListener("change",()=>{ pagina=1; render(); }));
+    q.addEventListener("input",()=>{ pagina=1; render(); });
+    render();
+  }
+
+  /* El texto oficial del artículo, tal cual se publicó. */
+  function textoOficial(n){
+    const t=(SEMANAS.LEYTEXTO||{})[n];
+    if(!t) return `<p class="art-sin">El texto de este artículo no aparece con su encabezado en la publicación de Función Pública que se transcribió. Consúltelo en la fuente oficial: ${cite("ley2381")}</p>`;
+    return (t.h?`<p class="art-h">Artículo ${n}. ${t.h}.</p>`:"")+t.x.split("\n").map(x=>`<p>${x}</p>`).join("");
+  }
+
+  function openArt(n){
+    const a=SEMANAS.ARTICULOS.find(x=>x.n===n); if(!a) return;
+    const m=$("#modal");
+    $("#modal-body").innerHTML=`
+      <div class="meta"><span>Ley 2381 de 2024 · Artículo ${a.n}</span><span class="tag">${PL[a.p]}</span><span class="tag ${ST[a.st][1]}">${ST[a.st][0]}</span></div>
+      <h3>${a.t}</h3>
+      <div class="art-detalle">
         <div class="art-col">
           <h4>En palabras sencillas</h4>
           <p>${a.s}</p>
@@ -225,32 +257,15 @@
         </div>
         <div class="art-col art-oficial">
           <h4>Texto exacto del artículo</h4>
-          ${textoOficial(a)}
+          ${textoOficial(a.n)}
           <p class="xs muted">Transcripción del texto publicado por Función Pública ${cite("ley2381")}.</p>
         </div>
       </div>
-    </div>`;
-
-    const render=()=>{
-      const items=filtrados(); const total=Math.max(1,Math.ceil(items.length/POR_PAGINA));
-      if(pagina>total) pagina=total;
-      $("#art-count").textContent=items.length+" artículos";
-      const desde=(pagina-1)*POR_PAGINA;
-      list.innerHTML=items.slice(desde,desde+POR_PAGINA).map(fila).join("")||`<p class="art-sin">Ningún artículo coincide con la búsqueda.</p>`;
-      renderCites();
-      $$(".art-head",list).forEach(b=>b.addEventListener("click",()=>{ const n=+b.parentElement.dataset.n; abierto=(abierto===n)?null:n; render();
-        if(abierto===n){ const el=list.querySelector(`.art-item[data-n="${n}"]`); if(el) el.scrollIntoView({block:"nearest",behavior:"smooth"}); } }));
-      if(pag){
-        if(total<=1){ pag.innerHTML=""; return; }
-        const btn=(n,l,dis,act)=>`<button class="pg${act?" es":""}" data-p="${n}"${dis?" disabled":""}>${l}</button>`;
-        let nums=[]; for(let i=1;i<=total;i++){ if(i===1||i===total||Math.abs(i-pagina)<=1) nums.push(i); else if(nums[nums.length-1]!=="…") nums.push("…"); }
-        pag.innerHTML=btn(pagina-1,"← Anterior",pagina===1)+`<span class="pg-nums">${nums.map(x=>x==="…"?`<span class="pg-dots">…</span>`:btn(x,x,false,x===pagina)).join("")}</span>`+btn(pagina+1,"Siguiente →",pagina===total)+`<span class="pg-info">Página ${pagina} de ${total} · artículos ${desde+1}–${Math.min(desde+POR_PAGINA,items.length)}</span>`;
-        $$("button.pg",pag).forEach(b=>b.addEventListener("click",()=>{ pagina=+b.dataset.p; abierto=null; render(); $("#ley")?.scrollIntoView({block:"start",behavior:"smooth"}); }));
-      }
-    };
-    [sel,st].forEach(e=>e.addEventListener("change",()=>{ pagina=1; abierto=null; render(); }));
-    q.addEventListener("input",()=>{ pagina=1; abierto=null; render(); });
-    render();
+      <div class="flex mt2"><button class="btn sm ghost" id="art-prev">← Art. ${Math.max(1,a.n-1)}</button><button class="btn sm" id="art-next">Art. ${Math.min(95,a.n+1)} →</button></div>`;
+    m.classList.add("open"); renderCites();
+    $("#modal-body").scrollTop=0;
+    $("#art-prev").onclick=()=>openArt(Math.max(1,n-1));
+    $("#art-next").onclick=()=>openArt(Math.min(95,n+1));
   }
   function modal(){ const m=$("#modal"); if(!m) return; $("#modal-close").addEventListener("click",()=>m.classList.remove("open")); m.addEventListener("click",e=>{ if(e.target===m) m.classList.remove("open"); }); }
 
