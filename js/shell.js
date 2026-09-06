@@ -95,7 +95,6 @@
     <button class="gloss-close" id="gloss-close" aria-label="Cerrar el glosario">×</button>
   </div>
   <div class="gloss-body" id="gloss-body"></div>
-  <div class="gloss-foot"><button class="gloss-volver" id="gloss-indice" type="button">← Ver todos los términos</button></div>
 </aside>
 <div class="gloss-veil" id="gloss-veil" hidden></div>
 

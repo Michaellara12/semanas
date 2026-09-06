@@ -49,7 +49,18 @@ Es la regla que más se rompe y la que el autor pidió expresamente.
 - Catálogo actual: `.pat-zigzag`, `.pat-escamas`, `.pat-damero`, `.pat-arcos`,
   `.pat-rayas`, `.pat-cubos`, `.pat-puntos`, `.pat-cruces`.
 
-## 3. Color
+## 3. Nombres de clase reservados
+
+`.side` es **el menú lateral fijo** (`position:fixed`). Nunca use esa clase para
+otra cosa: un `<div class="side">` dentro de un componente hereda el posicionado
+del menú y se planta encima de él. Pasó con el bloque de tesis de la sección de
+críticas, que usaba `.side a` / `.side b` y secuestraba el menú al llegar a esa
+parte de la página; ahora se llama `.lado`.
+
+Igual de reservadas: `.gloss` (cajón del glosario), `.drawer` (cajón móvil),
+`.pdfview`, `.modal`, `.topbar` y `.pop`.
+
+## 4. Color
 
 - Todo color sale de las variables de `css/styles.css`. Ningún valor suelto en
   un componente.
@@ -58,14 +69,28 @@ Es la regla que más se rompe y la que el autor pidió expresamente.
   legible encima) y `--card-soft` (tinte suave). Úsalas en vez de escoger
   pareja de colores a mano: `--on` ya está calculada para contrastar.
 
-## 4. Bloques, no tarjetas
+## 5. Bloques, no tarjetas
 
 El lenguaje es el de Aardvark Book Club: bloques de color plano, no una rejilla
 de tarjetas iguales. Alterna `.figure`, `.panel`, `.block`, `.listblock`,
 `.rows`, `.tiles`, `.stat-strip`, `.band`, `.callout`, `.steps`. `.card` es
 para uso puntual.
 
-## 5. Navegación
+## 6. Menú, glosario y barras de desplazamiento
+
+- El menú lateral es **una tabla de contenidos**, no una pila de tarjetas: un
+  solo marco, filas separadas por reglas finas, número en columna propia y la
+  punta de flecha girando al abrirse. Las partes de la ruta activa se despliegan
+  como filas hijas, con una regla de color a la izquierda.
+- El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
+  el buscador con el índice completo en dos columnas (una en móvil). No lleva
+  lista de «ver también» ni página propia: desde cualquier ficha se salta a otro
+  término sin cerrar nada.
+- Las barras de desplazamiento también van con la marca (`scrollbar-color` y
+  `::-webkit-scrollbar-*`): pista clara, pulgar negro que se pone magenta al
+  pasar por encima. Ningún contenedor con desplazamiento se deja sin estilo.
+
+## 7. Navegación
 
 - `js/routes.js` es la única fuente de verdad. El menú, la rejilla de la
   portada y el pie anterior/siguiente se generan de ahí; no se escriben a mano.
@@ -76,7 +101,7 @@ para uso puntual.
   cambiar clases con el scroll, pero jamás llamar `scrollIntoView` desde un
   oyente de scroll: eso dejaba el menú congelado al final de la página.
 
-## 6. Móvil y accesibilidad
+## 8. Móvil y accesibilidad
 
 - Móvil primero. Nada desborda en horizontal; lo ancho va en un contenedor con
   desplazamiento propio.

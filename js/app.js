@@ -282,7 +282,7 @@
       const lab=sc.rows.filter(x=>x.y%5===0||x.y===2027).map(x=>String(x.y)); const pick=res=>res.rows.filter(x=>x.y%5===0||x.y===2027).map(x=>x.saldo); Charts.line($("#a-chart"),{labels:lab,series:[{name:"Saldo del fondo — base",values:pick(base),color:P[3],dashed:true},{name:"Saldo — escenario IA",values:pick(sc),color:P[0]},{name:"Saldo — IA + contribución sobre capital",values:pick(sc2),color:P[6]}],yFormat:v=>NUM(v,1)+" % PIB",height:280}); }; ["a-exp","a-desp","a-reemp","a-aum","a-sal","a-form","a-cap"].forEach(id=>on(id,"input",run)); run(); }
 
   /* ---------- Sanabria ---------- */
-  function sanabria(){ const c=$("#sb-columns"); if(c){ c.innerHTML=SEMANAS.SANABRIA.columnas.slice().sort((a,b)=>a.f.localeCompare(b.f)).map(x=>`<div class="tl-item"><div class="y">${x.f}</div><h3>${x.t} ${cite(x.k)}</h3><p>${x.r}</p></div>`).join(""); } const cl=$("#sb-claims"); if(cl){ cl.innerHTML=SEMANAS.SANABRIA.tesis.map((t,i)=>`<div class="claim reveal"><div class="side a"><div class="h">Tesis ${i+1} · Sanabria</div>${t.a}</div><div class="side b"><div class="h">Contraste con fuentes primarias</div>${t.b} ${t.k.map(cite).join(" ")}<br><span class="verdict v${t.v}">${t.vt}</span></div></div>`).join(""); } setHTML("sb-perfil",SEMANAS.SANABRIA.perfil+" "+cite("sMejor")+" "+cite("sEnvejecer")+" "+cite("sTigre")); }
+  function sanabria(){ const c=$("#sb-columns"); if(c){ c.innerHTML=SEMANAS.SANABRIA.columnas.slice().sort((a,b)=>a.f.localeCompare(b.f)).map(x=>`<div class="tl-item"><div class="y">${x.f}</div><h3>${x.t} ${cite(x.k)}</h3><p>${x.r}</p></div>`).join(""); } const cl=$("#sb-claims"); if(cl){ cl.innerHTML=SEMANAS.SANABRIA.tesis.map((t,i)=>`<div class="claim reveal"><div class="lado a"><div class="h">Tesis ${i+1} · Sanabria</div>${t.a}</div><div class="lado b"><div class="h">Contraste con fuentes primarias</div>${t.b} ${t.k.map(cite).join(" ")}<br><span class="verdict v${t.v}">${t.vt}</span></div></div>`).join(""); } setHTML("sb-perfil",SEMANAS.SANABRIA.perfil+" "+cite("sMejor")+" "+cite("sEnvejecer")+" "+cite("sTigre")); }
 
   /* ---------- El umbral de 2,3 SMLMV ----------
      Sección propia: qué hace el umbral, de dónde salió el número, las fórmulas
@@ -500,19 +500,53 @@
   function glosario(){
     const G=SEMANAS.GLOSARIO||{};
     const caj=$("#gloss"), veil=$("#gloss-veil"), cuerpo=$("#gloss-body"), ttl=$("#gloss-term");
-    const kicker=$("#gloss-head-kicker"), pieBtn=$("#gloss-indice");
-    let ultimo=null;
+    const items=(SEMANAS.glosarioOrdenado?SEMANAS.glosarioOrdenado():[]);
+    let ultimo=null, actual=null, filtro="";
 
+    /* La ficha ocupa la parte de arriba; el buscador con todos los términos
+       va siempre debajo, para saltar a otra palabra sin cerrar nada. */
     const ficha=k=>{
       const g=G[k]; if(!g) return "";
-      const rel=(g.v||[]).filter(x=>G[x]);
       return (g.a?`<p class="gloss-alias">${g.a}</p>`:"")+
         `<p class="gloss-def">${g.d}</p>`+
         (g.e?`<div class="gloss-ej"><h4>Ejemplo</h4><p>${g.e}</p></div>`:"")+
-        (g.k?`<p class="gloss-src">Fuente: ${cite(g.k)}</p>`:"")+
-        (rel.length?`<div class="gloss-rel"><h4>Ver también</h4>${
-          rel.map(x=>`<button class="chip-term" data-t="${x}">${G[x].t}</button>`).join("")}</div>`:"");
+        (g.k?`<p class="gloss-src">Fuente: ${cite(g.k)}</p>`:"");
     };
+
+    const filas=()=>{
+      const q=filtro.trim().toLowerCase();
+      const hits=items.filter(g=>!q||(g.t+" "+(g.a||"")+" "+g.d).toLowerCase().includes(q));
+      if(!hits.length) return `<p class="gloss-vacio">Ningún término coincide con «${q}».</p>`;
+      return `<ul class="gloss-lista">${hits.map(g=>
+        `<li><button data-t="${g.k}"${g.k===actual?' class="es"':""}>${g.t}`+
+        `${g.a?`<small>${g.a}</small>`:""}</button></li>`).join("")}</ul>`;
+    };
+
+    function pintarLista(){
+      const cont=$("#gloss-filas"); if(!cont) return;
+      cont.innerHTML=filas();
+      $$("button[data-t]",cont).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
+    }
+
+    function pintar(){
+      ttl.textContent=actual?G[actual].t:"Glosario";
+      cuerpo.innerHTML=
+        (actual?`<div class="gloss-ficha">${ficha(actual)}</div>`:"")+
+        `<div class="gloss-indice">
+           <div class="gloss-buscar">
+             <span class="searchbar"><input type="search" id="gloss-q" autocomplete="off"
+               placeholder="Buscar otro término…" aria-label="Buscar en el glosario"></span>
+           </div>
+           <div id="gloss-filas"></div>
+         </div>`;
+      pintarLista();
+      renderCites();
+      const q=$("#gloss-q");
+      if(q){
+        q.value=filtro;
+        q.addEventListener("input",()=>{ filtro=q.value; pintarLista(); });
+      }
+    }
 
     function mostrar(){
       if(caj.hidden){ caj.hidden=false; veil.hidden=false; }
@@ -520,42 +554,25 @@
       document.body.classList.add("gloss-abierto");
     }
 
-    /* Ficha de un término. */
-    function abrir(k, origen){
-      const g=G[k]; if(!g||!caj) return;
+    function abrir(k,origen){
+      if(!caj||!G[k]) return;
       if(origen) ultimo=origen;
-      ttl.textContent=g.t;
-      cuerpo.innerHTML=ficha(k);
+      actual=k;
+      pintar();
       cuerpo.scrollTop=0;
-      if(pieBtn) pieBtn.hidden=false;
       mostrar();
-      renderCites();
-      $$(".chip-term",cuerpo).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
       $$(".term.on").forEach(x=>x.classList.remove("on"));
       if(origen) origen.classList.add("on");
       $("#gloss-close").focus();
     }
 
-    /* Índice A–Z con buscador, dentro del mismo cajón. */
-    const items=(SEMANAS.glosarioOrdenado?SEMANAS.glosarioOrdenado():[]);
-    function indice(filtro){
+    function indice(){
       if(!caj) return;
-      ttl.textContent="Glosario";
-      const q=(filtro||"").trim().toLowerCase();
-      const hits=items.filter(g=>!q||(g.t+" "+(g.a||"")+" "+g.d).toLowerCase().includes(q));
-      cuerpo.innerHTML=
-        `<div class="gloss-buscar"><span class="searchbar"><input type="search" id="gloss-q" `+
-        `placeholder="Buscar un término…" aria-label="Buscar en el glosario" value="${(filtro||"").replace(/"/g,"&quot;")}"></span></div>`+
-        (hits.length
-          ? `<ul class="gloss-lista">${hits.map(g=>
-              `<li><button data-t="${g.k}">${g.t}${g.a?`<small>${g.a}</small>`:""}</button></li>`).join("")}</ul>`
-          : `<p class="gloss-vacio">Ningún término coincide con «${q}».</p>`);
-      if(pieBtn) pieBtn.hidden=true;
+      actual=null; filtro="";
+      pintar();
+      cuerpo.scrollTop=0;
       mostrar();
-      $$(".gloss-lista button",cuerpo).forEach(b=>b.onclick=()=>abrir(b.dataset.t));
-      const q2=$("#gloss-q");
-      if(q2){ q2.addEventListener("input",()=>{ const v=q2.value; const pos=q2.selectionStart; indice(v);
-        const nuevo=$("#gloss-q"); if(nuevo){ nuevo.focus(); nuevo.setSelectionRange(pos,pos); } }); }
+      $("#gloss-q")?.focus();
     }
 
     function cerrar(){
@@ -573,7 +590,7 @@
        pinta después (línea de tiempo, artículos, fichas del glosario). */
     document.addEventListener("click",e=>{
       const boton=e.target.closest("[data-glosario], .abre-glosario");
-      if(boton){ e.preventDefault(); indice(""); return; }
+      if(boton){ e.preventDefault(); indice(); return; }
       const t=e.target.closest(".term[data-t]");
       if(!t) return;
       e.preventDefault();
@@ -586,7 +603,6 @@
       if(e.key==="Escape") cerrar();
     });
     $("#gloss-close")?.addEventListener("click",cerrar);
-    pieBtn?.addEventListener("click",()=>indice(""));
     veil?.addEventListener("click",cerrar);
 
     /* Accesibilidad: cada término es un botón para el teclado. */
