@@ -131,6 +131,11 @@ bloque, busque su selector en `css/styles.css` y copie la estructura que espera.
   y dibujan la onda con un `::before` enmascarado por un SVG (bloque «RAYAS
   ONDULADAS»). El color va en `--raya`. Un componente nuevo con raya lateral se
   suma a esa lista; no se le pone un `border-left` recto.
+- **Si el bloque tiene fondo tintado, se enmascara él también** con la silueta
+  rellena de la misma onda más un rectángulo desde los 9 px: así el color no
+  queda como un cuadrado por detrás de la línea. El contenido no se recorta
+  porque el `padding-left` lo mantiene pasada la onda; si se baja ese padding,
+  el texto se corta.
 - **Artículo por artículo es la cuadrícula de tarjetas de siempre**, paginada de
   diez en diez. Al hacer clic, el detalle se abre en la ventana (`.modal`) con
   dos columnas: «En palabras sencillas» (interpretación para quien no maneja

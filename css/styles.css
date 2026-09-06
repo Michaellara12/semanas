@@ -870,7 +870,7 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 /* El acceso al glosario se queda pegado abajo aunque el menú se desplace. */
 .side .glosario-btn{
   position:sticky;bottom:0;margin-top:auto;
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px;
   font:inherit;font-size:.86rem;font-weight:800;text-align:left;cursor:pointer;
   padding:13px 20px;border:0;border-top:1.5px solid var(--ink);
   background:var(--yellow);color:var(--ink);box-shadow:none;
@@ -964,7 +964,7 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);border-radius:0;overflow:visible}
 .drawer nav .part{padding:9px 18px;background:var(--paper-2);border:0;
   font-size:.6rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3)}
-.drawer .glosario-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;
+.drawer .glosario-btn{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:11px;
   position:sticky;bottom:0;margin-top:auto;width:100%;
   font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:15px 18px;
   border:0;border-top:1.5px solid var(--ink);background:var(--yellow);box-shadow:none}
@@ -1233,17 +1233,27 @@ body.gloss-abierto{overflow:hidden}
    RAYAS ONDULADAS
    ---------------------------------------------------------------------
    Todo bloque que llevaba una raya recta a la izquierda la lleva ahora
-   ondulada. La onda es una máscara SVG sobre un ::before del color que
-   tenía la raya (--raya). El borde recto se apaga en todos.
+   ondulada, dibujada con una máscara SVG sobre un ::before del color que
+   tenía la raya (--raya).
+
+   Los bloques con fondo tintado se enmascaran también ellos, con la
+   silueta rellena de la misma onda: así el color no queda como un
+   rectángulo por detrás de la línea, sino que su borde izquierdo ondula
+   igual. El contenido nunca se recorta porque empieza pasados los 9 px
+   de la onda (de ahí el padding-left de cada bloque).
    ===================================================================== */
 .listblock,.callout,.note,.warnbox,.gloss-ej,.gloss-puntos,.cita-loc{
   position:relative;border-left:0!important}
 .listblock::before,.callout::before,.note::before,.warnbox::before,
 .gloss-ej::before,.gloss-puntos::before,.cita-loc::before{
-  content:"";position:absolute;left:0;top:0;bottom:0;width:9px;
+  content:"";position:absolute;left:0;top:0;bottom:0;width:9px;z-index:1;
   background:var(--raya,var(--magenta));
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M4.5 0C8 3 8 6 4.5 9S1 15 4.5 18' fill='none' stroke='%23000' stroke-width='2.6'/%3E%3C/svg%3E") 0 0/9px 18px repeat-y;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M4.5 0C8 3 8 6 4.5 9S1 15 4.5 18' fill='none' stroke='%23000' stroke-width='2.6'/%3E%3C/svg%3E") 0 0/9px 18px repeat-y}
+/* Solo los que tienen fondo: el tinte arranca en la onda, no antes. */
+.callout,.note,.warnbox,.gloss-ej,.gloss-puntos,.cita-loc{
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M4.5 0C8 3 8 6 4.5 9S1 15 4.5 18L9 18 9 0Z' fill='%23000'/%3E%3C/svg%3E") 0 0/9px 18px repeat-y, linear-gradient(#000,#000) 9px 0/calc(100% - 9px) 100% no-repeat;
+          mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='9' height='18' viewBox='0 0 9 18'%3E%3Cpath d='M4.5 0C8 3 8 6 4.5 9S1 15 4.5 18L9 18 9 0Z' fill='%23000'/%3E%3C/svg%3E") 0 0/9px 18px repeat-y, linear-gradient(#000,#000) 9px 0/calc(100% - 9px) 100% no-repeat}
 /* Los bloques tintados tenían la raya pegada al borde: se le da aire. */
 .callout,.note,.warnbox{padding-left:26px}
 .gloss-ej,.gloss-puntos,.cita-loc{padding-left:22px}
@@ -1292,3 +1302,8 @@ body.gloss-abierto{overflow:hidden}
 .art-pages .pg-nums .pg{min-width:38px;padding:9px 8px;text-align:center}
 .art-pages .pg-dots{padding:0 4px;color:var(--ink-3)}
 .art-pages .pg-info{margin-left:auto;font-family:var(--mono);font-size:.72rem;color:var(--ink-3)}
+
+
+/* Icono del botón del glosario */
+.glosario-btn .gb-ico{width:20px;height:20px;flex:none}
+.drawer .glosario-btn .gb-ico{width:22px;height:22px}
