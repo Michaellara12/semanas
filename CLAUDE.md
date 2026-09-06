@@ -22,13 +22,14 @@ Dentro de una ruta, cada parte es un `<section id="…">` declarado en el campo 
 | `<seccion>/index.html` | Una carpeta por ruta. Contiene solo su `<main>`; declara `data-root="../"` y `data-route="<seccion>"` en `<html>`. |
 | `js/routes.js` | **Única fuente de verdad de la navegación**: número, título, descripción, color, patrón y partes internas (`sub`) de cada ruta, más los grupos del menú (`PARTS`). Agregar una parte = crear el `<section id>` + añadirlo a `sub`. |
 | `js/shell.js` | Inyecta el armazón compartido y el pie anterior/siguiente. |
+| `js/ley-texto.js` | Texto oficial de los 95 artículos (94 transcritos; el 93 no aparece con encabezado en Función Pública), en `SEMANAS.LEYTEXTO`. Lo consume el acordeón de artículo por artículo. |
 | `js/glossary.js` | `GLOSARIO` (definición, «lo importante», ejemplo y términos relacionados) y `TERM_FRASES` (frases que disparan el marcado automático). El glosario no tiene página: vive en el cajón lateral. |
 | `.claude/skills/interfaz-semanas/` | Reglas de interfaz obligatorias: controles con marca, patrones fuera del texto, color, navegación. |
 | `css/styles.css` | Identidad visual completa en variables CSS. |
 | `js/data.js` | Fuentes numeradas, series de datos, línea de tiempo, los 95 artículos de la ley, columnas y tesis de Jerome Sanabria. |
 | `js/models.js` | Motores de cálculo: actuarial, demográfico, Monte Carlo, fiscal y de subsidios. |
 | `js/charts.js` | Librería propia de gráficas SVG (línea, barras, doble eje, dona, pirámide, histograma, mapa de calor, tornado). |
-| `js/app.js` | Interfaz: citas con vista previa, bibliografía por sección, glosario, calculadora, simuladores, explorador de artículos. |
+| `js/app.js` | Interfaz: citas en el cajón, bibliografía por sección, glosario, calculadora, simuladores, acordeón paginado de artículos. |
 | `tests/test_models.js` | Casos de calibración. Correr con `node tests/test_models.js`. |
 | `build.py` | Concatena todas las rutas en `dist/semanas.html` (archivo único) y `dist/semanas-artifact.html`. Marca `<html data-single>` para que los enlaces vuelvan a ser anclas. Opcional; el sitio no lo necesita. |
 | `vendor/tex-svg.js` | MathJax local para que las fórmulas funcionen sin internet. |

@@ -117,9 +117,10 @@
 <section class="section tint" id="ley">
   <div class="wrap">
     <div class="chapter c-cyan"><span class="lbl">Artículo por artículo</span><span class="part">La ley 2381</span></div>
-    <div class="section-head reveal"><h2>95 artículos explicados y su estado tras la Corte</h2><p class="lead">Resúmenes elaborados a partir del texto oficial publicado por Función Pública, con etiqueta temática y estado procesal según la Sentencia C-264 de 2026. Haga clic en un artículo para el detalle. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="c264"></a></p></div>
+    <div class="section-head reveal"><h2>Los 95 artículos, uno por uno</h2><p class="lead">Cada artículo se abre en el sitio y muestra dos cosas: la interpretación en palabras sencillas, para quien no maneja lenguaje jurídico, y el <b>texto exacto</b> tal como lo publica Función Pública. Diez por página; el buscador también busca dentro del texto oficial. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="c264"></a></p></div>
     <div class="art-tools"><span class="searchbar"><input type="text" id="art-search" placeholder="Buscar (p. ej. «2,3», «semanas», «Banco de la República»)"></span><span class="select-wrap"><select id="art-filter"></select></span><span class="select-wrap"><select id="art-status"><option value="all">Todos los estados</option><option value="ex">Exequibles</option><option value="parc">Con aparte devuelto</option><option value="dev">Devueltos</option><option value="cond">Condicionado</option></select></span><span class="tag" id="art-count"></span></div>
-    <div class="art-list" id="art-list"></div>
+    <div class="art-acc" id="art-list"></div>
+    <nav class="art-pages" id="art-pages" aria-label="Páginas de artículos"></nav>
     <div class="note mt2 small"><b>Nota:</b> los resúmenes no sustituyen el texto legal; los artículos 14, 36 y 93 y apartes de 11, 19, 23, 63, 84 y 92 pueden cambiar tras la subsanación ordenada por la Corte (30 días hábiles dentro de la legislatura). <a class="cite" data-ref="lafmProp"></a></div>
   </div>
 </section>
@@ -438,6 +439,7 @@
 
 <script src="../js/data.js"></script>
 <script src="../js/glossary.js"></script>
+<script src="../js/ley-texto.js"></script>
 <script src="../js/routes.js"></script>
 <script src="../js/shell.js"></script>
 <script src="../js/charts.js"></script>

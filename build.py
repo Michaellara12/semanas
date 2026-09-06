@@ -55,7 +55,7 @@ mathjax = ('<script>window.MathJax={tex:{inlineMath:[["\\\\(","\\\\)"]],'
            '<script src="%s" id="MathJax-script" async></script>' % CDN)
 
 scripts = []
-for js in ("js/data.js", "js/glossary.js", "js/routes.js", "js/shell.js",
+for js in ("js/data.js", "js/glossary.js", "js/ley-texto.js", "js/routes.js", "js/shell.js",
            "js/charts.js", "js/models.js", "js/app.js"):
     src = (root / js).read_text(encoding="utf-8").replace("</script>", "<\\/script>")
     scripts.append("<script>\n" + src + "\n</script>")

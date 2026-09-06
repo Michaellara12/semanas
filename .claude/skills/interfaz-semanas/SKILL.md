@@ -111,8 +111,17 @@ para uso puntual.
   dos columnas (una en móvil). Dentro de la ficha, las demás palabras del
   glosario se enlazan solas (`automarcar` sobre `.gloss-ficha`). No hay «ver
   también» ni página propia.
-- Un término en el texto lleva **un cuadrito amarillo delante**, no un signo
-  detrás. Es `.term::before`; no agregar iconos por otra vía.
+- Un término en el texto va **solo subrayado** (punteado violeta), sin icono
+  ni signo. El autor probó el cuadrito delante y el «?» detrás y rechazó ambos.
+- **Toda raya lateral es ondulada.** `.listblock`, `.callout`, `.note`,
+  `.warnbox`, `.gloss-ej`, `.gloss-puntos` y `.cita-loc` apagan su `border-left`
+  y dibujan la onda con un `::before` enmascarado por un SVG (bloque «RAYAS
+  ONDULADAS»). El color va en `--raya`. Un componente nuevo con raya lateral se
+  suma a esa lista; no se le pone un `border-left` recto.
+- **Artículo por artículo es un acordeón paginado** (10 por página). Cada fila
+  se abre en el sitio con dos columnas: «En palabras sencillas» (interpretación
+  para quien no maneja lenguaje jurídico) y «Texto exacto del artículo»
+  (transcripción de Función Pública en `js/ley-texto.js`). Nada de modales.
 - **Las citas no muestran nada al pasar el cursor.** Se hace clic en `[n]` y se
   abre el mismo cajón (`SEMANAS.abrirCita`) con la ficha: qué documento es, en
   qué página o artículo está el dato, la lista de páginas citadas, «Ver el PDF
