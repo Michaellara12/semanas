@@ -60,7 +60,18 @@ parte de la página; ahora se llama `.lado`.
 Igual de reservadas: `.gloss` (cajón del glosario), `.drawer` (cajón móvil),
 `.pdfview`, `.modal`, `.topbar` y `.pop`.
 
-## 4. Color
+## 4. Geometría cuadrada
+
+Nada lleva esquinas redondeadas. Los radios viven en `--r-xs`, `--r-sm`, `--r`,
+`--r-lg`, `--r-xl` y `--pill`, y **todos valen `0`**: los componentes siguen
+usando el token, así que no hay que tocarlos uno por uno. Un `border-radius`
+escrito a mano en un componente nuevo es un error; use el token.
+
+Siguen redondos, y solo ellos: el punto de la marca, las viñetas de la línea de
+tiempo y de las listas con tilde, el pulsador del deslizador y el `input[type=radio]`
+—cuadrarlo lo volvería indistinguible de una casilla—.
+
+## 5. Color
 
 - Todo color sale de las variables de `css/styles.css`. Ningún valor suelto en
   un componente.
@@ -69,14 +80,14 @@ Igual de reservadas: `.gloss` (cajón del glosario), `.drawer` (cajón móvil),
   legible encima) y `--card-soft` (tinte suave). Úsalas en vez de escoger
   pareja de colores a mano: `--on` ya está calculada para contrastar.
 
-## 5. Bloques, no tarjetas
+## 6. Bloques, no tarjetas
 
 El lenguaje es el de Aardvark Book Club: bloques de color plano, no una rejilla
 de tarjetas iguales. Alterna `.figure`, `.panel`, `.block`, `.listblock`,
 `.rows`, `.tiles`, `.stat-strip`, `.band`, `.callout`, `.steps`. `.card` es
 para uso puntual.
 
-## 6. Menú, glosario y barras de desplazamiento
+## 7. Menú, glosario y barras de desplazamiento
 
 - El menú lateral usa **el mismo lenguaje de celdas que la rejilla de «artículo
   por artículo»**: un fondo negro que asoma 1,5 px entre celdas, sin marco
@@ -91,8 +102,8 @@ para uso puntual.
   romper el bloque de color.
 - La vertical del árbol la dibuja cada fila (`::after`), y en la última se corta
   a la altura de su rama: el árbol cierra en «L» en vez de seguir hacia abajo.
-- El menú lateral **solo lleva el menú**: ni botón de glosario ni pie con la
-  fecha de corte. El glosario se abre desde cualquier palabra marcada.
+- El menú lateral lleva el menú y, pegado abajo con `position:sticky`, el botón
+  amarillo del glosario. Nada más: el pie con la fecha de corte se retiró.
 - El menú muestra su barra de desplazamiento, con marca y algo más ancha que
   las demás: es la única señal de que hay más secciones abajo.
 - El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
@@ -104,7 +115,7 @@ para uso puntual.
   pasar por encima. Ningún contenedor con desplazamiento se deja sin estilo, y
   el menú lateral esconde la suya para no partir las celdas.
 
-## 7. Navegación
+## 8. Navegación
 
 - `js/routes.js` es la única fuente de verdad. El menú, la rejilla de la
   portada y el pie anterior/siguiente se generan de ahí; no se escriben a mano.
@@ -115,7 +126,7 @@ para uso puntual.
   cambiar clases con el scroll, pero jamás llamar `scrollIntoView` desde un
   oyente de scroll: eso dejaba el menú congelado al final de la página.
 
-## 8. Móvil y accesibilidad
+## 9. Móvil y accesibilidad
 
 - Móvil primero. Nada desborda en horizontal; lo ancho va en un contenedor con
   desplazamiento propio.

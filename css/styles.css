@@ -55,7 +55,10 @@
 
   /* --- Métrica --- */
   --side:246px; --gutter:clamp(16px,4vw,44px);
-  --r-xs:.5em; --r-sm:.75em; --r:1em; --r-lg:1.5em; --r-xl:2em; --pill:9em;
+  /* Geometría cuadrada: nada de esquinas redondeadas. Los tokens se
+     conservan para no reescribir cada componente; si algún día vuelve
+     el radio, se cambia aquí y se propaga solo. */
+  --r-xs:0; --r-sm:0; --r:0; --r-lg:0; --r-xl:0; --pill:0;
   --bd:2px solid var(--ink);
   --bd-thin:1.5px solid var(--ink);
   --pop:4px 4px 0 var(--ink);
@@ -687,7 +690,7 @@ td.num{font-size:.88rem}
 .modal.open{display:flex}
 .modal .box{background:#fff;border:var(--bd);border-radius:var(--r-xl);max-width:820px;width:100%;max-height:88vh;overflow:auto;padding:clamp(22px,4vw,36px);position:relative;animation:pop .3s var(--ease);box-shadow:var(--pop)}
 @keyframes pop{from{transform:scale(.965);opacity:0}to{transform:none;opacity:1}}
-.modal .close{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:50%;border:var(--bd);background:var(--yellow);cursor:pointer;font-size:1.2rem;font-weight:800;transition:transform .2s var(--bounce)}
+.modal .close{position:absolute;top:12px;right:12px;width:42px;height:42px;border-radius:0;border:var(--bd);background:var(--yellow);cursor:pointer;font-size:1.2rem;font-weight:800;transition:transform .2s var(--bounce)}
 .modal .close:hover{transform:rotate(90deg)}
 .modal .meta{font-size:.72rem;color:var(--ink-3);margin-bottom:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-weight:700}
 
@@ -764,7 +767,7 @@ td.num{font-size:.88rem}
    ===================================================================== */
 footer{border-top:var(--bd);padding:36px 0;color:var(--ink-2);font-size:.82rem;background:var(--paper-2)}
 footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.totop{position:fixed;right:16px;bottom:16px;width:50px;height:50px;border-radius:50%;background:var(--magenta);color:#fff;border:var(--bd);cursor:pointer;font-weight:900;font-size:1.1rem;z-index:60;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s var(--bounce);box-shadow:var(--pop-sm)}
+.totop{position:fixed;right:16px;bottom:16px;width:50px;height:50px;border-radius:0;background:var(--magenta);color:#fff;border:var(--bd);cursor:pointer;font-weight:900;font-size:1.1rem;z-index:60;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s var(--bounce);box-shadow:var(--pop-sm)}
 .totop.show{opacity:1;pointer-events:auto}
 .totop:hover{transform:translateY(-3px);box-shadow:var(--pop)}
 @media print{.side,.topbar,.totop,.pdfview{display:none}main{margin-left:0}}
@@ -876,6 +879,16 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .side{overflow-y:auto;overflow-x:hidden;padding:20px 0 0;gap:14px}
 .side .brand{margin:0 14px 0 20px}
 .side .foot{display:none}
+/* El acceso al glosario se queda pegado abajo aunque el menú se desplace. */
+.side .glosario-btn{
+  position:sticky;bottom:0;margin-top:auto;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font:inherit;font-size:.86rem;font-weight:800;text-align:left;cursor:pointer;
+  padding:13px 20px;border:0;border-top:1.5px solid var(--ink);
+  background:var(--yellow);color:var(--ink);box-shadow:none;
+  transition:background .16s}
+.side .glosario-btn:hover{background:var(--pale-yellow)}
+.side .glosario-btn i{font-style:normal;font-size:1rem}
 
 .side nav{
   display:flex;flex-direction:column;gap:1.5px;
@@ -928,19 +941,11 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .side nav .subs a.en{background:none;color:var(--ink);font-weight:800}
 .side nav .subs a.en::before{opacity:1;height:3px;width:13px;top:calc(.95em - .75px)}
 
-.side .glosario-btn{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  font:inherit;font-size:.86rem;font-weight:800;text-align:left;cursor:pointer;
-  padding:11px 16px;border:var(--bd-thin);border-radius:var(--pill);
-  background:var(--pale-yellow);color:var(--ink);box-shadow:var(--pop-sm);
-  transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
-.side .glosario-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
-.side .glosario-btn:active{transform:translate(2px,2px);box-shadow:none}
-.side .glosario-btn i{font-style:normal;font-size:1rem}
 
 /* Cajón móvil: las mismas celdas, más altas para el pulgar. */
 .drawer .panel{padding:18px 0;gap:14px}
 .drawer .brand{margin-left:18px;margin-right:18px}
+.drawer .panel{padding-bottom:0}
 .drawer nav{display:flex;flex-direction:column;gap:1.5px;background:var(--ink);
   border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);border-radius:0;overflow:visible}
 .drawer nav .part{padding:9px 18px;background:var(--paper-2);border:0;
@@ -972,8 +977,9 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
 .drawer nav .part{padding:9px 18px;background:var(--paper-2);border:0;
   font-size:.6rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3)}
 .drawer .glosario-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;
-  font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:13px 18px;
-  border:var(--bd-thin);border-radius:var(--pill);background:var(--pale-yellow);box-shadow:var(--pop-sm)}
+  position:sticky;bottom:0;margin-top:auto;width:100%;
+  font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:15px 18px;
+  border:0;border-top:1.5px solid var(--ink);background:var(--yellow);box-shadow:none}
 
 /* =====================================================================
    BARRAS DE DESPLAZAMIENTO
@@ -1126,7 +1132,7 @@ input[type=range]:focus-visible{outline:none}
   padding:16px 18px 13px;border-bottom:var(--bd-thin);background:var(--pale-yellow)}
 .gloss-head small{display:block;font-size:.6rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2);margin-bottom:4px}
 .gloss-head h3{margin:0;font-size:clamp(1.25rem,2.6vw,1.65rem);line-height:1.05}
-.gloss-close{flex:none;width:36px;height:36px;border-radius:50%;border:var(--bd-thin);background:var(--paper);
+.gloss-close{flex:none;width:36px;height:36px;border-radius:0;border:var(--bd-thin);background:var(--paper);
   font-size:1.2rem;line-height:1;cursor:pointer;box-shadow:var(--pop-sm);transition:transform .16s var(--ease),box-shadow .16s}
 .gloss-close:hover{transform:translate(-1px,-1px);box-shadow:4px 4px 0 var(--ink)}
 .gloss-close:active{transform:translate(2px,2px);box-shadow:none}
@@ -1187,7 +1193,7 @@ body.gloss-abierto{overflow:hidden}
 .explica{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .paso{display:flex;flex-direction:column;gap:8px;padding:20px;border:var(--bd-thin);
   border-radius:var(--r);background:var(--paper);box-shadow:var(--pop-sm)}
-.paso .n{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+.paso .n{width:34px;height:34px;border-radius:0;display:grid;place-items:center;
   border:var(--bd-thin);background:var(--yellow);font-family:var(--mono);font-size:.8rem;font-weight:600}
 .paso h3{margin:0;font-size:1.12rem}
 .paso p{margin:0;font-size:.89rem;color:var(--ink-2);line-height:1.5}
