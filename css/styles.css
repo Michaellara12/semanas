@@ -865,92 +865,84 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   background-size:26px 26px}
 
 /* =====================================================================
-   MENÚ LATERAL · tabla de contenidos
+   MENÚ LATERAL · celdas a sangre
    ---------------------------------------------------------------------
-   No son tarjetas sueltas: es una tabla. Un solo marco negro, filas
-   separadas por reglas finas, número a la izquierda y las partes de la
-   ruta activa desplegadas debajo de su fila, como una tabla que se abre.
+   Mismo lenguaje que la rejilla de «artículo por artículo»: un fondo
+   negro que asoma entre celdas blancas de 1,5 px, sin marco propio ni
+   radios ni sombra. Las celdas van de borde a borde del menú —nada de
+   una cajita flotando dentro de otra— y quien se desplaza es el menú
+   entero, no un contenedor interior con su propia barra.
    ===================================================================== */
-.side nav{
-  gap:0;border:var(--bd-thin);border-radius:var(--r-sm);
-  background:var(--paper);overflow:auto hidden;overflow-y:auto;
-  box-shadow:var(--pop-sm)}
-.side nav .part{
-  padding:9px 13px;margin:0;background:var(--paper-2);
-  border-bottom:1.5px solid var(--ink);
-  font-size:.58rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-2)}
-.side nav .part::after{display:none}
-.side nav .part ~ .part{border-top:1.5px solid var(--ink)}
-.side nav a.ruta{
-  position:relative;display:grid;grid-template-columns:30px 1fr 10px;align-items:center;gap:11px;
-  padding:13px 13px;border:0;border-radius:0;box-shadow:none;background:var(--paper);
-  color:var(--ink);font-size:.97rem;font-weight:800;line-height:1.15;letter-spacing:-.01em;
-  border-bottom:1.5px solid var(--line);transition:background .16s,color .16s}
-.side nav a.ruta:last-child{border-bottom:0}
-.side nav a.ruta .no{
-  width:auto;height:auto;border:0;border-radius:0;background:none;
-  font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--ink-3);
-  display:block;text-align:left}
-.side nav a.ruta .nm{grid-column:2}
-.side nav a.ruta .dot{display:none}
-/* Punta de flecha: apunta a la derecha, y hacia abajo en la ruta abierta. */
-.side nav a.ruta::after{
-  content:"";grid-column:3;width:7px;height:7px;
-  border-right:2px solid var(--line-2);border-bottom:2px solid var(--line-2);
-  transform:rotate(-45deg);transition:transform .2s var(--ease),border-color .16s}
-.side nav a.ruta:hover{background:var(--card-soft,var(--paper-2));transform:none;box-shadow:none;text-decoration:none}
-.side nav a.ruta:hover::after{border-color:var(--ink)}
-.side nav a.ruta.active{
-  background:var(--card,var(--ink));color:var(--on,#fff);
-  border-bottom:1.5px solid var(--ink);box-shadow:none}
-.side nav a.ruta.active .no{color:var(--on,#fff);opacity:.75}
-.side nav a.ruta.active::after{border-color:currentColor;transform:rotate(45deg)}
+.side{overflow-y:auto;overflow-x:hidden;padding:20px 0 18px;gap:14px}
+.side .brand,.side .glosario-btn,.side .foot{margin-left:20px;margin-right:14px}
 
-/* Las partes de la ruta activa: filas hijas de la tabla. */
+.side nav{
+  display:flex;flex-direction:column;gap:1.5px;
+  background:var(--ink);border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);
+  border-radius:0;box-shadow:none;overflow:visible;flex:none}
+
+.side nav .part{
+  padding:8px 20px;margin:0;background:var(--paper-2);border:0;
+  font-size:.58rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3)}
+.side nav .part::after{display:none}
+
+.side nav a.ruta{
+  display:grid;grid-template-columns:26px 1fr;align-items:baseline;gap:10px;
+  padding:13px 20px;border:0;border-radius:0;box-shadow:none;
+  background:var(--paper);color:var(--ink);
+  font-size:.98rem;font-weight:800;line-height:1.18;letter-spacing:-.015em;
+  transition:background .18s}
+.side nav a.ruta .no{
+  width:auto;height:auto;border:0;border-radius:0;background:none;display:block;text-align:left;
+  font-family:var(--mono);font-size:.72rem;font-weight:600;color:var(--ink-3)}
+.side nav a.ruta .dot{display:none}
+.side nav a.ruta:hover{background:var(--pale-yellow);transform:none;box-shadow:none;text-decoration:none}
+.side nav a.ruta.active{background:var(--card,var(--ink));color:var(--on,#fff);box-shadow:none}
+.side nav a.ruta.active .no{color:inherit;opacity:.7}
+
+/* Las partes de la ruta abierta: celdas hijas, un punto más claras. */
 .side nav .subs{
-  display:flex;flex-direction:column;gap:0;margin:0;padding:0;
-  border:0;border-bottom:1.5px solid var(--line);background:var(--paper-2)}
+  display:flex;flex-direction:column;gap:1.5px;margin:0;padding:0;
+  border:0;background:var(--ink)}
 .side nav .subs a{
-  display:block;padding:9px 13px 9px 30px;border:0;border-radius:0;box-shadow:none;
-  background:none;font-size:.84rem;font-weight:600;color:var(--ink-2);letter-spacing:0;
-  border-left:3px solid transparent;transition:background .14s,color .14s,border-color .14s}
-.side nav .subs a:hover{background:var(--paper);color:var(--ink);border-left-color:var(--line-2);transform:none;box-shadow:none}
-.side nav .subs a.en{background:var(--paper);color:var(--ink);font-weight:800;border-left-color:var(--card,var(--ink))}
+  display:block;padding:10px 20px 10px 46px;border:0;border-radius:0;box-shadow:none;
+  background:var(--paper-2);font-size:.85rem;font-weight:600;color:var(--ink-2);letter-spacing:0;
+  transition:background .16s,color .16s}
+.side nav .subs a:hover{background:var(--pale-yellow);color:var(--ink);transform:none;box-shadow:none}
+.side nav .subs a.en{background:var(--paper);color:var(--ink);font-weight:800}
 
 .side .glosario-btn{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
   font:inherit;font-size:.86rem;font-weight:800;text-align:left;cursor:pointer;
-  padding:11px 14px;border:var(--bd-thin);border-radius:var(--pill);
+  padding:11px 16px;border:var(--bd-thin);border-radius:var(--pill);
   background:var(--pale-yellow);color:var(--ink);box-shadow:var(--pop-sm);
   transition:transform .16s var(--ease),box-shadow .16s var(--ease)}
 .side .glosario-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--ink)}
 .side .glosario-btn:active{transform:translate(2px,2px);box-shadow:none}
 .side .glosario-btn i{font-style:normal;font-size:1rem}
-.side .foot{padding-top:2px}
 
-/* Cajón móvil: la misma tabla, con filas más altas para el pulgar. */
-.drawer nav{gap:0;border:var(--bd-thin);border-radius:var(--r-sm);overflow:hidden;background:var(--paper)}
-.drawer nav .part{padding:10px 14px;background:var(--paper-2);border-bottom:1.5px solid var(--ink);
-  font-size:.6rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-2)}
-.drawer nav .part ~ .part{border-top:1.5px solid var(--ink)}
-.drawer nav a.ruta{display:grid;grid-template-columns:32px 1fr 10px;align-items:center;gap:12px;
-  padding:16px 14px;border:0;border-bottom:1.5px solid var(--line);border-radius:0;box-shadow:none;
+/* Cajón móvil: las mismas celdas, más altas para el pulgar. */
+.drawer .panel{padding:18px 0;gap:14px}
+.drawer .brand,.drawer .glosario-btn{margin-left:18px;margin-right:18px}
+.drawer nav{display:flex;flex-direction:column;gap:1.5px;background:var(--ink);
+  border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);border-radius:0;overflow:visible}
+.drawer nav .part{padding:9px 18px;background:var(--paper-2);border:0;
+  font-size:.6rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase;color:var(--ink-3)}
+.drawer nav a.ruta{display:grid;grid-template-columns:28px 1fr;align-items:baseline;gap:11px;
+  padding:16px 18px;border:0;border-radius:0;box-shadow:none;
   background:var(--paper);color:var(--ink);font-weight:800;font-size:1.05rem}
 .drawer nav a.ruta .no{width:auto;height:auto;border:0;background:none;display:block;text-align:left;
   font-family:var(--mono);font-size:.74rem;font-weight:600;color:var(--ink-3)}
 .drawer nav a.ruta .dot{display:none}
-.drawer nav a.ruta::after{content:"";grid-column:3;width:8px;height:8px;
-  border-right:2px solid var(--line-2);border-bottom:2px solid var(--line-2);transform:rotate(-45deg)}
 .drawer nav a.ruta.active{background:var(--card,var(--ink));color:var(--on,#fff)}
-.drawer nav a.ruta.active .no{color:var(--on,#fff);opacity:.75}
-.drawer nav a.ruta.active::after{border-color:currentColor;transform:rotate(45deg)}
-.drawer nav .subs{margin:0;padding:0;border:0;border-bottom:1.5px solid var(--line);
-  background:var(--paper-2);display:flex;flex-direction:column;gap:0}
-.drawer nav .subs a{display:block;padding:13px 14px 13px 32px;border:0;border-left:3px solid transparent;
-  box-shadow:none;background:none;font-size:.96rem;font-weight:600;color:var(--ink-2)}
-.drawer nav .subs a.en{background:var(--paper);color:var(--ink);font-weight:800;border-left-color:var(--card,var(--ink))}
-.drawer .glosario-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;
-  font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:13px 16px;
+.drawer nav a.ruta.active .no{color:inherit;opacity:.7}
+.drawer nav .subs{margin:0;padding:0;border:0;background:var(--ink);
+  display:flex;flex-direction:column;gap:1.5px}
+.drawer nav .subs a{display:block;padding:13px 18px 13px 46px;border:0;border-radius:0;box-shadow:none;
+  background:var(--paper-2);font-size:.95rem;font-weight:600;color:var(--ink-2)}
+.drawer nav .subs a.en{background:var(--paper);color:var(--ink);font-weight:800}
+.drawer .glosario-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;
+  font:inherit;font-size:1rem;font-weight:800;text-align:left;cursor:pointer;padding:13px 18px;
   border:var(--bd-thin);border-radius:var(--pill);background:var(--pale-yellow);box-shadow:var(--pop-sm)}
 
 /* =====================================================================
@@ -966,10 +958,9 @@ footer .inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap
   border:3px solid var(--paper-2);background-clip:padding-box}
 ::-webkit-scrollbar-thumb:hover{background:var(--magenta);background-clip:padding-box}
 ::-webkit-scrollbar-corner{background:var(--paper-2)}
-/* Dentro de bloques oscuros o de color, la pista sigue al fondo. */
-.side nav::-webkit-scrollbar{width:9px}
-.side nav::-webkit-scrollbar-track{background:var(--paper)}
-.side nav::-webkit-scrollbar-thumb{border-width:2px;border-color:var(--paper)}
+/* El menú no muestra barra: se desplaza con la rueda y se ve limpio. */
+.side{scrollbar-width:none}
+.side::-webkit-scrollbar{width:0;height:0}
 .table-wrap::-webkit-scrollbar{height:11px}
 .gloss-body::-webkit-scrollbar{width:10px}
 

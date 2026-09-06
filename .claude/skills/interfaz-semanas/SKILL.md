@@ -78,17 +78,21 @@ para uso puntual.
 
 ## 6. Menú, glosario y barras de desplazamiento
 
-- El menú lateral es **una tabla de contenidos**, no una pila de tarjetas: un
-  solo marco, filas separadas por reglas finas, número en columna propia y la
-  punta de flecha girando al abrirse. Las partes de la ruta activa se despliegan
-  como filas hijas, con una regla de color a la izquierda.
+- El menú lateral usa **el mismo lenguaje de celdas que la rejilla de «artículo
+  por artículo»**: un fondo negro que asoma 1,5 px entre celdas, sin marco
+  propio, sin radios y sin sombra. Las celdas van **a sangre**, de borde a borde
+  del menú: nada de una cajita con su propia barra de desplazamiento dentro de
+  otra. Quien se desplaza es `.side` entero, y su barra va oculta.
+- Las partes de la ruta abierta son celdas hijas, un tono más grises y con
+  sangría; la que se está leyendo se pone blanca.
 - El cajón del glosario muestra la definición y el ejemplo y, **siempre debajo**,
   el buscador con el índice completo en dos columnas (una en móvil). No lleva
   lista de «ver también» ni página propia: desde cualquier ficha se salta a otro
   término sin cerrar nada.
-- Las barras de desplazamiento también van con la marca (`scrollbar-color` y
+- Las barras de desplazamiento van con la marca (`scrollbar-color` y
   `::-webkit-scrollbar-*`): pista clara, pulgar negro que se pone magenta al
-  pasar por encima. Ningún contenedor con desplazamiento se deja sin estilo.
+  pasar por encima. Ningún contenedor con desplazamiento se deja sin estilo, y
+  el menú lateral esconde la suya para no partir las celdas.
 
 ## 7. Navegación
 
