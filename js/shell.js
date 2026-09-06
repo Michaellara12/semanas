@@ -43,7 +43,7 @@
     `<path d="M21 4h-6a3 3 0 0 0-3 3v13a3 3 0 0 1 3-3h6z"/></svg>`;
 
   const glosarioBtn = `<button class="glosario-btn" data-glosario type="button">`+
-                      iconoLibro+`<span>¿Qué significa?</span><i aria-hidden="true">→</i></button>`;
+                      iconoLibro+`<span>Glosario</span><i aria-hidden="true">→</i></button>`;
 
   const brand = `<a class="brand" href="${ROOT || "./"}"><span class="mark"></span>`+
                 `<span class="name">SEMANAS<small>Observatorio pensional</small></span></a>`;
