@@ -83,7 +83,20 @@
      marca <html data-single>. Ahí los enlaces vuelven a ser anclas. */
   S.SINGLE = document.documentElement.hasAttribute("data-single");
 
+  /* La ficha bibliográfica de la Ley 2381 deja explícita la trazabilidad
+     normativa usada en la primera sección, no solo el enlace general. */
+  const ley2381 = (S.SOURCES || []).find(s => s && s.k === "ley2381");
+  if (ley2381) ley2381.t = `<b>Congreso de Colombia · Ley 2381 de 2024.</b> Texto oficial consultado en Función Pública. Para la sección “Qué es y cómo funciona” se revisaron directamente los artículos <b>1, 3, 4, 5, 17, 18, 19, 20, 23, 24, 32, 34, 75 y 94</b>. Método: lectura primaria artículo por artículo; separación entre mandato normativo y explicación pedagógica; contraste de los detalles operativos con el ABECÉ oficial; y verificación de vigencia/estado procesal con la Sentencia C-264 de 2026.`;
+
   S.href = id => S.SINGLE
     ? "#" + id
     : S.ROOT + (id === "inicio" ? "" : id + "/");
+
+  /* Recursos editoriales específicos de la primera sección de la reforma. */
+  if (S.HERE === "reforma" && !S.SINGLE) {
+    const visual = document.createElement("script");
+    visual.src = S.ROOT + "js/reforma-visual.js";
+    visual.defer = true;
+    document.head.appendChild(visual);
+  }
 })();
