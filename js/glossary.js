@@ -156,7 +156,7 @@
     e:"Con $300.000.000 a los 62 años, una renta vitalicia paga alrededor de $1.500.000 mensuales de por vida.",
     i:["El capital pasa a una aseguradora, que paga una mesada fija de por vida y asume el riesgo de longevidad.",
        "No deja saldo heredable, pero sí genera sustitución pensional para el cónyuge y los hijos con derecho.",
-       "Es la modalidad que la Ley 2381 usa para el pilar semicontributivo."],
+       "La renta del pilar semicontributivo tiene una regla distinta: el artículo 18, parágrafo 2, no permite heredarla ni sustituirla por muerte. No se deben trasladar a ella las reglas de sobrevivientes de una pensión."],
     v:["retiro-programado","mortalidad","punto-equilibrio"] },
 
   "retiro-programado":{ t:"Retiro programado", a:"",

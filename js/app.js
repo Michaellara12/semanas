@@ -484,7 +484,7 @@
       const lab=sc.rows.filter(x=>x.y%5===0||x.y===2027).map(x=>String(x.y)); const pick=res=>res.rows.filter(x=>x.y%5===0||x.y===2027).map(x=>x.saldo); Charts.line($("#a-chart"),{labels:lab,series:[{name:"Saldo del fondo — base",values:pick(base),color:P[3],dashed:true},{name:"Saldo — escenario IA",values:pick(sc),color:P[0]},{name:"Saldo — IA + contribución sobre capital",values:pick(sc2),color:P[6]}],yFormat:v=>NUM(v,1)+" % PIB",height:280}); }; ["a-exp","a-desp","a-reemp","a-aum","a-sal","a-form","a-cap"].forEach(id=>on(id,"input",run)); run(); }
 
   /* ---------- Sanabria ---------- */
-  function sanabria(){ const c=$("#sb-columns"); if(c){ c.innerHTML=SEMANAS.SANABRIA.columnas.slice().sort((a,b)=>a.f.localeCompare(b.f)).map(x=>`<div class="tl-item"><div class="y">${x.f}</div><h3>${x.t} ${cite(x.k)}</h3><p>${x.r}</p></div>`).join(""); } const cl=$("#sb-claims"); if(cl){ cl.innerHTML=SEMANAS.SANABRIA.tesis.map((t,i)=>`<div class="claim reveal"><div class="lado a"><div class="h">Tesis ${i+1} · Sanabria</div>${t.a}</div><div class="lado b"><div class="h">Contraste con fuentes primarias</div>${t.b} ${t.k.map(cite).join(" ")}<br><span class="verdict v${t.v}">${t.vt}</span></div></div>`).join(""); } setHTML("sb-perfil",SEMANAS.SANABRIA.perfil+" "+cite("sMejor")+" "+cite("sEnvejecer")+" "+cite("sTigre")); }
+
 
   /* ---------- El umbral de 2,3 SMLMV ----------
      Sección propia: qué hace el umbral, de dónde salió el número, las fórmulas
@@ -802,5 +802,5 @@
 
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); linkLawMentions($("main")); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); glosario(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); SEMANAS.initDebate?.(); renderCites(); refsLocales(); linkLawMentions($("main")); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); glosario(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();

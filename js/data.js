@@ -199,6 +199,105 @@ SEMANAS.LEGAL_SOURCES={
  al01:{tipo:"Reforma constitucional",ubicacion:"Adiciones al art. 48 de la Constitución",uso:"Contextualiza límites constitucionales, sostenibilidad, derechos y mesadas adicionales.",limite:"La aplicación exige revisar fechas, derechos adquiridos y excepciones del propio acto."}
 };
 SEMANAS.PDFPAGES.ley2381pdf={def:49,pages:[{p:49,d:"Art. 93: trato diferencial; arts. 94 y 95: vigencia y derogatorias"}]};
+
+/* Debate: fuentes añadidas sin renumerar las anteriores. */
+SEMANAS.SOURCES.push({"k": "anifSemi24", "t": "ANIF, equipo de investigación (2024). <b>Pilar Semicontributivo: la otra cara de la moneda</b>, 19 de junio.", "u": "https://anif.com.co/comentario-economico/pilar-semicontributivo-la-otra-cara-de-la-moneda/"},{"k": "anifFiscal24", "t": "ANIF, equipo de investigación (2024). <b>La insostenibilidad del sistema pensional persiste</b>, 25 de abril.", "u": "https://anif.com.co/comentario-economico/la-insostenibilidad-del-sistema-pensional-persiste/"},{"k": "gobAloc24", "t": "Presidencia de la República (2024). <b>Alocución de Gustavo Petro sobre la Reforma Pensional</b>, 24 de abril.", "u": "https://petro.presidencia.gov.co/prensa/Paginas/Alocucion-del-presidente-de-la-Republica-Gustavo-Petro-Urrego-sobre-la-Refo-240424.aspx"},{"k": "gobVida24", "t": "Presidencia de la República (2024). <b>VIDA, número 29</b>, octubre, página impresa 12: respuesta a #NoConMiAhorro.", "u": "https://www.presidencia.gov.co/prensa/HistorialVida/VIDA2924.pdf"},{"k": "gobFiscal23", "t": "Presidencia / Ministerio de Hacienda (2023). <b>El proyecto de reforma pensional está dentro de las posibilidades financieras de la nación</b>, 10 de octubre.", "u": "https://petro.presidencia.gov.co/prensa/Paginas/El-proyecto-de-reforma-pensional-esta-dentro-de-las-posibilidades-financieras-de-la-nacion-231010.aspx"},{"k": "ce415", "t": "Consejo de Estado (2026). <b>Suspensión total del Decreto 415 sobre traslado de ahorros pensionales a Colpensiones</b>, comunicado del 11 de mayo; expediente principal 1023-2026.", "u": "https://www.consejodeestado.gov.co/ordenesdeldia/prensa/fina.php"},{"k": "gob415", "t": "Presidencia / Hacienda, Trabajo y Colpensiones (2026). <b>Suspensión total de los ahorros pensionales desde fondos privados puede afectar el pago de mesadas</b>, 11 de mayo.", "u": "https://petro.presidencia.gov.co/prensa/Paginas/Suspension-total-de-los-ahorros-pensionales-desde-fondos-privados-puede-afectar-el-pago-de-mesadas-pensionales-260511.aspx"},{"k": "colpSeguro25", "t": "Colpensiones (2025). <b>Comunicado a la opinión pública</b>, 3 de diciembre: alcance del proyecto de cobertura de deslizamiento del salario mínimo.", "u": "https://www.colpensiones.gov.co/publicaciones/5139/comunicado-a-la-opinion-publica/"},{"k": "d1485texto", "t": "Gobierno Nacional (2025). <b>Decreto 1485 del 31 de diciembre de 2025</b>, texto oficial: sustituye el mecanismo de cobertura de deslizamiento del salario mínimo del Decreto 1833 de 2016.", "u": "https://dapre.presidencia.gov.co/normativa/normativa/DECRETO%201485%20DEL%2031%20DE%20DICIEMBRE%20DE%202025.pdf"});
+Object.assign(SEMANAS.LEGAL_SOURCES,{
+  "anifSemi24": {
+    "tipo": "Análisis técnico · autor de la crítica",
+    "ubicacion": "Resumen y comparación del ahorro en el pilar semicontributivo",
+    "uso": "Documenta objeciones sobre rendimiento, suficiencia y grupos excluidos. Se atribuyen a ANIF y a los supuestos de su ejercicio.",
+    "limite": "Es un escenario, no una pérdida comprobada para todos los afiliados."
+  },
+  "anifFiscal24": {
+    "tipo": "Análisis técnico · propuesta de ajuste",
+    "ubicacion": "Comentarios sobre umbral, transición y administración del fondo",
+    "uso": "Respalda la recomendación de un umbral de un mínimo y la necesidad de proteger el ahorro.",
+    "limite": "Estudia una etapa del proyecto. Sus cifras de pasivo no se mezclan con las del CARF o Hacienda como si midieran lo mismo."
+  },
+  "gobAloc24": {
+    "tipo": "Declaración oficial · Gobierno promotor",
+    "ubicacion": "Pasaje sobre renta basada en ahorro y subsidio para quienes no alcanzan pensión",
+    "uso": "Permite explicar la finalidad defendida por el Gobierno: protección periódica combinando ahorro y subsidio.",
+    "limite": "Es un discurso sobre el proyecto, no el texto final de la ley ni una respuesta específica a cada caso de Sanabria. Acceso completo intermitente; pasaje corroborado en el índice público."
+  },
+  "gobVida24": {
+    "tipo": "Publicación oficial · argumento de la contraparte",
+    "ubicacion": "Página impresa 12, apartado 3 sobre la campaña #NoConMiAhorro",
+    "uso": "Documenta que el Gobierno negó la confiscación y defendió el destino pensional de los recursos. La valoración editorial contrasta esa defensa con los artículos 11 y 19.",
+    "limite": "No es una decisión judicial sobre expropiación. El pasaje fue corroborado en el índice público; el servidor devolvió una página de bloqueo al descargar, por lo que no hay copia local."
+  },
+  "gobFiscal23": {
+    "tipo": "Respuesta oficial · financiación del proyecto",
+    "ubicacion": "Declaración de Hacienda y apartado sobre creación del Fondo de Ahorro",
+    "uso": "Identifica la defensa fiscal del Gobierno y el papel atribuido al fondo.",
+    "limite": "Se refiere al proyecto de 2023, no refuta por sí misma el escenario del CARF de junio de 2024 ni acredita financiación suficiente de la ley final."
+  },
+  "ce415": {
+    "tipo": "Comunicación judicial · medida cautelar",
+    "ubicacion": "Entrada fechada 11 de mayo de 2026, suspensión del Decreto 415",
+    "uso": "Documenta la objeción por exceso de potestad reglamentaria y el destino legal de los recursos. Se describe ese hito, no se presume una sentencia definitiva.",
+    "limite": "Es un comunicado sobre una suspensión provisional. El índice puede cambiar; la vigencia actual de la medida exige consultar las actuaciones posteriores del expediente."
+  },
+  "gob415": {
+    "tipo": "Respuesta oficial a una decisión judicial",
+    "ubicacion": "Comunicado conjunto del 11 de mayo, argumentos sobre pagos sin giro de recursos",
+    "uso": "Representa la preocupación financiera del Gobierno y de Colpensiones. Se contrapone al límite jurídico señalado por el Consejo de Estado.",
+    "limite": "Una advertencia de caja no prueba legalidad del decreto ni permite desconocer una orden judicial."
+  },
+  "colpSeguro25": {
+    "tipo": "Aclaración institucional · alcance de un proyecto",
+    "ubicacion": "Distinción entre rentas vitalicias contratadas con aseguradoras en RAIS y pensiones del RPM",
+    "uso": "Aclara a quién se aplica el mecanismo. No se presenta como una respuesta actuarial a la cifra citada por Sanabria.",
+    "limite": "Es anterior al Decreto 1485 definitivo y al comentario de enero de 2026. Acceso completo intermitente; contenido corroborado en el índice público."
+  },
+  "d1485texto": {
+    "tipo": "Decreto · fuente oficial",
+    "ubicacion": "Título y considerandos sobre el riesgo de aumentos del salario mínimo en rentas vitalicias",
+    "uso": "Identifica el objeto del decreto, separado de la Ley 2381. No se deduce de su título un costo universal por afiliado.",
+    "limite": "El objeto se corroboró en el índice oficial. El servidor impidió descargar una copia local íntegra; no se afirma haber auditado todo el articulado ni sus efectos actuales."
+  }
+});
+SEMANAS.PDFPAGES.carf24u.pages.push({p:16,d:"Transferencias de la Nación, agotamiento del fondo y costo inicial de reservar ahorro por generaciones"});
+SEMANAS.PDFPAGES.oit25.pages.push({p:19,d:"Prestación periódica reducida y reservas sobre suficiencia del semicontributivo"});
+Object.assign(SEMANAS.LEGAL_SOURCES,{
+  "sIncomodando": {
+    "tipo": "Columna de opinión · fuente de la crítica",
+    "ubicacion": "29 de octubre de 2024; argumentos de #NoConMiAhorro sobre renta, propiedad y elección",
+    "uso": "Identifica la posición de Sanabria en sus propias palabras. La sección resume sus objeciones sin adoptar sus calificativos como hechos.",
+    "limite": "La autora es parte del debate; sus cifras y conclusiones se contrastan con la ley y fuentes técnicas."
+  },
+  "sTigre": {
+    "tipo": "Propuesta política · fuente de la autora",
+    "ubicacion": "21 de mayo de 2026; renta opcional, retiros excepcionales y elección de régimen",
+    "uso": "Documenta la solución que propone Sanabria. Se evalúa como alternativa, no como norma aprobada.",
+    "limite": "La columna no aporta una evaluación fiscal suficiente para concluir que elimina las obligaciones futuras."
+  },
+  "sSeguro": {
+    "tipo": "Columna de opinión · crítica a un decreto",
+    "ubicacion": "15 de enero de 2026; cobertura del mínimo, ejemplo de capital y predicción de quiebra",
+    "uso": "Permite atribuir a la autora la cifra de 360 a 560 millones y separar esa tesis del diseño de la Ley 2381.",
+    "limite": "Es un caso citado por la autora, no un requisito universal ni una prueba de insolvencia de todas las entidades."
+  },
+  "sCorte": {
+    "tipo": "Columna de opinión · crítica al procedimiento",
+    "ubicacion": "27 de agosto de 2025; cuestionamientos a la subsanación",
+    "uso": "Identifica la objeción política y jurídica de la autora, contrastada con el Auto 841.",
+    "limite": "No sustituye el criterio de la Corte ni permite anticipar el resultado final del proceso."
+  },
+  "oit25": {
+    "tipo": "Análisis normativo · organismo internacional",
+    "ubicacion": "Página física 19: prestación periódica reducida, cotización definida y reservas de suficiencia",
+    "uso": "Respalda la comparación entre protección periódica y pago único. La sección conserva las reservas expresas del documento.",
+    "limite": "No garantiza una mensualidad individual ni acredita la sostenibilidad fiscal de la reforma. Tampoco es una sentencia colombiana."
+  },
+  "carf24u": {
+    "tipo": "Modelo fiscal · análisis técnico independiente",
+    "ubicacion": "Página física 16: transferencias, agotamiento y costo de las cuentas generacionales; páginas 19–23: escenarios de umbral",
+    "uso": "Documenta los riesgos futuros y los costos de reservar más ahorro. La conclusión editorial distingue un fondo agotado de una desaparición de las pensiones.",
+    "limite": "Estudia la ponencia del tercer debate de 2024 con supuestos demográficos y financieros. No es una fecha de quiebra garantizada para la ley final."
+  }
+});
 SEMANAS.SRC = {}; SEMANAS.SOURCES.forEach((s,i)=>{ SEMANAS.SRC[s.k]=i+1; });
 
 /* ---------- SERIES ECONÓMICAS Y DEMOGRÁFICAS ---------- */
@@ -430,37 +529,6 @@ SEMANAS.ARTICULOS = [
 ];
 
 /* ---------- JEROME SANABRIA: columnas, entrevistas y tesis ---------- */
-SEMANAS.SANABRIA = {
-  perfil: "Jerome Sanabria es estudiante de Derecho e Historia, columnista semanal de La República (sección Tribuna Universitaria / Análisis desde abril de 2024; columna número 52 el 29 de abril de 2025), vocera del movimiento #NoConMiAhorro, exconsejera de juventud en San Cristóbal (Bogotá) y codirectora del documental «Sin permiso para envejecer» (con Julio César Iglesias y Mateo Amaya, financiado por Atlas Network). Su activismo nació de una experiencia familiar: a sus 15 años su padre recibió una devolución de saldos de $112 millones tras cotizar más de 400 semanas en un fondo privado, recursos que financiaron su educación. Se define en el liberalismo clásico (Hayek) y en 2025–2026 se vinculó a la campaña presidencial de Abelardo de la Espriella, con quien elaboró la propuesta de contrarreforma «La pensional del Tigre».",
-  columnas: [
-    {f:"2024-07-30", t:"«Mini pensiones» (reseña en Infobae)", k:"sMini", r:"Presenta la tesis central: el pilar semicontributivo elimina la devolución de saldos y entrega «mini pensiones» de $82.000 a $280.000 mensuales a más de 12 millones de cotizantes; convoca a firmar una demanda ante la Corte."},
-    {f:"2024-10-29", t:"Los estamos incomodando", k:"sIncomodando", r:"Define la reforma como «expropiación»: los saldos del RAIS pasan a Colpensiones, la renta empieza «desde los $82.000» tres años después de la edad pensional y no es heredable; critica a Colombia Check y RTVC."},
-    {f:"2025-04-29", t:"El mejor año de mi vida", k:"sMejor", r:"Balance personal de un año de columnas; origen del activismo tras una entrevista en La FM y beca universitaria."},
-    {f:"2025-08-20", t:"Sin permiso para envejecer", k:"sEnvejecer", r:"Relata la devolución de saldos de su padre ($112 millones) y el documental con testimonios de Argentina, Perú, Venezuela y Colombia."},
-    {f:"2025-08-27", t:"Corte, en ti confío", k:"sCorte", r:"Sostiene que la subsanación en la Cámara fue indebida por citarse sesiones extraordinarias sin el Auto notificado; pide a la Corte actuar como «muro de contención»."},
-    {f:"2026-01-15", t:"El nuevo Seguro Social", k:"sSeguro", r:"Critica el Decreto 1485 de 2025: con productividad de 0,91 % e inflación de 5,1 %, el mínimo subió 23 %; un afiliado de 62 años que necesitaba $360 millones ahora requeriría $560 millones (Asofondos); proyecta el agotamiento del Fondo de Garantía y el colapso de Colpensiones hacia 2062."},
-    {f:"2026-03-27", t:"Siempre tuvimos la razón", k:"sRazon", r:"Reivindica las advertencias de #NoConMiAhorro: umbral de 4 → 2,3 SMLMV, bono prometido de $500.000, «chichigua vitalicia desde $82.000», ~$200 billones de ahorro en juego; acusa a la «tecnocracia centrista» de respaldar el esquema."},
-    {f:"2026-05-21", t:"La pensional del Tigre", k:"sTigre", r:"Propuesta de contrarreforma: semicontributivo opcional (renta vitalicia o devolución de saldos), retiros excepcionales (enfermedad terminal, residencia en el exterior, tratamientos no cubiertos) y pilar contributivo opcional: AFP sin límite o Colpensiones hasta 2,3 SMLMV."},
-    {f:"2026-07-24", t:"Oscuro panorama", k:"sOscuro", r:"Aritmética de la Comisión Séptima de la Cámara (21 curules, 11 para mayoría) como llave para desmontar la reforma."},
-    {f:"2026-08-21", t:"¡Archiven la pensional!", k:"sArchiven", r:"Pide a la Corte declarar inexequible la ley: el Congreso «pupitreó» la reforma, incumplió el Auto 841 y devolverla por segunda vez sería un «cambio jurisprudencial enorme»."},
-    {f:"2026-08-29", t:"Que ruja el Tigre", k:"sRuja", r:"Tras la C-264: la Corte devolvió «nueve artículos intrascendentes»; nómina de Colpensiones ≈ $90 billones (2026), $32 billones del PGN; 16 millones de cotizantes obligados aliviarían la caja en más de $30 billones anuales, pero la crisis se «patea» 15 años."},
-    {f:"2026-09-05", t:"Pañito de agua tibia", k:"sPanito", r:"Contrasta las dos contrarreformas del Centro Democrático: «La pensional de la libertad» (Forero–Briceño: libertad de elección) frente a la de Cadavid–Posada (mantiene pilares y baja el umbral a 1 SMLMV), que califica de insuficiente por conservar la obligatoriedad del reparto."},
-    {f:"2026-08-26", t:"Entrevistas y declaraciones tras la C-264 (Infobae, La FM)", k:"sChichigua", r:"«Chichigua vitalicia»: 300 semanas ≈ $82.956–$84.322 y 999 semanas ≈ $276.244–$280.792 mensuales; caso de un padre con $160 millones de devolución (2017) invertidos en un inmueble que renta $2 millones; los $25 billones del Decreto 0415 deberían ir al fondo del Banco de la República y no a Colpensiones."}
-  ],
-  /* Tesis principales confrontadas con fuentes primarias. v: 1 = respaldada por la fuente; 2 = parcialmente/depende de supuestos; 3 = imprecisa o contradicha */
-  tesis: [
-    {a:"El pilar semicontributivo «roba la devolución de saldos»: quien no alcance las semanas recibe una renta vitalicia no heredable, tres años después de la edad de pensión.", b:"El art. 18 crea una Renta Vitalicia a los 65 (H) / 60 (M) —tres años después de 62/57—, con tope de 80 % del SMLMV, «no sustituible por muerte, ni heredable» (par. 2). La devolución de saldos e indemnización sustitutiva se conservan solo para quienes tienen hasta 299 semanas (par. 3). MinTrabajo confirmó la no heredabilidad. La OIT valora que sustituir un pago único por una prestación periódica acerca el sistema al Convenio 102, aunque advierte que su nivel no está garantizado por ser de cotización definida.", v:1, k:["ley2381","portHeredable","oit25"], vt:"Descripción correcta del texto legal"},
-    {a:"Las «mini pensiones» empiezan en $82.000 y llegan a lo sumo a $280.000 mensuales.", b:"Los montos dependen de las semanas, del IBC y de la tasa técnica de la renta vitalicia, que el Gobierno aún no ha reglamentado. Con 300 semanas a 1 SMLMV el capital indexado es bajo y la renta resultante puede estar en ese orden; con 999 semanas, ingresos superiores a 1 SMLMV o el subsidio de 20 %/30 % (art. 18 b) el valor sube. El tope legal es 80 % del SMLMV ($1.400.724 en 2026), muy por encima de $280.000. La calculadora de esta plataforma permite reproducir ambos casos.", v:2, k:["ley2381","sChichigua"], vt:"Cifras plausibles para el caso base, pero no son el techo"},
-    {a:"«Nos toca a todos irnos obligatoriamente a Colpensiones».", b:"El art. 19 (b) hace obligatorio el Componente de Prima Media sobre ingresos de 1 a 2,3 SMLMV para todos los afiliados sin transición; el 84 % de los cotizantes de Colpensiones y la mayoría del RAIS ganan hasta 2 SMLMV, de modo que la mayor parte de la cotización de la mayoría iría al reparto. El art. 75 exime a quienes tengan 750/900 semanas al 1 abr 2027. La OIT y el CARF describen el mismo diseño; lo evalúan de forma opuesta (coherencia con el Convenio 102 vs. menor ahorro nacional).", v:1, k:["ley2381","oit25","carf24"], vt:"Correcto para afiliados sin transición"},
-    {a:"Colpensiones es una «pirámide» insostenible; la reforma «patea» la crisis 15 años y el sistema colapsa hacia 2062.", b:"El CARF (jun 2024) estima que el Fondo de Ahorro se agotaría en 2062 en el escenario base y que las transferencias de la Nación pasarían de 1,3 % a 3,8 % del PIB en 2063 (+62,3 % del PIB en VPN a 2100); el MFMP 2026 eleva el pasivo de 94,4 % a 121,5 % del PIB. Pero el mismo CARF señala que con subcuentas generacionales el fondo no se agota antes de 2100, que la reforma reduce los subsidios a pensiones altas y eleva la cobertura. «Pirámide» es una metáfora política: el reparto es un contrato intergeneracional legal, cuyo problema es demográfico y de diseño, no fraude.", v:2, k:["carf24","mfmp26"], vt:"El horizonte de riesgo coincide con el CARF; la caracterización es discutible"},
-    {a:"El Gobierno prometió un bono de $500.000 y entregó «$82.000».", b:"La promesa de campaña (2022) fue de $500.000; el proyecto radicado en 2023 y la ley fijan la Renta Básica Solidaria en la línea de pobreza extrema indexada ($230.000 en 2026), tal como habían propuesto ANIF y Fedesarrollo por costo fiscal (0,3 % del PIB según el CARF). Los $82.000 corresponden al ejemplo del semicontributivo, no al Pilar Solidario.", v:2, k:["ley2381","carf24","anifFedes","pilarSol"], vt:"Mezcla dos pilares distintos"},
-    {a:"Las cotizaciones son «propiedad privada» del afiliado y el Estado no debería decidir dónde cotizar.", b:"El art. 11 declara los recursos del sistema como públicos y parafiscales, y solo las cuentas del CCAI como propiedad privada del afiliado (inciso 4, devuelto a la Cámara por la C-264). En el RPM la cotización nunca ha sido propiedad individual (Ley 100, art. 32). La jurisprudencia reconoce la libertad de escoger régimen como configuración legal, no como derecho absoluto; ese es precisamente el punto de fondo pendiente en más de 100 demandas.", v:2, k:["ley2381","c264","ley100"], vt:"Posición normativa; el texto legal la contradice parcialmente"},
-    {a:"El Decreto 1485 «quiebra» a las AFP y aleja la pensión mínima: de $360 a $560 millones de capital requerido.", b:"El decreto sustituyó el mecanismo de cobertura de deslizamiento del salario mínimo (que cubría el impacto del alza del mínimo sobre rentas vitalicias); con el mínimo +23 % en 2026, el capital para financiar una renta de 1 SMLMV sube en la misma proporción y las aseguradoras deben asumir el riesgo. La cifra de $360 → $560 millones es de Asofondos y depende de la edad y la tasa técnica; el modelo actuarial de esta plataforma muestra un salto del orden de 20–25 % por el mínimo, más el efecto de la tasa.", v:2, k:["d1485","d1469","sSeguro"], vt:"Mecanismo real; magnitud depende de supuestos"},
-    {a:"Los $25 billones del Decreto 0415 deberían ir al fondo del Banco de la República, no a Colpensiones.", b:"El art. 24 (num. 4 y 5) destina al FAPC «la totalidad» de los traslados del RAIS a Colpensiones; el decreto ordena girar a Colpensiones los saldos de quienes se trasladaron por la ventana del art. 76, cuyo parágrafo dice que los saldos siguen en las AFP «hasta que se consolide la pensión». Asofondos sostiene que el traslado anticipado contraviene la ley; el Gobierno alega el «descalce» de pagar pensiones sin recibir los saldos. El fondo del Banco solo opera desde la vigencia (1 abr 2027).", v:1, k:["ley2381","d0415","sLaFM"], vt:"Consistente con el diseño del art. 24"},
-    {a:"Contrarreforma: eliminar el semicontributivo, hacer opcional el contributivo, Colpensiones hasta 2,3 SMLMV para quien lo elija.", b:"El CARF advirtió que el arbitraje entre regímenes (elegir el que más subsidio da) es una de las fuentes del costo actual y que un umbral más bajo reduce el costo (≈20 % del PIB con 1 SMLMV); ANIF/Fedesarrollo muestran que el 76,8 % de los subsidios del RPM va al quintil más rico. Restaurar la libre elección con umbral de 2,3 mantendría el subsidio para quien elija reparto y devolvería el riesgo de selección adversa a Colpensiones. La propuesta no ha sido costeada públicamente.", v:2, k:["carf24","carf23","anifFedes","sContra"], vt:"Propuesta política sin evaluación fiscal publicada"}
-  ]
-};
-
 /* ---------- Copias locales de los PDF citados ----------
    Varios servidores bloquean que su PDF se muestre dentro de otra página, y
    otros lo sirven sin extensión o forzando la descarga. Por eso el visor

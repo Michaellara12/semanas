@@ -1,0 +1,33 @@
+{
+  "mode": "built-in image_gen; green chromakey extraction with Sharp",
+  "images": [
+    {
+      "name": "debate-renta",
+      "scene": "An older woman considers a large single savings jar on her left versus a row of small regular monthly coin envelopes on her right. A calendar and winding ribbon signal continuing time. Balanced choice, neither option depicted as good or bad.",
+      "prompt": "Create a new illustration for Colombian SEMANAS pensions education website, reference image STYLE ONLY. Bold geometric Bauhaus expressive human characters, crisp black contour, black/white checkerboards, energetic diagonals and arcs, saturated magenta #FF008C cyan #1CE8ED violet #3B308F yellow #FFD24A lavender white black. Flat clean solid fills, no texture, no shadows, no photographic style. Entire isolated square composition with generous margins on solid pure green chromakey #00FF00, absolutely no green inside artwork. No text, no letters, no numbers. Compassionate thoughtful educational scene, no caricature of real politicians or real people. An older woman considers a large single savings jar on her left versus a row of small regular monthly coin envelopes on her right. A calendar and winding ribbon signal continuing time. Balanced choice, neither option depicted as good or bad.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-7aae64b4-26a5-46e0-9263-fa3b20737f4b.png",
+      "output": "assets/illustrations/debate-renta.webp"
+    },
+    {
+      "name": "debate-eleccion",
+      "scene": "A young woman stands at a fork with two geometric pathways leading to a public columned pension building and a private savings container. She holds her contribution envelope and thoughtfully considers the paths. Dynamic arrows and checkerboards suggest choices.",
+      "prompt": "Create a new illustration for Colombian SEMANAS pensions education website, reference image STYLE ONLY. Bold geometric Bauhaus expressive human characters, crisp black contour, black/white checkerboards, energetic diagonals and arcs, saturated magenta #FF008C cyan #1CE8ED violet #3B308F yellow #FFD24A lavender white black. Flat clean solid fills, no texture, no shadows, no photographic style. Entire isolated square composition with generous margins on solid pure green chromakey #00FF00, absolutely no green inside artwork. No text, no letters, no numbers. Compassionate thoughtful educational scene, no caricature of real politicians or real people. A young woman stands at a fork with two geometric pathways leading to a public columned pension building and a private savings container. She holds her contribution envelope and thoughtfully considers the paths. Dynamic arrows and checkerboards suggest choices.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-b0251ad6-6f12-45b6-8874-7691bc326a46.png",
+      "output": "assets/illustrations/debate-eleccion.webp"
+    },
+    {
+      "name": "debate-futuro",
+      "scene": "A young worker and an older retiree on opposite ends of a geometric bridge, cooperatively supporting a central savings jar. Calendar pages and coin ribbons join the two generations. Bridge solid but visibly needs support, no catastrophic collapse.",
+      "prompt": "Create a new illustration for Colombian SEMANAS pensions education website, reference image STYLE ONLY. Bold geometric Bauhaus expressive human characters, crisp black contour, black/white checkerboards, energetic diagonals and arcs, saturated magenta #FF008C cyan #1CE8ED violet #3B308F yellow #FFD24A lavender white black. Flat clean solid fills, no texture, no shadows, no photographic style. Entire isolated square composition with generous margins on solid pure green chromakey #00FF00, absolutely no green inside artwork. No text, no letters, no numbers. Compassionate thoughtful educational scene, no caricature of real politicians or real people. A young worker and an older retiree on opposite ends of a geometric bridge, cooperatively supporting a central savings jar. Calendar pages and coin ribbons join the two generations. Bridge solid but visibly needs support, no catastrophic collapse.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-f360e552-6db2-46f1-a750-4ba356622de3.png",
+      "output": "assets/illustrations/debate-futuro.webp"
+    },
+    {
+      "name": "debate-control",
+      "scene": "Two friendly citizens examine a large open legal document with a magnifying glass and balanced scales of justice. Abstract meeting seats, checkerboard and diagonal shapes around them. Represents scrutiny, clear rules, transparent democratic debate.",
+      "prompt": "Create a new illustration for Colombian SEMANAS pensions education website, reference image STYLE ONLY. Bold geometric Bauhaus expressive human characters, crisp black contour, black/white checkerboards, energetic diagonals and arcs, saturated magenta #FF008C cyan #1CE8ED violet #3B308F yellow #FFD24A lavender white black. Flat clean solid fills, no texture, no shadows, no photographic style. Entire isolated square composition with generous margins on solid pure green chromakey #00FF00, absolutely no green inside artwork. No text, no letters, no numbers. Compassionate thoughtful educational scene, no caricature of real politicians or real people. Two friendly citizens examine a large open legal document with a magnifying glass and balanced scales of justice. Abstract meeting seats, checkerboard and diagonal shapes around them. Represents scrutiny, clear rules, transparent democratic debate.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-31e3234a-1e6d-40d0-9ac8-c64f1cc819d5.png",
+      "output": "assets/illustrations/debate-control.webp"
+    }
+  ]
+}

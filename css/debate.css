@@ -1,0 +1,59 @@
+/* Debate breve a primera vista; argumentos completos al abrir cada tema. */
+.debate-intro{max-width:85ch;margin:1.5rem 0 2rem}
+.debate-list{display:grid;gap:1rem}
+.debate-topic{border:1.5px solid var(--ink);background:var(--paper);min-width:0}
+.debate-topic>summary{list-style:none;display:grid;grid-template-columns:110px minmax(0,1fr) 32px;gap:1.25rem;align-items:center;padding:1rem 1.25rem;cursor:pointer;background:var(--card-soft)}
+.debate-topic>summary::-webkit-details-marker{display:none}
+.debate-topic>summary:focus-visible{outline:3px solid var(--magenta);outline-offset:3px}
+.debate-topic>summary img{width:100%;height:auto;display:block}
+.debate-topic>summary small{display:block;font:700 .72rem var(--mono);margin-bottom:.5rem}
+.debate-topic>summary strong{display:block;font:800 clamp(1.15rem,2vw,1.5rem)/1.15 var(--display)}
+.debate-take{display:block;margin-top:.5rem;font-size:.9rem;line-height:1.45}
+.debate-expand{display:grid;place-items:center;width:30px;height:30px;border:1.5px solid var(--ink);background:var(--paper);font:800 1.3rem var(--mono)}
+.debate-expand:before{content:'+'}
+.debate-topic[open] .debate-expand:before{content:'−'}
+.debate-topic[open]>summary{border-bottom:1.5px solid var(--ink)}
+.debate-body{padding:1.5rem;min-width:0}
+.debate-body h3,.debate-bottom h3{font:800 1.1rem var(--display);letter-spacing:0;text-transform:none;margin:0 0 .75rem}
+.debate-body p{line-height:1.65}
+.debate-arguments{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem;margin-bottom:1.25rem}
+.debate-arguments>div{border-top:4px solid var(--violet);padding-top:1rem;min-width:0}
+.debate-arguments>div+div{border-top-color:var(--cyan-ink)}
+.debate-arguments p{margin-bottom:0}
+.debate-reading{margin-top:1.25rem}
+.debate-reading p:last-child{margin-bottom:0}
+.debate-flow{display:flex;align-items:stretch;gap:.6rem;margin:1.2rem 0}
+.debate-flow>span{flex:1;padding:.9rem;background:var(--card-soft);border:1px solid var(--ink);font-size:.9rem;min-width:0;line-height:1.5}
+.debate-flow>b{align-self:center}
+.debate-math{border-block:1.5px solid var(--ink);background:var(--paper-2);padding:1.25rem;margin:1.5rem 0}
+.debate-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1rem 0}
+.debate-controls label{font-weight:700;font-size:.9rem}
+.debate-controls input{display:block;width:100%;min-width:0;font-size:1rem;margin-top:.5rem}
+.debate-equation{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:1rem 0}
+.debate-equation>span:not([aria-hidden]){flex:1;min-width:130px;background:var(--pale-yellow);border:1px solid var(--ink);padding:.85rem}
+.debate-equation small,.debate-equation b{display:block}
+.debate-equation small{font-size:.75rem;margin-bottom:.5rem}
+.debate-equation b{font:800 1.2rem var(--display)}
+.debate-bottom{margin-top:2rem}
+.debate-method{max-width:95ch;margin-top:1.5rem}
+@media(max-width:600px){
+ .debate-topic>summary{grid-template-columns:64px minmax(0,1fr) 26px;gap:.6rem;padding:1rem .75rem}
+ .debate-expand{width:25px;height:25px}
+ .debate-topic>summary strong{font-size:1.12rem}
+ .debate-topic>summary small{font-size:.65rem}
+ .debate-take{font-size:.83rem}
+ .debate-body{padding:1rem}
+ .debate-arguments,.debate-controls{grid-template-columns:1fr;gap:1.25rem}
+ .debate-flow{flex-direction:column}
+ .debate-flow>b{transform:rotate(90deg)}
+ .debate-math{padding:1rem}
+ .debate-equation{flex-direction:column;align-items:stretch;gap:.4rem}
+ .debate-equation>[aria-hidden]{text-align:center}
+}
+
+/* Al abrir, la ilustración crece para que se entienda la escena. */
+.debate-topic[open]>summary{grid-template-columns:155px minmax(0,1fr) 32px}
+@media(max-width:600px){
+ .debate-topic[open]>summary{grid-template-columns:minmax(0,1fr) 26px}
+ .debate-topic[open]>summary img{grid-column:1 / -1;width:150px;justify-self:center;margin:.25rem 0 .5rem}
+}
