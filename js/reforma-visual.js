@@ -14,10 +14,11 @@
 
   async function generatedArtwork(){
     const paths = [0,1,2,3,4].map(i => root + "assets/illustrations/ley2381-hero.webp.b64." + i);
-    const parts = await Promise.all(paths.map(async path => {
+    const parts = await Promise.all(paths.map(async (path,i) => {
       const r = await fetch(path, {cache:"force-cache"});
       if (!r.ok) throw new Error("No se pudo cargar " + path);
-      return (await r.text()).trim();
+      const text = (await r.text()).trim();
+      return i < 4 ? text.slice(0,6000) : text;
     }));
     return "data:image/webp;base64," + parts.join("");
   }
@@ -79,8 +80,6 @@
         <div class="law-pillar-card voluntario"><div class="law-pillar-art" data-art-pos="voluntario" aria-hidden="true"></div><span class="law-pillar-index">04</span><h4>Ahorro voluntario</h4><p>Ahorro adicional para complementar la protección económica en la vejez.</p><small>Pilar definido en el artículo 3</small></div>
       </div>`);
 
-    /* Corrige una atribución puntual de la explicación original: la pensión integral
-       y su reconocimiento conjunto se desarrolla en el art. 34, no en el art. 19. */
     const pension = Array.from(wrap.querySelectorAll(".paso p")).find(p => p.textContent.includes("Pensión Integral de Vejez"));
     if (pension) pension.innerHTML = pension.innerHTML.replace("(art. 19)", "(art. 34; requisitos en el art. 32)");
 
@@ -92,8 +91,6 @@
       wrap.querySelector(".law-hero-visual")?.classList.add("art-missing");
     });
 
-    /* La referencia [1] de esta sección debe explicar el rango normativo también
-       aunque el usuario no abra la bibliografía completa. */
     setTimeout(() => {
       wrap.querySelectorAll('.cite[data-ref="ley2381"]').forEach(a => {
         a.title = "Ley 2381 de 2024 · artículos usados en esta sección: 1, 3–5, 17–20, 23–24, 32, 34, 75 y 94";
