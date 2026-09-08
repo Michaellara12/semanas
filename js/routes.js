@@ -36,7 +36,7 @@
     { n:"01", id:"historia", label:"Historia", title:"Ochenta años de sistema pensional colombiano",
       desc:"De las cajas de previsión de 1945 a la Ley 2381: cada norma, por qué se hizo y qué dejó sin resolver.",
       color:"magenta", pat:"zigzag",
-      sub:[["origen","1945–1966 · El origen"],["deterioro","1967–1992 · El deterioro"],
+      sub:[["origen","1945–1966 · El origen"],["deterioro","1967–1992 · Seguro y derecho"],
            ["ley100","1993 · La Ley 100"],["parametricas","2003–2014 · Los ajustes"],
            ["diagnostico-comun","2015–2022 · El diagnóstico"],["hacia2381","2023–2027 · La Ley 2381"],
            ["cronologia","La cronología completa"]] },

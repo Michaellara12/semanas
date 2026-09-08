@@ -298,6 +298,10 @@ Object.assign(SEMANAS.LEGAL_SOURCES,{
     "limite": "Estudia la ponencia del tercer debate de 2024 con supuestos demográficos y financieros. No es una fecha de quiebra garantizada para la ley final."
   }
 });
+SEMANAS.SOURCES.push(...[{"k": "ley6", "t": "Congreso de Colombia (1945). <b>Ley 6 de 1945</b>. Organización de la Caja de Previsión Social de los Empleados y Obreros Nacionales.", "u": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=1167"}, {"k": "ley90", "t": "Congreso de Colombia (1946). <b>Ley 90 de 1946</b>. Seguro social obligatorio e Instituto Colombiano de Seguros Sociales.", "u": "https://normativa.colpensiones.gov.co/colpens/compilacion/docs/ley_0090_1946.htm"}, {"k": "d3041", "t": "Presidencia de Colombia (1966). <b>Decreto 3041 de 1966</b>. Aprueba el Acuerdo 224: reglamento del seguro de invalidez, vejez y muerte. Diario Oficial del 14 de enero de 1967.", "u": "https://normativa.colpensiones.gov.co/colpens/compilacion/docs/decreto_3041_1966.htm"}]);
+Object.assign(SEMANAS.LEGAL_SOURCES,{"ley6": {"tipo": "Norma histórica · fuente primaria", "ubicacion": "Artículos 17–19", "uso": "Identifica la caja de empleados nacionales y las prestaciones a su cargo.", "limite": "Se cita para reconstruir el diseño de esa época. El texto compilado puede incluir modificaciones posteriores; no se presenta como regla aplicable hoy a una persona."}, "ley90": {"tipo": "Norma histórica · fuente primaria", "ubicacion": "Artículos 1 y 8", "uso": "Identifica el seguro social obligatorio y la creación del ICSS.", "limite": "Se cita para reconstruir el diseño de esa época. El texto compilado puede incluir modificaciones posteriores; no se presenta como regla aplicable hoy a una persona."}, "d3041": {"tipo": "Norma histórica · fuente primaria", "ubicacion": "Acuerdo 224: artículos 1, 11 y capítulos de financiación y prestaciones", "uso": "Explica la relación entre aportes, requisitos y seguro; reconoce las reservas sin atribuir un déficit inicial no demostrado.", "limite": "Se cita para reconstruir el diseño de esa época. El texto compilado puede incluir modificaciones posteriores; no se presenta como regla aplicable hoy a una persona."}});
+SEMANAS.SOURCES.push({k:"d2011",t:"Presidencia de Colombia (2012). <b>Decreto 2011 de 2012</b>. Entrada en operación de Colpensiones.",u:"https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=49704"});
+SEMANAS.LEGAL_SOURCES.d2011={tipo:"Norma histórica · fuente primaria",ubicacion:"Considerandos y artículos 1–3",uso:"Distingue la creación legal de Colpensiones en 2007 de su entrada en operación en 2012 y de la transferencia de funciones pensionales del ISS.",limite:"Documenta el cambio de administrador; no implica la creación de un tercer régimen pensional."};
 SEMANAS.SRC = {}; SEMANAS.SOURCES.forEach((s,i)=>{ SEMANAS.SRC[s.k]=i+1; });
 
 /* ---------- SERIES ECONÓMICAS Y DEMOGRÁFICAS ---------- */
@@ -410,21 +414,133 @@ SEMANAS.HIST = {
 
 /* ---------- LÍNEA DE TIEMPO ---------- */
 SEMANAS.TIMELINE = [
- {y:"1945–1946", t:"Cajanal e ICSS", c:"hist", d:"Se crean la Caja Nacional de Previsión (Cajanal, Ley 6 de 1945) y el Instituto Colombiano de Seguros Sociales (Ley 90 de 1946). Arranca el aseguramiento contributivo, fragmentado por sectores y con cientos de cajas."},
- {y:"1967", t:"Seguro de vejez del ISS", c:"hist", d:"El ISS asume el riesgo de vejez para trabajadores privados (Decreto 3041 de 1966): régimen de reparto con reservas insuficientes desde el inicio."},
- {y:"1993", t:"Ley 100: dos regímenes en competencia", c:"hist", d:"Nace el Sistema General de Pensiones: Régimen de Prima Media (RPM, prestación definida) y Régimen de Ahorro Individual con Solidaridad (RAIS, cuentas individuales en AFP). Cotización inicial 13,5 %; garantía de pensión mínima; devolución de saldos e indemnización sustitutiva.", s:"ley100", major:true},
- {y:"2003", t:"Ley 797: paramétrica", c:"hist", d:"Sube gradualmente semanas (1.000 → 1.300 en 2015) y edades (57 M / 62 H desde 2014), cotización a 16 %, y fija la fórmula de tasa de reemplazo r = 65,5 − 0,5·s (55,5 %–65,5 %, máximo 80 %).", s:"ley797", major:true},
- {y:"2005", t:"Acto Legislativo 01", c:"hist", d:"Constitucionaliza la sostenibilidad financiera, elimina regímenes especiales (salvo Fuerza Pública y Presidente) desde 2010, tope de 25 SMLMV y fin de la mesada 14.", s:"al01"},
- {y:"2009–2012", t:"Multifondos, BEPS y Colpensiones", c:"hist", d:"Ley 1328 de 2009 crea multifondos (conservador, moderado, mayor riesgo) y los BEPS. En 2012 Colpensiones reemplaza al ISS; Ley 1580 de 2012 crea la pensión familiar.", s:"ley1328"},
- {y:"2014", t:"Doble asesoría", c:"hist", d:"Ley 1748 de 2014 obliga a la doble asesoría para traslados entre regímenes, tras la evidencia de traslados mal informados.", s:"ley1748"},
- {y:"mar-2023", t:"Radicación de «Cambio por la Vejez»", c:"ref", d:"El Gobierno radica el proyecto (PL 293/2023 Senado) con cuatro pilares y umbral inicial de 3 SMLMV (4 en la propuesta original de campaña).", s:"carf24"},
- {y:"jun-2024", t:"Aprobación y sanción", c:"ref", d:"La plenaria de la Cámara acoge el texto del Senado el 14 de junio de 2024 sin debatir más de 700 proposiciones. Sanción el 16 de julio de 2024 (Ley 2381).", s:"ley2381", major:true},
- {y:"jun-2025", t:"Auto 841: vicio subsanable", c:"jur", d:"La Corte constata la falta de deliberación mínima en la Cámara, devuelve el proyecto para repetir el segundo debate y suspende la vigencia prevista para el 1 de julio de 2025.", s:"auto841", major:true},
- {y:"jun–ago 2025", t:"Subsanación en la Cámara", c:"jur", d:"La Cámara repite la votación (27–28 de junio de 2025) con base en el comunicado de prensa; el Auto solo se notifica el 14 de agosto de 2025 (crítica del conjuez Márquez)."},
- {y:"dic-2025", t:"Decreto 1485 y salario mínimo +23 %", c:"ref", d:"Sustituye el mecanismo de cobertura de deslizamiento del salario mínimo; el mínimo de 2026 sube 23 % ($1.750.905), elevando el capital requerido para pensiones mínimas en el RAIS.", s:"d1485"},
- {y:"abr-2026", t:"Decreto 0415: traslado de $25 billones", c:"ref", d:"Ordena a las AFP girar a Colpensiones los saldos de ~120.000 afiliados que se trasladaron con la ventana de la Ley 2381. Asofondos alerta sobre venta masiva de activos.", s:"d0415"},
- {y:"25-ago-2026", t:"Sentencia C-264: exequible en su mayoría", c:"jur", d:"Exequibilidad por vicios de procedimiento de casi todo el articulado; devuelve los arts. 14, 36 y 93 y apartes de 11, 19, 23, 63, 84 y 92; vigencia condicionada al 1 de abril de 2027; suspende términos de las demás demandas hasta esa fecha.", s:"c264", major:true},
- {y:"1-abr-2027", t:"Entrada en vigencia", c:"ref", d:"Fecha fijada por la Corte para el inicio del nuevo sistema. Desde entonces la Corte retomará más de 100 demandas de fondo.", s:"c264"}
+  {
+    "y": "1945",
+    "t": "Una caja para empleados nacionales",
+    "c": "hist",
+    "d": "La Ley 6 ordenó organizar la Caja de Previsión Social de los Empleados y Obreros Nacionales.",
+    "s": "ley6",
+    "major": false
+  },
+  {
+    "y": "1946",
+    "t": "Nace el ICSS",
+    "c": "hist",
+    "d": "La Ley 90 creó el Instituto Colombiano de Seguros Sociales y estableció el seguro social obligatorio.",
+    "s": "ley90",
+    "major": false
+  },
+  {
+    "y": "1966–1967",
+    "t": "Seguro de invalidez, vejez y muerte",
+    "c": "hist",
+    "d": "El Decreto 3041 aprobó el reglamento del seguro: afiliación, aportes, reservas y requisitos para las prestaciones.",
+    "s": "d3041",
+    "major": false
+  },
+  {
+    "y": "1991",
+    "t": "Un derecho constitucional",
+    "c": "hist",
+    "d": "El artículo 48 reconoce la seguridad social como un derecho irrenunciable y dispone ampliar progresivamente su cobertura.",
+    "s": "constitucion",
+    "major": false
+  },
+  {
+    "y": "1993",
+    "t": "Ley 100: dos regímenes",
+    "c": "hist",
+    "d": "El Sistema General de Pensiones organiza prima media y ahorro individual como regímenes alternativos, con mecanismos de solidaridad y una transición para ciertos afiliados.",
+    "s": "ley100",
+    "major": true
+  },
+  {
+    "y": "2003",
+    "t": "Cambian los requisitos",
+    "c": "hist",
+    "d": "La Ley 797 aumenta gradualmente las semanas de prima media hasta 1.300 en 2015 y fija edades de 57 años para mujeres y 62 para hombres desde 2014. Son reglas históricas.",
+    "s": "ley797",
+    "major": false
+  },
+  {
+    "y": "2005",
+    "t": "Límites y sostenibilidad",
+    "c": "hist",
+    "d": "La reforma constitucional introduce sostenibilidad financiera y límites pensionales, con excepciones y transiciones expresas.",
+    "s": "al01",
+    "major": false
+  },
+  {
+    "y": "2009",
+    "t": "Multifondos y beneficios periódicos",
+    "c": "hist",
+    "d": "La Ley 1328 regula distintos fondos de inversión pensional y los beneficios económicos periódicos.",
+    "s": "ley1328",
+    "major": false
+  },
+  {
+    "y": "2012",
+    "t": "Colpensiones entra en operación",
+    "c": "hist",
+    "d": "El Decreto 2011 reglamenta el inicio de Colpensiones como administradora de prima media y la recepción de funciones pensionales del ISS. La entidad había sido creada legalmente en 2007.",
+    "s": "d2011"
+  },
+  {
+    "y": "2012",
+    "t": "Pensión familiar",
+    "c": "hist",
+    "d": "La Ley 1580 permite sumar esfuerzos de una pareja para pensionarse, bajo requisitos específicos.",
+    "s": "ley1580",
+    "major": false
+  },
+  {
+    "y": "2014",
+    "t": "Más información para trasladarse",
+    "c": "hist",
+    "d": "La Ley 1748 refuerza las obligaciones de información y asesoría al cambiar de régimen.",
+    "s": "ley1748",
+    "major": false
+  },
+  {
+    "y": "2020",
+    "t": "Una fotografía de la cobertura",
+    "c": "hist",
+    "d": "Según DANE, recibía pensión el 25,5 % de hombres de 62 años o más y mujeres de 57 años o más. El dato no mide todas las ayudas o ingresos de esa población.",
+    "s": "daneMayores",
+    "major": false
+  },
+  {
+    "y": "2024",
+    "t": "Ley 2381: cuatro pilares",
+    "c": "ref",
+    "d": "La ley sancionada el 16 de julio organiza pilares solidario, semicontributivo, contributivo y de ahorro voluntario.",
+    "s": "ley2381",
+    "major": true
+  },
+  {
+    "y": "2025",
+    "t": "Suspensión y corrección del trámite",
+    "c": "jur",
+    "d": "El Auto 841 ordenó subsanar el trámite y suspendió la entrada general, con excepciones expresas para el parágrafo transitorio del artículo 12 y el artículo 76.",
+    "s": "auto841",
+    "major": true
+  },
+  {
+    "y": "2026",
+    "t": "Decisión de trámite reportada",
+    "c": "jur",
+    "d": "La Cámara informó un aval mayoritario y aspectos por subsanar. Esta comunicación institucional no sustituye la parte resolutiva íntegra de la sentencia.",
+    "s": "camara264",
+    "major": false
+  },
+  {
+    "y": "2027 · futuro",
+    "t": "Fecha reportada, no un hecho cumplido",
+    "c": "ref",
+    "d": "La comunicación de la Cámara menciona el 1 de abril de 2027. La fecha debe leerse con las condiciones de la decisión judicial, no como una operación ya iniciada.",
+    "s": "camara264",
+    "major": false
+  }
 ];
 
 /* ---------- ARTÍCULOS DE LA LEY 2381 DE 2024 ----------

@@ -1,0 +1,48 @@
+{
+  "mode": "built-in image_gen; green chromakey extraction with Sharp",
+  "images": [
+    {
+      "name": "historia-generaciones",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. Three Colombian generations: young working woman, middle-aged worker and elderly woman together walking a lively winding ribbon of time, calendar leaves and geometric sun. Warm confident poses.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-f26c060a-31ff-4257-8468-64809127f702.png",
+      "output": "assets/illustrations/historia-generaciones.webp"
+    },
+    {
+      "name": "historia-origen",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. Two workers standing at two separate architectural doorways: a public office worker carrying documents and a factory worker with a wrench. Two distinct entrances symbolize separate pension institutions.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-aa3f7627-a31c-4f14-8a33-acb5b300c607.png",
+      "output": "assets/illustrations/historia-origen.webp"
+    },
+    {
+      "name": "historia-seguro",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. Young woman worker passing golden coins along a curved bridge to a smiling elderly man, with a calendar and protected reserve jar beneath bridge. Social insurance across generations.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-b55a8015-b0f1-42eb-a219-3ef76877add7.png",
+      "output": "assets/illustrations/historia-seguro.webp"
+    },
+    {
+      "name": "historia-eleccion",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. A woman considering a forked path: one branch leads to a communal classical institution with several people, other leads to an individual savings jar. Balanced equally prominent destinations.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-dee2dcd3-2e90-4916-bc96-a49a4a85fa70.png",
+      "output": "assets/illustrations/historia-eleccion.webp"
+    },
+    {
+      "name": "historia-ajustes",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. Woman mechanic carefully adjusting three large symbolic controls: clock, calendar full of small squares, and stack of coins. Illustrate adjustments to age, contribution weeks and contributions.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-a0b7b5f4-3397-4058-afd1-f3149c8c4acf.png",
+      "output": "assets/illustrations/historia-ajustes.webp",
+      "refinement_prompt": "Edit this illustration minimally: the woman accidentally has THREE hands. Remove the middle hand resting on the yellow knob above the calendar, along with its entire extra forearm. Keep exactly two arms and two hands: left hand on the left clock control and right hand on the right coin control. The central calendar control should have only a simple yellow knob, no hand. Preserve all other details, composition, style, palette and pure green chromakey background unchanged."
+    },
+    {
+      "name": "historia-cobertura",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. A broad group of diverse Colombian workers and elderly people, some under a large geometric umbrella and some standing outside it. Respectful hopeful editorial scene of incomplete social protection.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-1c0e0bb2-673d-409c-8094-0a8c4f784fe1.png",
+      "output": "assets/illustrations/historia-cobertura.webp"
+    },
+    {
+      "name": "umbral-reparto",
+      "prompt": "Create a NEW standalone editorial illustration, illustration-story. Match the supplied reference STYLE only: lively Bauhaus geometric characters, bold clean black outlines, flat magenta, violet, cyan, yellow, periwinkle, black and white; energetic arcs, diagonals, checkerboard fragments and playful geometric motion. No gradients, no texture, no text or letters. Full complete scene centered with generous margin, no cropped limbs. Background must be solid pure chromakey green #00FF00 for later removal; absolutely no green in any foreground artwork. Woman dividing a flowing ribbon of golden salary coins into two destinations: cyan public pension institution and violet individual savings jar. Behind them exactly five separate stair-step gateways of different heights symbolize different thresholds. No numbers, no labels.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-f529aee9-3398-45c4-8e5e-8b653e7865f1.png",
+      "output": "assets/illustrations/umbral-reparto.webp"
+    }
+  ]
+}

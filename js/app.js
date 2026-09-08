@@ -197,7 +197,7 @@
     const cuerpo=$("#gloss-body");
     $$("[data-pdfk]",cuerpo).forEach(b=>b.onclick=()=>openPDF(k,+b.dataset.pdfp||undefined));
     const g=$("[data-goto]",cuerpo); if(g) g.onclick=e=>{ const li=document.getElementById("ref-"+f.n); if(!li) return;
-      e.preventDefault(); SEMANAS.panel.cerrar(); closeArt(); li.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"}); li.setAttribute("tabindex","-1"); li.focus({preventScroll:true}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); };
+      e.preventDefault(); SEMANAS.panel.cerrar(); closeArt(); const folded=li.closest('details'); if(folded) folded.open=true; li.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"}); li.setAttribute("tabindex","-1"); li.focus({preventScroll:true}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); };
     $$(".cite.on").forEach(x=>x.classList.remove("on")); if(origen) origen.classList.add("on");
   }
   SEMANAS.abrirCita=abrirCita;
@@ -266,7 +266,7 @@
   }
 
   /* ---------- Línea de tiempo ---------- */
-  function timeline(){ const c=$("#timeline"); if(!c) return; const render=f=>{ c.innerHTML=SEMANAS.TIMELINE.filter(i=>f==="all"||i.c===f).map(i=>`<div class="tl-item ${i.major?"major":""}"><div class="y">${i.y}</div><h3>${i.t}</h3><p>${i.d}${i.s?" "+cite(i.s):""}</p></div>`).join(""); renderCites(); }; render("all"); $$("#tl-filter button").forEach(b=>b.addEventListener("click",()=>{ $$("#tl-filter button").forEach(x=>x.classList.remove("active")); b.classList.add("active"); render(b.dataset.f); })); }
+  function timeline(){ const c=$("#timeline"); if(!c) return; const render=f=>{ c.innerHTML=SEMANAS.TIMELINE.filter(i=>f==="all"||i.c===f).map(i=>`<div class="tl-item ${i.major?"major":""}"><div class="y">${i.y}</div><h3>${i.t}</h3><p>${i.d}${i.s?" "+cite(i.s):""}</p></div>`).join(""); renderCites(); }; render("all"); $$("#tl-filter button").forEach(b=>b.addEventListener("click",()=>{ $$("#tl-filter button").forEach(x=>{x.classList.remove("active");x.setAttribute("aria-pressed","false");}); b.classList.add("active"); b.setAttribute("aria-pressed","true"); render(b.dataset.f); })); }
 
   /* ---------- Pilares ---------- */
   const PILLAR_TEXT={
@@ -634,6 +634,14 @@
         const pv=isPDF(s.u,s.k)?` <button class="pdfbtn" data-pdfk="${s.k}">Previsualizar PDF</button>`:"";
         return `<li value="${n}" id="ref-${n}">${s.t}${s.u?` <br><a href="${s.u}" target="_blank" rel="noopener">${s.u}</a>`:""}${pv}</li>`;
       }).join("")}</ol></div>`;
+    if(HERE==="historia"){
+      const wrap=$(".wrap",sec),details=document.createElement("details");
+      details.className="history-more";
+      details.innerHTML='<summary>Consultar todas las fuentes de este recorrido</summary>';
+      while(wrap.firstChild) details.appendChild(wrap.firstChild);
+      wrap.appendChild(details);
+      if(location.hash.startsWith('#ref-')) details.open=true;
+    }
     const antes=$(".ruta-foot",main);
     antes?main.insertBefore(sec,antes):main.appendChild(sec);
     $$(".refs-local .pdfbtn").forEach(b=>b.onclick=()=>openPDF(b.dataset.pdfk));

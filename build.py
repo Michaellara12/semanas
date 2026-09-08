@@ -14,6 +14,7 @@ css = (root / "css/styles.css").read_text(encoding="utf-8")
 css += "\n" + (root / "css/reforma-visual.css").read_text(encoding="utf-8")
 css += "\n" + (root / "css/math-explainers.css").read_text(encoding="utf-8")
 css += "\n" + (root / "css/debate.css").read_text(encoding="utf-8")
+css += "\n" + (root / "css/history-visual.css").read_text(encoding="utf-8")
 portada = (root / "index.html").read_text(encoding="utf-8")
 
 # --- orden de las secciones, leído de js/routes.js ------------------------
@@ -43,6 +44,7 @@ for rid in IDS:
 
 # Enlaces entre páginas -> anclas del mismo documento.
 todo = "\n".join(partes)
+todo = re.sub(r'href="(?:\.\./)?[a-z0-9]+/#([a-z0-9-]+)"', r'href="#\1"', todo)
 todo = re.sub(r'href="\.\./([a-z0-9]+)/"', r'href="#\1"', todo)
 todo = re.sub(r'href="([a-z0-9]+)/"', r'href="#\1"', todo)
 todo = todo.replace('href="../"', 'href="#inicio"')
