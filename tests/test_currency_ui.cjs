@@ -1,0 +1,33 @@
+const {chromium}=require('playwright'),assert=require('node:assert/strict'),fs=require('node:fs');
+(async()=>{
+ const browser=await chromium.launch({headless:true,channel:'msedge'}),page=await browser.newPage({viewport:{width:390,height:950}}),errors=[];
+ page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:8765/reforma/',{waitUntil:'networkidle'});
+ await page.locator('#debate-renta summary').click();
+ const capital=page.locator('#debate-capital'),monthly=page.locator('#debate-mensual');
+ assert.equal(await capital.inputValue(),'24.000.000');assert.equal(await monthly.inputValue(),'200.000');
+ await capital.fill('48000000');assert.equal(await capital.inputValue(),'48.000.000');assert.equal(await page.locator('[data-debate-meses]').textContent(),'240 meses');
+ await monthly.fill('$ 400.000');assert.equal(await monthly.inputValue(),'400.000');assert.equal(await page.locator('[data-debate-meses]').textContent(),'120 meses');
+ await monthly.fill('0');assert.equal(await monthly.evaluate(e=>e.validity.valid),false);await capital.focus();assert.equal(await monthly.inputValue(),'400.000');
+ await capital.fill('1000001');assert.equal(await capital.evaluate(e=>e.validity.valid),false);await monthly.focus();assert.equal(await capital.inputValue(),'48.000.000');
+ await capital.fill('1234567');await capital.evaluate(e=>e.setSelectionRange(2,2));await page.keyboard.press('9');assert.equal(await capital.inputValue(),'19.234.567');assert.equal(await capital.evaluate(e=>e.selectionStart),2);
+ await capital.fill('1234567');await capital.evaluate(e=>e.setSelectionRange(2,2));await page.keyboard.press('Backspace');assert.equal(await capital.inputValue(),'234.567');
+ await capital.fill('1234567');await capital.evaluate(e=>e.setSelectionRange(1,1));await page.keyboard.press('Delete');assert.equal(await capital.inputValue(),'134.567');
+ await page.goto('http://127.0.0.1:8765/cifras/',{waitUntil:'networkidle'});
+ assert.equal(await page.locator('[data-currency="COP"]').count(),4);
+ for(const [id,value] of Object.entries({'c-ibc':'2.500.000','c-ibl':'','c-saldo':'60.000.000','mc-ibc':'1.750.905'}))assert.equal(await page.locator('#'+id).inputValue(),value);
+ await page.evaluate(()=>{const old=Models.acumular;window.moneyArgs=[];Models.acumular=function(o){moneyArgs.push(o.ibcMensual);return old(o);};});
+ await page.locator('#c-ibc').fill('3500000');assert.ok(await page.evaluate(()=>moneyArgs.includes(3500000)));
+ await page.locator('#c-ibl').fill('3000000');await page.locator('#c-ibl').fill('');assert.equal(await page.locator('#c-ibl').inputValue(),'');
+ await page.evaluate(()=>{const old=Models.monteCarlo;Models.monteCarlo=function(o){window.monteIBC=o.ibcMensual;return old(o);};});
+ await page.locator('button[data-tab="m3"]').click();await page.locator('#mc-ibc').fill('7000000');assert.equal(await page.evaluate(()=>monteIBC),7000000);
+ await page.locator('details').filter({has:page.locator('#c-demo')}).locator('summary').click();
+ await page.locator('#c-demo').click();assert.match(await page.locator('#c-ibc').inputValue(),/^\d{1,3}(\.\d{3})+$/);assert.match(await page.locator('#c-ibl').inputValue(),/^\d{1,3}(\.\d{3})+$/);
+ assert.equal(await page.locator('#c-edad').getAttribute('type'),'number');
+ await page.evaluate(()=>{let input=document.createElement('input');input.dataset.currency='COP';input.id='future-cop';input.value='12345678';document.querySelector('main').append(input);});
+ await page.waitForTimeout(30);assert.equal(await page.locator('#future-cop').inputValue(),'12.345.678');
+ await page.locator('#future-cop').fill('2,5');assert.equal(await page.locator('#future-cop').evaluate(e=>e.validity.valid),false);
+ for(const width of [320,390,1440]){await page.setViewportSize({width,height:950});assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));}
+ await page.goto('http://127.0.0.1:8765/dist/semanas.html',{waitUntil:'networkidle'});assert.equal(await page.locator('[data-currency="COP"]').count(),6);assert.equal(await page.locator('#c-saldo').inputValue(),'60.000.000');
+ assert.deepEqual(errors,[]);await browser.close();console.log('OK: seis campos COP, cálculos, límites/pasos, cursor, borrado, pegado, vacíos, autollenado, campos futuros y standalone.');
+})().catch(e=>{console.error(e);process.exit(1)});

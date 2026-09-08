@@ -44,8 +44,8 @@
    document.getElementById('debate-cuenta-result').textContent=`${num(months)} meses son ${num(months/12)} años. La renta vitalicia continúa mientras viva la persona. Sumar lo mismo no equivale a tener el mismo valor financiero.`;
   }
   [capital,mensual].forEach((el,i)=>{
-   el.addEventListener('input',()=>{if(el.value!==''&&el.validity.valid){values[i]=Number(el.value);draw();}});
-   el.addEventListener('change',()=>{if(el.value===''||!el.validity.valid)el.value=values[i];});
+   el.addEventListener('input',()=>{if(el.value!==''&&el.validity.valid){values[i]=S.Money.read(el);draw();}});
+   el.addEventListener('change',()=>{if(el.value===''||!el.validity.valid)S.Money.set(el,values[i]);});
   });
   draw();
  };

@@ -33,7 +33,7 @@ const base=process.env.TEST_BASE_URL||'http://127.0.0.1:8765';
  await page.locator('#debate-mensual').fill('400000');
  assert.equal(await page.locator('[data-debate-meses]').textContent(),'120 meses');
  await page.locator('#debate-mensual').fill('0');await page.locator('#debate-capital').focus();
- assert.equal(await page.locator('#debate-mensual').inputValue(),'400000');
+ assert.equal(await page.locator('#debate-mensual').inputValue(),'400.000');
  assert.ok(!(await page.locator('#debate-cuenta-result').textContent()).includes('Infinity'));
  await page.locator('#debate-renta [data-t="renta-vitalicia"]').click();
  assert.ok((await page.locator('#gloss-body').textContent()).includes('regla distinta'));

@@ -55,7 +55,7 @@
   document.addEventListener('click',articleLinkAction);
   document.addEventListener('keydown',articleLinkAction);
   const on=(id,ev,fn)=>{ const e=document.getElementById(id); if(e) e.addEventListener(ev,fn); return e; };
-  const val=id=>{ const e=document.getElementById(id); return e?(e.type==="checkbox"?e.checked:parseFloat(e.value)):null; };
+  const val=id=>{ const e=document.getElementById(id); return e?(e.type==="checkbox"?e.checked:e.matches('input[data-currency="COP"]')?SEMANAS.Money.read(e):parseFloat(e.value)):null; };
   const txt=id=>{ const e=document.getElementById(id); return e?e.value:""; };
   const setHTML=(id,h)=>{ const e=document.getElementById(id); if(e) e.innerHTML=h; };
   const T=()=>Charts.theme().pal;
@@ -412,7 +412,7 @@
     const ids=["c-edad","c-semanas","c-semanas2027","c-ibc","c-ibl","c-saldo","c-hijos","c-rend","c-itec","c-gmin","c-gap","c-regimen","c-tasacot","c-mort","c-benef","c-pobre"]; ids.forEach(id=>{ const e=document.getElementById(id); if(e){ e.addEventListener("input",run); e.addEventListener("change",run);} }); $$("input[name=c-sexo]").forEach(r=>r.addEventListener("change",run));
     on("c-parse","click",parseHist); on("c-demo","click",()=>{ $("#c-historia").value="# Ejemplo: inicio, fin, IBC mensual (pesos del período)\n2004-02-01,2008-12-31,381500\n2009-03-01,2014-06-30,600000\n2015-01-15,2019-12-31,1000000\n2020-02-01,2025-12-31,1600000\n2026-01-01,2026-08-31,1900000"; parseHist(); });
     ["c-rend","c-itec","c-gmin"].forEach(id=>{ const e=document.getElementById(id); if(e){ const o=$("#"+id+"-o"); const upd=()=>{ o.textContent=NUM(parseFloat(e.value),1)+" %"; }; e.addEventListener("input",upd); upd(); } }); run();
-    function parseHist(){ const h=Models.parseHistoria($("#c-historia").value); const out=$("#c-hist-out"); if(!h.periodos.length){ out.innerHTML=`<span class="status no">Sin períodos válidos</span> ${h.errores.join("; ")}`; return; } $("#c-semanas").value=Math.floor(h.semanas); $("#c-ibl").value=Math.round(h.ibl); $("#c-ibc").value=Math.round(h.ultimoIBC);
+    function parseHist(){ const h=Models.parseHistoria($("#c-historia").value); const out=$("#c-hist-out"); if(!h.periodos.length){ out.innerHTML=`<span class="status no">Sin períodos válidos</span> ${h.errores.join("; ")}`; return; } $("#c-semanas").value=Math.floor(h.semanas); SEMANAS.Money.set($("#c-ibl"),Math.round(h.ibl)); SEMANAS.Money.set($("#c-ibc"),Math.round(h.ultimoIBC));
       out.innerHTML=`<span class="status ok">${h.periodos.length} períodos leídos</span> Semanas: <b>${NUM(h.semanas,1)}</b> · IBL últimos 10 años (pesos de ${Models.CURRENT_YEAR}): <b>${COP(h.ibl10)}</b> · IBL toda la vida: <b>${COP(h.iblVida)}</b> · Se usa el mayor (art. 21 Ley 100 / art. 32 Ley 2381). ${h.errores.length?"Advertencias: "+h.errores.join("; "):""}`; run(); }
     function run(){ const sex=($("input[name=c-sexo]:checked")||{}).value||"M"; const edad=val("c-edad")||45; const semanas=val("c-semanas")||0; const s27=val("c-semanas2027"); const sem2027=(s27==null||isNaN(s27))?null:s27; const ibc=val("c-ibc")||Models.smmlv(2026); const ibl=val("c-ibl")||ibc; const saldo=val("c-saldo")||0; const hijos=val("c-hijos")||0;
       const rend=(val("c-rend")||4)/100, itec=(val("c-itec")||3)/100, gmin=(val("c-gmin")||0)/100, gap=val("c-gap")||0; const regimen=txt("c-regimen")||"RAIS"; const tasaCot=parseFloat(txt("c-tasacot")||"0.16"); const benef=!!val("c-benef"); const pobre=!!val("c-pobre"); Models.setMortality(txt("c-mort")||"rentistas");

@@ -61,6 +61,7 @@ La identidad visual v3 toma como referencia el lenguaje gráfico de **Aardvark B
 - **Ningún control usa el aspecto por defecto del navegador.** El bloque «CONTROLES CON MARCA» de `css/styles.css` cubre texto, número, fecha, búsqueda, desplegable, casilla, radio y deslizador. Un desplegable va dentro de `.select-wrap`; un buscador, dentro de `.searchbar`. Si aparece un control nuevo, se estiliza antes de usarlo.
 - Los bloques con clase `.illus` y el `.avatar` son espacios reservados para ilustraciones y animaciones que el autor agregará después. No borrarlos.
 - Mobile primero. Nada debe desbordar horizontalmente; tablas y gráficas anchas van dentro de un contenedor con desplazamiento propio.
+- **Campos de dinero:** todos los importes editables en COP llevan puntos de miles (`24.000.000`), incluso durante la edición. Use `data-currency="COP"` y `SEMANAS.Money.read/set` de `js/currency.js`; la regla y el marcado están en `.claude/skills/interfaz-semanas/SKILL.md`.
 - Las animaciones parten de un estado de reposo visible (nunca `opacity: 0` esperando un observador) y respetan `prefers-reduced-motion`.
 
 ## Glosario: términos con cajón lateral

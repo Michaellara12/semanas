@@ -19,6 +19,7 @@ Ya están resueltos en `css/styles.css` (bloque «CONTROLES CON MARCA»):
 | Control | Cómo se usa |
 |---|---|
 | Texto, número, correo, fecha | `<input type="...">` a secas: el estilo es global. |
+| Dinero en pesos colombianos | `<input type="text" inputmode="numeric" data-currency="COP">`: separadores de miles mediante `js/currency.js`. |
 | Buscador | `<span class="searchbar"><input type="search"></span>` — la lupa la pone el CSS. |
 | Desplegable | `<span class="select-wrap"><select>…</select></span>` — la flecha la pone el CSS; nunca la del sistema. |
 | Casilla y radio | `<input type="checkbox">` / `<input type="radio">`: se dibujan con la marca propia. |
@@ -33,6 +34,22 @@ aspecto nativo «por ahora».
 Lo mismo aplica a lo emergente: el sitio no usa `alert()`, `confirm()` ni
 `window.prompt()`. Las ventanas se hacen con `.modal`, las fichas flotantes con
 `.pop` y los paneles laterales con el patrón de `.gloss`.
+
+### Campos de dinero · regla permanente
+
+Todo campo editable de pesos colombianos muestra puntos cada tres cifras,
+también al escribir, pegar y rellenar valores desde código: `24.000.000`.
+Conserve la unidad COP/pesos en la etiqueta. Use `data-currency="COP"` y el
+componente compartido `js/currency.js`, incluido antes de `app.js` en todas
+las rutas y en `build.py`; también inicializa campos añadidos dinámicamente.
+
+Los modelos reciben números sin formato mediante `SEMANAS.Money.read(input)`.
+Para asignar un valor desde código use `SEMANAS.Money.set(input, numero)`;
+no use `parseFloat(input.value)` ni `Number(input.value)` con texto formateado.
+El componente conserva campos vacíos, posición del cursor y validación de
+límites/pasos. Actualmente admite pesos enteros, sin centavos; no interprete
+comas decimales como separadores de miles. No aplique el formato de pesos a
+edades, semanas, porcentajes ni valores expresados en salarios mínimos o PIB.
 
 ## 2. Los patrones nunca van debajo del texto
 

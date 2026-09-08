@@ -80,10 +80,10 @@
           <div class="field"><label>Edad actual</label><input type="number" id="c-edad" value="42" min="16" max="80"></div>
           <div class="field"><label>Semanas cotizadas hoy</label><input type="number" id="c-semanas" value="620" min="0" max="3000"><div class="hint">RPM + RAIS + tiempos públicos (art. 75).</div></div>
           <div class="field"><label>Semanas al 1-abr-2027 (opcional)</label><input type="number" id="c-semanas2027" placeholder="auto" min="0" max="3000"><div class="hint">Umbral de transición: 750 M / 900 H.</div></div>
-          <div class="field"><label>IBC mensual (COP)</label><input type="number" id="c-ibc" value="2500000" step="50000"><div class="hint">SMLMV 2026: $1.750.905 · umbral 2,3 SMLMV = $4.027.082.</div></div>
-          <div class="field"><label>IBL estimado (COP, opcional)</label><input type="number" id="c-ibl" placeholder="= IBC" step="50000"><div class="hint">Promedio indexado de los últimos 10 años.</div></div>
+          <div class="field"><label>IBC mensual (COP)</label><input type="text" data-currency="COP" id="c-ibc" value="2500000" step="50000" inputmode="numeric"><div class="hint">SMLMV 2026: $1.750.905 · umbral 2,3 SMLMV = $4.027.082.</div></div>
+          <div class="field"><label>IBL estimado (COP, opcional)</label><input type="text" data-currency="COP" id="c-ibl" placeholder="= IBC" step="50000" inputmode="numeric"><div class="hint">Promedio indexado de los últimos 10 años.</div></div>
           <div class="field"><label>Régimen actual (Ley 100)</label><span class="select-wrap"><select id="c-regimen"><option value="RAIS">Fondo privado (RAIS)</option><option value="RPM">Colpensiones (RPM)</option></select></span></div>
-          <div class="field"><label>Saldo en cuenta individual (COP)</label><input type="number" id="c-saldo" value="60000000" step="1000000"></div>
+          <div class="field"><label>Saldo en cuenta individual (COP)</label><input type="text" data-currency="COP" id="c-saldo" value="60000000" step="1000000" inputmode="numeric"></div>
           <div class="field"><label>Hijos nacidos vivos o adoptivos</label><input type="number" id="c-hijos" value="0" min="0" max="10"><div class="hint">Art. 36 (solo mujeres; devuelto a la Cámara).</div></div>
           <div class="field"><label>Años sin cotizar antes de la renta semicontributiva</label><input type="number" id="c-gap" value="0" min="0" max="30"></div>
         </div>
@@ -203,7 +203,7 @@ else:
     </div></div>
     <div class="tabpanel" data-tab="m3"><div class="grid g2">
       <div class="panel yellow"><h3>Riesgo de rentabilidad: simulación estocástica</h3><p class="small muted">El RAIS y el CCAI transfieren al afiliado el riesgo de mercado. Se simulan 2.000 trayectorias de rendimientos mensuales lognormales (generador Mulberry32 + Box–Muller, reproducible con semilla), acumulando share · IBC.</p><div class="math">\[ R_m=\exp\!\left(\mu_m-\tfrac{\sigma_m^2}{2}+\sigma_m Z\right)-1,\qquad Z\sim N(0,1),\qquad \mu_m=\tfrac{\ln(1+\mu)}{12},\;\sigma_m=\tfrac{\sigma}{\sqrt{12}} \]</div>
-        <div class="form-grid mt2"><div class="field"><label>IBC mensual (COP)</label><input type="number" id="mc-ibc" value="1750905" step="50000"></div><div class="field"><label>Cuenta</label><span class="select-wrap"><select id="mc-share"><option value="0.115">RAIS (11,5 pts)</option><option value="0.132">CCAI (13,2 pts)</option></select></span></div><div class="field"><label>Años de cotización · <output id="mc-anios-o"></output></label><input type="range" id="mc-anios" min="5" max="45" step="1" value="25"></div><div class="field"><label>Rendimiento real medio · <output id="mc-mu-o"></output></label><input type="range" id="mc-mu" min="0" max="9" step="0.5" value="4.5"></div><div class="field"><label>Volatilidad anual · <output id="mc-sigma-o"></output></label><input type="range" id="mc-sigma" min="2" max="20" step="1" value="9"></div></div>
+        <div class="form-grid mt2"><div class="field"><label>IBC mensual (COP)</label><input type="text" data-currency="COP" id="mc-ibc" value="1750905" step="50000" inputmode="numeric"></div><div class="field"><label>Cuenta</label><span class="select-wrap"><select id="mc-share"><option value="0.115">RAIS (11,5 pts)</option><option value="0.132">CCAI (13,2 pts)</option></select></span></div><div class="field"><label>Años de cotización · <output id="mc-anios-o"></output></label><input type="range" id="mc-anios" min="5" max="45" step="1" value="25"></div><div class="field"><label>Rendimiento real medio · <output id="mc-mu-o"></output></label><input type="range" id="mc-mu" min="0" max="9" step="0.5" value="4.5"></div><div class="field"><label>Volatilidad anual · <output id="mc-sigma-o"></output></label><input type="range" id="mc-sigma" min="2" max="20" step="1" value="9"></div></div>
         <p class="muted xs mt1">Referencias: multifondos ≈ 8 % real desde 2011 (Asofondos); TES ≈ 4,3 % real (CARF); la volatilidad del fondo moderado ha rondado 8–10 % anual. <a class="cite" data-ref="asof25"></a> <a class="cite" data-ref="carf24"></a></p></div>
       <div class="figure tinted"><div class="chart-title"><h3>Distribución del capital final</h3></div><div class="chart" id="mc-chart"></div><div id="mc-out" class="mt2"></div></div>
     </div></div>
@@ -235,6 +235,7 @@ else:
 <script src="../js/shell.js"></script>
 <script src="../js/charts.js"></script>
 <script src="../js/models.js"></script>
+<script src="../js/currency.js"></script>
 <script src="../js/app.js"></script>
 </body>
 </html>

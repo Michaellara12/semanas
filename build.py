@@ -66,7 +66,7 @@ mathjax = ('<script>window.MathJax={tex:{inlineMath:[["\\\\(","\\\\)"]],'
 
 scripts = []
 for js in ("js/data.js", "js/glossary.js", "js/ley-texto.js", "js/ley-analisis.js", "js/routes.js", "js/shell.js",
-           "js/charts.js", "js/models.js", "js/math-explainers.js", "js/debate.js", "js/app.js"):
+           "js/charts.js", "js/models.js", "js/math-explainers.js", "js/debate.js", "js/currency.js", "js/app.js"):
     src = (root / js).read_text(encoding="utf-8").replace("</script>", "<\\/script>")
     scripts.append("<script>\n" + src + "\n</script>")
 scripts = "\n".join(scripts)
