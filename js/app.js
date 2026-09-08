@@ -108,11 +108,14 @@
     page=page||pdfPage(k);
     const frame=$("#pdf-frame"), fb=$("#pdf-fallback");
     const plain=src.t.replace(/<[^>]+>/g,"");
-    setHTML("pdf-title",plain.length>120?plain.slice(0,120)+"…":plain);
+    const title=document.createElement("div"); title.innerHTML=src.t;
+    $("#pdf-title").textContent=title.querySelector("b")?.textContent||title.textContent;
+    $("#pdf-title").title=plain;
+    $(".pdf-guide",view).open=false;
     const go=p=>{
       const ext=src.u+"#page="+p;
       $("#pdf-open").href=ext; $("#pdf-fallback-open").href=ext;
-      $("#pdf-kicker").textContent="Vista previa · página "+p;
+      $("#pdf-kicker").textContent="Dónde buscar · página "+p;
       setHTML("pdf-note",pdfPageNote(k,p));
       fb.classList.remove("show");
       clearTimeout(pdfTimer); let ok=false;
@@ -121,13 +124,11 @@
       frame.src=(pdfLocal(k)||src.u)+"#page="+p+"&view=FitH";
       /* Si el documento no llega, el visor no puede quedarse en negro. */
       pdfTimer=setTimeout(()=>{ if(!ok) fb.classList.add("show"); },4500);
-      $$("#pdf-pages button").forEach(b=>b.classList.toggle("active",+b.dataset.p===p));
     };
     const m=pdfMap(k);
-    setHTML("pdf-pages", m&&m.pages&&m.pages.length>1
-      ? '<span>Páginas citadas</span>'+m.pages.map(x=>`<button data-p="${x.p}" title="${x.d.replace(/"/g,"&quot;")}">p. ${x.p}</button>`).join("")
-      : "");
-    $$("#pdf-pages button").forEach(b=>b.onclick=()=>go(+b.dataset.p));
+    $("#pdf-pages").textContent=m?.pages?.length
+      ? "Otras páginas citadas: "+[...new Set(m.pages.map(x=>x.p))].filter(p=>p!==+page).sort((a,b)=>a-b).join(", ") : "";
+    if(!m?.pages?.some(x=>x.p!==+page)) $("#pdf-pages").textContent="";
     pdfOrigin=document.activeElement;
     view.classList.add("open"); document.body.style.overflow="hidden"; go(page); syncLayers();
     $("#pdf-close").focus();
@@ -156,7 +157,7 @@
     const href=pdf?(s.u+"#page="+page):s.u;
     const paginas=(m&&m.pages&&m.pages.length)
       ? `<div class="cita-paginas"><h4>Páginas citadas en el observatorio</h4><ul class="cita-lista">${
-          m.pages.map(x=>`<li><button data-pdfpage="${x.p}"${x.p===page?' class="es"':""}><span class="pg">p. ${x.p}</span><span>${x.d}</span></button></li>`).join("")
+          m.pages.map(x=>`<li class="cita-page-info"><span class="pg">p. ${x.p}</span><span>${x.d}</span></li>`).join("")
         }</ul></div>` : "";
     const legal=(SEMANAS.LEGAL_SOURCES||{})[k];
     const art=+(origen?.dataset.article||origen?.closest("#modal")?.dataset.article||0);
@@ -195,7 +196,6 @@
     SEMANAS.panel.abrir({kicker:"Referencia ["+f.n+"]", titulo:title.querySelector("b")?.textContent||"Fuente "+f.n, html:f.html, origen});
     const cuerpo=$("#gloss-body");
     $$("[data-pdfk]",cuerpo).forEach(b=>b.onclick=()=>openPDF(k,+b.dataset.pdfp||undefined));
-    $$("[data-pdfpage]",cuerpo).forEach(b=>b.onclick=()=>abrirCita(k,b.dataset.pdfpage,origen));
     const g=$("[data-goto]",cuerpo); if(g) g.onclick=e=>{ const li=document.getElementById("ref-"+f.n); if(!li) return;
       e.preventDefault(); SEMANAS.panel.cerrar(); closeArt(); li.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"}); li.setAttribute("tabindex","-1"); li.focus({preventScroll:true}); li.classList.add("flash"); setTimeout(()=>li.classList.remove("flash"),2500); };
     $$(".cite.on").forEach(x=>x.classList.remove("on")); if(origen) origen.classList.add("on");

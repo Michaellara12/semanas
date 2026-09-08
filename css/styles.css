@@ -643,23 +643,25 @@ td.num{font-size:.88rem}
 .pdfview.open{display:flex}
 .pdfview .shell{margin:auto;width:min(1080px,100%);height:100%;max-height:100%;background:var(--paper-2);display:flex;flex-direction:column;border-left:var(--bd);border-right:var(--bd);animation:pop .3s var(--ease)}
 @media (min-width:900px){.pdfview .shell{height:min(94vh,980px);border:var(--bd);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--pop)}}
-.pdfview .bar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--yellow);border-bottom:var(--bd);flex-wrap:wrap}
-.pdfview .bar .ttl{flex:1;min-width:150px;font-size:.8rem;font-weight:800;line-height:1.3;letter-spacing:-.01em}
-.pdfview .bar .ttl small{display:block;font-weight:800;font-size:.66rem;color:var(--wine);letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
-.pdfview .bar .ttl em{display:block;font-style:normal;font-weight:600;font-size:.74rem;color:var(--ink-2);margin-top:3px;line-height:1.35}
-.pdfview .bar .ttl em:empty{display:none}
-.pdfview .bar .actions{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-.pdfview .bar a,.pdfview .bar button{font-family:var(--font);font-size:.74rem;font-weight:800;padding:8px 13px;border-radius:var(--pill);border:1.5px solid var(--ink);background:#fff;color:var(--ink);cursor:pointer;white-space:nowrap;transition:transform .18s var(--bounce),box-shadow .18s}
-.pdfview .bar a:hover,.pdfview .bar button:hover{text-decoration:none;transform:translateY(-2px);box-shadow:var(--pop-sm)}
-.pdfview .bar .close{background:var(--ink);color:#fff;font-size:1rem;padding:6px 12px;line-height:1.2}
+.pdfview .bar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:6px 12px;padding:9px 12px;background:var(--yellow);border-bottom:var(--bd)}
+.pdfview .bar .ttl{font-size:.86rem;font-weight:800;line-height:1.35;align-self:center;overflow-wrap:anywhere}
+.pdfview .bar .close{appearance:none;font:800 1.4rem/1 var(--font);width:36px;height:36px;padding:0;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.pdfview .pdf-tools{grid-column:1 / -1;display:flex;gap:12px;justify-content:space-between;align-items:start}
+.pdfview .pdf-tools>a{font-size:.76rem;font-weight:800;color:var(--ink);white-space:nowrap;padding:5px 0;flex:none}
+.pdfview .pdf-guide{min-width:0;font-size:.76rem;line-height:1.45}
+.pdfview .pdf-guide summary{cursor:pointer;padding:5px 0;font-weight:800}
+.pdfview .pdf-guide-body{max-height:25vh;overflow:auto;padding:3px 0 5px}
+.pdfview .pdf-guide-body p{margin:0 0 6px}
+.pdfview .pdf-guide-body p:empty{display:none}
+.pdfview .bar :is(button,a,summary):focus-visible{outline:3px solid var(--magenta);outline-offset:2px}
+.cita-lista .cita-page-info{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;padding:9px 0;font-size:.82rem;line-height:1.4}
+@media(max-width:600px){.pdfview .bar{padding:8px 10px;gap:4px 8px}.pdfview .bar .close{width:44px;height:44px}.pdfview .pdf-tools>a,.pdfview .pdf-guide summary{min-height:44px;display:flex;align-items:center}.pdfview .pdf-guide summary:before{content:'▸';margin-right:5px}.pdfview .pdf-guide[open] summary:before{content:'▾'}}
 .pdfview .body{flex:1;position:relative;background:#5a5a5a;min-height:0}
 .pdfview iframe{width:100%;height:100%;border:0;display:block;background:#5a5a5a}
 .pdfview .fallback{position:absolute;inset:0;display:none;place-content:center;text-align:center;padding:30px;background:var(--paper-2);color:var(--ink-2);font-size:.92rem}
 .pdfview .fallback.show{display:grid}
 .pdfview .fallback h3{margin-bottom:10px}
-.pdfview .pages{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font-size:.72rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--wine)}
-.pdfview .pages button{padding:6px 11px;font-size:.72rem}
-.pdfview .pages button.active{background:var(--magenta);color:#fff}
+
 
 /* =====================================================================
    EXPLORADOR DE ARTÍCULOS · rejilla plana con reglas

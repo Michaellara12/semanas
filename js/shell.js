@@ -72,19 +72,19 @@
 <div class="pdfview" id="pdfview" role="dialog" aria-modal="true" aria-label="Vista previa de la fuente">
   <div class="shell">
     <div class="bar">
-      <div class="ttl"><small id="pdf-kicker">Vista previa en la aplicación</small><span id="pdf-title"></span><em id="pdf-note"></em></div>
-      <div class="pages" id="pdf-pages"></div>
-      <div class="actions">
-        <a id="pdf-open" href="#" target="_blank" rel="noopener">Abrir fuente ↗</a>
-        <button class="close" id="pdf-close" aria-label="Cerrar vista previa">Cerrar ×</button>
+      <div class="ttl" id="pdf-title"></div>
+      <button class="close" id="pdf-close" aria-label="Cerrar vista previa">×</button>
+      <div class="pdf-tools">
+        <details class="pdf-guide"><summary id="pdf-kicker">Dónde buscar</summary><div class="pdf-guide-body"><p id="pdf-note"></p><p id="pdf-pages"></p><p>Use el número de página del lector de PDF. La numeración impresa puede ser diferente.</p></div></details>
+        <a id="pdf-open" href="#" target="_blank" rel="noopener">Abrir PDF ↗</a>
       </div>
     </div>
     <div class="body">
       <iframe id="pdf-frame" title="Documento fuente" referrerpolicy="no-referrer"></iframe>
       <div class="fallback" id="pdf-fallback">
         <div>
-          <h3>Este servidor no permite la vista previa</h3>
-          <p class="small">Algunos sitios bloquean que su PDF se muestre dentro de otra página, y varios navegadores móviles no incrustan PDF.<br>El documento sigue disponible en su fuente original, abierto en la página citada.</p>
+          <h3>No se pudo mostrar el PDF aquí</h3>
+          <p class="small">Ábralo aparte y busque la página indicada arriba. Algunos navegadores no muestran PDF dentro de la página.</p>
           <p><a class="btn sm" id="pdf-fallback-open" href="#" target="_blank" rel="noopener">Abrir el PDF en su sitio ↗</a></p>
         </div>
       </div>
