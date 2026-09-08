@@ -1,0 +1,66 @@
+/* Infografías vivas: tres pasos en escritorio, lectura vertical en móvil. */
+.math-lessons{list-style:none;padding:0;margin:2rem 0;display:grid;gap:3rem}
+.math-lesson{min-width:0;border:2px solid var(--ink);background:var(--paper)}
+.math-lesson>header{padding:1.6rem 1.8rem 0;max-width:76ch}
+.math-number{font:700 .75rem var(--mono);letter-spacing:.08em;display:block;margin-bottom:.65rem}
+.math-lesson h3{font-size:clamp(1.55rem,3vw,2.2rem);line-height:1.1;margin:0 0 .8rem}
+.math-lesson p{line-height:1.6}
+.math-visual{display:grid;grid-template-columns:minmax(160px,.7fr) minmax(0,3fr);align-items:center;gap:1rem;padding:1rem 1.8rem 1.8rem}
+.math-art{position:relative;align-self:center;background:var(--card-soft);margin-top:1.5rem;min-width:0}
+.math-art img{display:block;width:calc(100% + 1rem);max-width:none;height:auto;margin:-1.5rem -.5rem -.3rem;position:relative}
+.math-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;align-items:stretch;min-width:0}
+[data-math="fund"] .math-flow{grid-template-columns:repeat(2,minmax(0,1fr))}
+.math-stage{padding:1rem .8rem;border:1.5px solid var(--ink);background:var(--card-soft);min-width:0;position:relative;display:flex;flex-direction:column;justify-content:center;gap:.65rem}
+.math-stage:not(:last-child):after{content:'→';position:absolute;right:-1.08rem;top:45%;font-weight:900;width:1rem;text-align:center;color:var(--ink)}
+[data-math="fund"] .math-stage:after{display:none}
+.math-stage>span{font-size:.78rem;font-weight:800;line-height:1.35}
+.math-stage strong{font:800 clamp(1rem,1.7vw,1.5rem)/1.2 var(--display);overflow-wrap:anywhere}
+.math-stage small{font-size:.77rem;line-height:1.45}
+.math-play{padding:1.5rem 1.8rem;background:var(--paper-2);border-block:1.5px solid var(--ink)}
+.math-play-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.math-play h4{font:800 1.2rem var(--display);margin:0}
+.math-play-heading .btn{font-size:.75rem;padding:.5rem .75rem}
+.math-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem 1.8rem;margin:1.2rem 0}
+.math-control{min-width:0}
+.math-control label{font-size:.9rem;font-weight:800;display:block;margin-bottom:.55rem}
+.math-control label small{display:block;font-size:.75rem;font-weight:500}
+.math-inputs{display:grid;grid-template-columns:minmax(0,1fr) 5.6rem;gap:1rem;align-items:center}
+.math-inputs input{width:100%;min-width:0;margin:0}
+.math-inputs input[type=number]{padding:.6rem;font:700 1rem var(--mono)}
+.math-note{font-size:.8rem;max-width:90ch}
+.math-result{background:var(--paper);padding:1rem 1rem 1rem 26px;font-weight:700;line-height:1.65;margin-top:1rem;overflow-wrap:anywhere}
+.math-detail{padding:1rem 1.8rem}
+.math-detail summary{font-weight:800;cursor:pointer;padding:.35rem 0}
+.math-detail summary:focus-visible{outline:3px solid var(--magenta);outline-offset:4px}
+.math-detail .formula-box{max-width:100%;overflow-x:auto;padding:1rem;font-size:.95rem}
+.math-lesson>footer{border-top:1px solid var(--ink);padding:1rem 1.8rem;font-size:.8rem;background:var(--paper)}
+.math-lesson>footer p{margin:0 0 .5rem}
+.math-term{font:inherit;color:var(--violet);background:transparent;appearance:none;border:0;border-bottom:1px dashed currentColor;box-shadow:none;padding:0;cursor:pointer;text-align:left;line-height:inherit}
+.math-term:hover{background:var(--pale-yellow)}
+.math-term:focus-visible{outline:3px solid var(--magenta);outline-offset:3px}
+.math-bar{height:12px;background:var(--periwinkle);border:1px solid var(--ink);display:block;margin:0 0 .6rem}
+.math-bar>span{display:block;height:100%;background:var(--cyan);border-right:1px solid var(--ink)}
+@media(max-width:1100px){.math-visual{grid-template-columns:1fr}.math-art{width:180px;margin:1.5rem auto .5rem}.math-flow{grid-template-columns:repeat(3,minmax(0,1fr))}.math-stage strong{font-size:1.25rem}}
+@media(max-width:600px){
+  .math-lessons{gap:2rem;margin-top:1rem}
+  .math-lesson>header{padding:1.1rem 1rem 0}
+  .math-visual{padding:.5rem 1rem 1.2rem;gap:.5rem}
+  .math-art{width:170px}
+  .math-flow,[data-math="fund"] .math-flow{grid-template-columns:1fr;gap:1.2rem}
+  .math-stage{padding:.85rem 1rem;gap:.35rem}
+  .math-stage:not(:last-child):after{content:'↓';display:block;top:auto;bottom:-1.2rem;left:calc(50% - .5rem);right:auto;height:1.15rem;line-height:1.15rem}
+  .math-stage strong{font-size:1.4rem}
+  .math-stage small{font-size:.85rem}
+  .math-play,.math-detail,.math-lesson>footer{padding:1rem}
+  .math-controls{grid-template-columns:1fr;gap:1.2rem}
+  .math-play-heading{gap:.75rem}
+  .math-play-heading .btn{min-height:44px}
+  .math-inputs{gap:.8rem}
+}
+
+/* La separación y la suma se leen con los mismos signos que su resultado. */
+.math-lesson[data-math="split"] .math-stage:first-child:after{content:'='}
+.math-lesson[data-math="split"] .math-stage:nth-child(2):after,
+.math-lesson[data-math="contribution"] .math-stage:first-child:after,
+.math-lesson[data-math="share"] .math-stage:not(:last-child):after{content:'+'}
+.math-lesson[data-math="contribution"] .math-stage:nth-child(2):after{content:'='}

@@ -1,0 +1,40 @@
+{
+  "mode": "built-in image_gen; green chromakey extraction with Sharp",
+  "images": [
+    {
+      "name": "math-split",
+      "scene": "A friendly woman directs one broad ribbon of yellow coins into two clearly separate containers, a cyan public building-shaped container and a violet personal savings jar. Two flowing geometric pathways make the split intuitive.",
+      "prompt": "Create a new educational editorial cutout illustration for SEMANAS Colombian pension website. Reference image is STYLE ONLY. Match expressive Bauhaus geometric human characters, bold crisp black outlines, lively diagonal grids, arcs, striped triangles, checkerboard accents, flat vector-like magenta #FF008C, violet #3B308F, cyan #1CE8ED, yellow #FFD24A, lavender, white and black. Cleaner flat solid ink than reference; NO distress, grain or scratches. Isolated COMPLETE composition with generous margin on pure chromakey green #00FF00, no green anywhere inside artwork, no shadows on backdrop. No letters, text, numbers, formula, labels or watermark. One attractive narrative scene, square composition; users see responsive HTML labels separately. A friendly woman directs one broad ribbon of yellow coins into two clearly separate containers, a cyan public building-shaped container and a violet personal savings jar. Two flowing geometric pathways make the split intuitive.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-eee2c861-8c21-49fd-b9d0-500ba326ba53.png",
+      "output": "assets/illustrations/math-split.webp"
+    },
+    {
+      "name": "math-contribution",
+      "scene": "An employee woman and employer man together add coins into one central pension savings container. Employee holds a smaller coin stack, employer a larger one. Lively ribbon arrows unite their contributions; clear simple scene.",
+      "prompt": "Create a new educational editorial cutout illustration for SEMANAS Colombian pension website. Reference image is STYLE ONLY. Match expressive Bauhaus geometric human characters, bold crisp black outlines, lively diagonal grids, arcs, striped triangles, checkerboard accents, flat vector-like magenta #FF008C, violet #3B308F, cyan #1CE8ED, yellow #FFD24A, lavender, white and black. Cleaner flat solid ink than reference; NO distress, grain or scratches. Isolated COMPLETE composition with generous margin on pure chromakey green #00FF00, no green anywhere inside artwork, no shadows on backdrop. No letters, text, numbers, formula, labels or watermark. One attractive narrative scene, square composition; users see responsive HTML labels separately. An employee woman and employer man together add coins into one central pension savings container. Employee holds a smaller coin stack, employer a larger one. Lively ribbon arrows unite their contributions; clear simple scene.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-173a30f4-d1f8-4896-8493-c522cfcb02dd.png",
+      "output": "assets/illustrations/math-contribution.webp"
+    },
+    {
+      "name": "math-share",
+      "scene": "Three friendly diverse workers side by side, each with a visibly different height stack of coins, one small one medium one very tall. A horizontal cyan geometric ribbon crosses the stacks at a common height to evoke a threshold. All three figures visible, playful analytical composition.",
+      "prompt": "Create a new educational editorial cutout illustration for SEMANAS Colombian pension website. Reference image is STYLE ONLY. Match expressive Bauhaus geometric human characters, bold crisp black outlines, lively diagonal grids, arcs, striped triangles, checkerboard accents, flat vector-like magenta #FF008C, violet #3B308F, cyan #1CE8ED, yellow #FFD24A, lavender, white and black. Cleaner flat solid ink than reference; NO distress, grain or scratches. Isolated COMPLETE composition with generous margin on pure chromakey green #00FF00, no green anywhere inside artwork, no shadows on backdrop. No letters, text, numbers, formula, labels or watermark. One attractive narrative scene, square composition; users see responsive HTML labels separately. Three friendly diverse workers side by side, each with a visibly different height stack of coins, one small one medium one very tall. A horizontal cyan geometric ribbon crosses the stacks at a common height to evoke a threshold. All three figures visible, playful analytical composition.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-8ca022f3-c552-43e0-9bd4-a9bc6d58b59c.png",
+      "output": "assets/illustrations/math-share.webp"
+    },
+    {
+      "name": "math-pension",
+      "scene": "An older friendly man climbs three bold geometric calendar-like steps towards a monthly payment envelope with yellow coins. Large calendar without numerals and modest clock, lively ascending diagonals. Clear narrative: time contributing builds a monthly pension.",
+      "prompt": "Create a new educational editorial cutout illustration for SEMANAS Colombian pension website. Reference image is STYLE ONLY. Match expressive Bauhaus geometric human characters, bold crisp black outlines, lively diagonal grids, arcs, striped triangles, checkerboard accents, flat vector-like magenta #FF008C, violet #3B308F, cyan #1CE8ED, yellow #FFD24A, lavender, white and black. Cleaner flat solid ink than reference; NO distress, grain or scratches. Isolated COMPLETE composition with generous margin on pure chromakey green #00FF00, no green anywhere inside artwork, no shadows on backdrop. No letters, text, numbers, formula, labels or watermark. One attractive narrative scene, square composition; users see responsive HTML labels separately. An older friendly man climbs three bold geometric calendar-like steps towards a monthly payment envelope with yellow coins. Large calendar without numerals and modest clock, lively ascending diagonals. Clear narrative: time contributing builds a monthly pension.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-63870a08-0324-4525-9608-ef619e9f6e8f.png",
+      "output": "assets/illustrations/math-pension.webp"
+    },
+    {
+      "name": "math-fund",
+      "scene": "A friendly woman tends a large transparent savings jar filled with yellow coins; a cyan arrow flows into the jar from one side and a magenta arrow flows out to a monthly payment envelope on the other. Small growing plant evokes returns; expressive geometric curves, full scene.",
+      "prompt": "Create a new educational editorial cutout illustration for SEMANAS Colombian pension website. Reference image is STYLE ONLY. Match expressive Bauhaus geometric human characters, bold crisp black outlines, lively diagonal grids, arcs, striped triangles, checkerboard accents, flat vector-like magenta #FF008C, violet #3B308F, cyan #1CE8ED, yellow #FFD24A, lavender, white and black. Cleaner flat solid ink than reference; NO distress, grain or scratches. Isolated COMPLETE composition with generous margin on pure chromakey green #00FF00, no green anywhere inside artwork, no shadows on backdrop. No letters, text, numbers, formula, labels or watermark. One attractive narrative scene, square composition; users see responsive HTML labels separately. A friendly woman tends a large transparent savings jar filled with yellow coins; a cyan arrow flows into the jar from one side and a magenta arrow flows out to a monthly payment envelope on the other. Small growing plant evokes returns; expressive geometric curves, full scene.",
+      "source": "C:\\Users\\Michael\\.codex\\generated_images\\01a07ebc-9b23-7223-b0a4-33ac2cccde5d\\exec-5c1c5c1b-01ff-484b-a098-8b327d7dbd78.png",
+      "output": "assets/illustrations/math-fund.webp"
+    }
+  ]
+}

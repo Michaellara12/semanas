@@ -75,3 +75,15 @@ en el lector. Los ejemplos son hipotéticos.
   ilustraciones con transparencia real.
 - Se revisaron además 1.024 y 1.280 píxeles; los títulos largos se mantienen
   completos. MathJax representa las dos fórmulas del comparador.
+# Matemáticas explicadas · septiembre de 2026
+
+`node tests/test_math_explainers.cjs` comprueba la conservación de las bases y
+aportes, las proporciones, las semanas faltantes, los grupos de 50, el tope y
+los pagos sin cubrir. `node tests/test_math_ui.cjs` prueba los cinco simuladores
+independientes, todos sus controles, el restablecimiento, conceptos y fuentes,
+las fórmulas cerradas inicialmente, la disposición a 320/390/768/1440 px y el
+archivo único generado por `python build.py`. Requiere servidor local en 8765,
+Playwright y Edge, igual que la prueba general de reforma.
+
+`node tests/test_illustrations.cjs` valida ahora las 16 imágenes de ambas series.
+Capturas de revisión: `tmp/reforma/math-*.png` (no se publican).

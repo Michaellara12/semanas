@@ -1,7 +1,7 @@
 const sharp=require('sharp'),fs=require('node:fs');
 process.chdir(require('node:path').resolve(__dirname,'..'));
 fs.mkdirSync('tmp/reforma',{recursive:true});
-const manifest=JSON.parse(fs.readFileSync('assets/illustrations/generacion-v2.json','utf8'));
+const manifest=JSON.parse(fs.readFileSync(process.argv[2] || 'assets/illustrations/generacion-v2.json','utf8'));
 (async()=>{
   const sheets=[];
   for(const job of manifest.images){
@@ -26,5 +26,5 @@ const manifest=JSON.parse(fs.readFileSync('assets/illustrations/generacion-v2.js
     const thumb=await sharp(final).resize(260,260).flatten({background:'#E7E7F0'}).png().toBuffer();
     sheets.push({input:thumb,left:(sheets.length%4)*280,top:Math.floor(sheets.length/4)*280});
   }
-  await sharp({create:{width:1120,height:840,channels:3,background:'#E7E7F0'}}).composite(sheets).png().toFile('tmp/reforma/chroma-contact.png');
+  await sharp({create:{width:1120,height:Math.ceil(sheets.length/4)*280,channels:3,background:'#E7E7F0'}}).composite(sheets).png().toFile(process.argv[3] || 'tmp/reforma/chroma-contact.png');
 })().catch(e=>{console.error(e);process.exit(1)});

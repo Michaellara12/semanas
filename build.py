@@ -12,6 +12,7 @@ import re, pathlib, base64
 root = pathlib.Path(__file__).parent
 css = (root / "css/styles.css").read_text(encoding="utf-8")
 css += "\n" + (root / "css/reforma-visual.css").read_text(encoding="utf-8")
+css += "\n" + (root / "css/math-explainers.css").read_text(encoding="utf-8")
 portada = (root / "index.html").read_text(encoding="utf-8")
 
 # --- orden de las secciones, leído de js/routes.js ------------------------
@@ -62,7 +63,7 @@ mathjax = ('<script>window.MathJax={tex:{inlineMath:[["\\\\(","\\\\)"]],'
 
 scripts = []
 for js in ("js/data.js", "js/glossary.js", "js/ley-texto.js", "js/ley-analisis.js", "js/routes.js", "js/shell.js",
-           "js/charts.js", "js/models.js", "js/app.js"):
+           "js/charts.js", "js/models.js", "js/math-explainers.js", "js/app.js"):
     src = (root / js).read_text(encoding="utf-8").replace("</script>", "<\\/script>")
     scripts.append("<script>\n" + src + "\n</script>")
 scripts = "\n".join(scripts)

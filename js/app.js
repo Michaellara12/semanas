@@ -513,63 +513,7 @@
     }
 
     /* --- 2· Las fórmulas, una por una --- */
-    const FORMULAS=[
-      {t:"Dónde cae cada peso de su salario",
-       say:"<b>Tome su salario del mes. La parte que no pasa del umbral es la base del componente público; lo que sobra es la base de su cuenta individual.</b> Nada más. Si gana menos que el umbral, la segunda base es cero y usted queda entero en Colpensiones.",
-       tex:"B_{\\text{público}}=\\min(w,\\;u\\cdot S)\\qquad B_{\\text{cuenta}}=\\max(0,\\;w-u\\cdot S)",
-       g:[["w","su salario mensual (el IBC sobre el que cotiza)"],
-          ["u","el umbral, en número de salarios mínimos. La ley lo fija en 2,3"],
-          ["S","el salario mínimo: $1.750.905 en 2026"],
-          ["min","«el menor de los dos»"],["max","«el mayor de los dos»"]],
-       ex:()=>{const w=4*SM,t=2.3*SM;return `Con un salario de ${COP(w)} (4 mínimos) y umbral 2,3: la base pública es ${COP(t)} y la base de su cuenta es ${COP(w-t)}. Los dos pedazos suman su salario completo.`},
-       src:"ley2381"},
-      {t:"Cuánto cotiza y a dónde va cada punto",
-       say:"<b>El umbral no cambia cuánto le descuentan: sigue siendo el 16 % del salario.</b> Cambia el destino. Dentro de cada mitad, además, la plata se reparte: en el componente público 13 de los 16 puntos alimentan el fondo común y el Fondo de Ahorro; en su cuenta, 13,2 puntos engordan el saldo y 1 punto se va al Pilar Solidario que paga las rentas de quienes nunca alcanzaron a pensionarse.",
-       tex:"C_{\\text{público}}=0{,}16\\,B_{\\text{público}}\\qquad C_{\\text{cuenta}}=0{,}16\\,B_{\\text{cuenta}}",
-       g:[["0,16","la tasa de cotización, 16 % del salario"],
-          ["C","lo que sale de su bolsillo (y del de su empleador) cada mes hacia cada lado"]],
-       ex:()=>{const w=4*SM,t=2.3*SM;return `Ese salario de ${COP(w)} cotiza ${COP(0.16*w)} en total: ${COP(0.16*t)} a Colpensiones y ${COP(0.16*(w-t))} a su cuenta. De estos últimos, ${COP(0.132*(w-t))} quedan como saldo suyo.`},
-       src:"ley2381"},
-      {t:"Por qué es 66 % de la plata y no 66 % de la gente",
-       say:"<b>Esta es la confusión más común de todo el debate.</b> El 66 % del CARF mide plata, no personas. Para calcularlo se suma, trabajador por trabajador, solo el pedazo de salario que queda bajo el umbral, y se divide entre la suma de todos los salarios completos. Quien gana 10 mínimos aporta al numerador únicamente 2,3, pero al denominador aporta los 10. Por eso la proporción de <i>gente</i> que gana menos del umbral es mucho más alta que la proporción de <i>dinero</i> que el umbral captura.",
-       tex:"s(u)=\\frac{\\sum_i \\min(w_i,\\;u\\cdot S)}{\\sum_i w_i}",
-       g:[["s(u)","la fracción de la masa de cotizaciones que capta el componente público"],
-          ["Σ","«sume esto para todos los cotizantes»"],
-          ["w_i","el salario del cotizante i"]],
-       ex:()=>`Con tres cotizantes de 1, 2 y 10 mínimos y umbral 2,3, el numerador es 1 + 2 + 2,3 = 5,3 y el denominador 1 + 2 + 10 = 13: el umbral capta 41 % de la plata, aunque dos de los tres trabajadores (67 % de la gente) estén enteramente por debajo. Con la distribución real de salarios de Colombia el resultado es 66 %.`,
-       src:"carf24u", pg:12},
-      {t:"La mesada que sale del componente público",
-       say:"<b>Aquí aparece el efecto que casi nadie ve venir: subir el umbral baja un poco la tasa, pero sube mucho la base.</b> La tasa de reemplazo arranca en 65,5 % y le resta medio punto por cada salario mínimo de IBL: castiga levemente a quien más gana. Pero el umbral define hasta dónde llega el IBL que entra en la cuenta. Un umbral más alto sube el techo, y como la base pesa más que la tasa, la mesada pública sube y el subsidio que la acompaña también.",
-       tex:"r = 65{,}5 - 0{,}5\\,s + 1{,}5\\left\\lfloor\\frac{n-1300}{50}\\right\\rfloor \\;\\le\\; 80\\qquad M=\\max\\!\\left(S,\\; \\tfrac{r}{100}\\cdot \\text{IBL}_{\\text{público}}\\right)",
-       g:[["r","la tasa de reemplazo, en porcentaje"],
-          ["s","el IBL público medido en número de salarios mínimos"],
-          ["n","las semanas que usted cotizó"],
-          ["⌊ ⌋","«quédese con la parte entera»: los premios van de 50 en 50 semanas"],
-          ["M","la mesada mensual del componente público, nunca menor a un mínimo"]],
-       ex:()=>{const a=Models.ley2381({sex:"M",edad:62,semanas:1300,ibl:5*SM,saldoCCAI:0,anio:2027,umbralSM:2.3});
-               const b=Models.ley2381({sex:"M",edad:62,semanas:1300,ibl:5*SM,saldoCCAI:0,anio:2027,umbralSM:4});
-               return `Un hombre con 1.300 semanas y 5 mínimos de IBL: con umbral 2,3 la tasa es ${NUM(a.tasa,1)} % sobre ${COP(a.iblCPM)} y la mesada pública ${COP(a.mesadaCPM)}. Con umbral 4 la tasa baja a ${NUM(b.tasa,1)} % pero la base sube, y la mesada pública llega a ${COP(b.mesadaCPM)}: ${NUM((b.mesadaCPM/a.mesadaCPM-1)*100,0)} % más.`},
-       src:"ley2381"},
-      {t:"El Fondo de Ahorro, año por año",
-       say:"<b>Es la fórmula de una cuenta de ahorro, escrita en porcentaje del PIB.</b> El saldo del año próximo es el de este año, más lo que rindió por encima de lo que creció la economía, más lo que entró, menos lo que se pagó. Se mide contra el PIB —por eso se resta el crecimiento g— porque lo que importa no son los pesos sino si el país puede con ellos. Cuando el saldo llega a cero, lo que falte para pagar las mesadas lo pone el Presupuesto: eso es la transferencia de la Nación.",
-       tex:"B_{t+1}=B_t\\,(1+r_{\\text{real}}-g)\\;+\\;S_t\\;-\\;P_t",
-       g:[["B_t","el saldo del Fondo de Ahorro al final del año t, en % del PIB"],
-          ["r_real","el rendimiento del portafolio, descontada la inflación"],
-          ["g","el crecimiento real de la economía"],
-          ["S_t","lo que entra: cotizaciones por encima del tope del art. 24, el punto solidario y los traslados"],
-          ["P_t","las mesadas que ese año se pagan con cargo al fondo"]],
-       ex:()=>`Si el fondo tiene 10 % del PIB, rinde 4,3 % real, la economía crece 3 % y ese año entra 1 % del PIB y salen 1,5 %: el saldo del año siguiente es 10 × (1 + 0,043 − 0,03) + 1 − 1,5 = ${NUM(10*1.013+1-1.5,2)} % del PIB. Mientras lo que entra supere lo que sale, el fondo crece; cuando se invierte, empieza la cuenta regresiva.`,
-       src:"carf24u", pg:19}
-    ];
-    function pintarFormulas(){
-      setHTML("u-formulas", FORMULAS.map(f=>`<li>
-        <div><h3>${f.t}</h3>
-        <p class="formula-say">${f.say}</p>
-        <div class="formula-box math">\\[${f.tex}\\]</div>
-        <dl class="glossary">${f.g.map(([k,v])=>`<div><dt>${k}</dt><dd>${v}</dd></div>`).join("")}</dl>
-        <div class="example"><span class="eh">Un ejemplo con números de 2026</span>${f.ex()} ${citeP(f.src,f.pg)}</div>
-        </div></li>`).join(""));
-    }
+    function pintarFormulas(){ SEMANAS.MathLab.init(); }
 
     /* --- 3· El simulador --- */
     const ESCEN=[

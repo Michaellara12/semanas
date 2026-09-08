@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
 <link rel="stylesheet" href="../css/reforma-visual.css">
+<link rel="stylesheet" href="../css/math-explainers.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"},options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};</script>
 <script src="../vendor/tex-svg.js" id="MathJax-script" async></script>
@@ -223,9 +224,16 @@
 
   <div class="wrap">
     <!-- ---------- 3· Las fórmulas, paso a paso ---------- -->
-    <div class="section-head mt3"><h2>Cómo se calcula, paso a paso</h2><p class="lead">Cinco cuentas. Cada una con la fórmula, qué dice en español, qué significa cada símbolo y un ejemplo con números de 2026. Si nunca ha visto una fórmula así, lea solo las líneas en negrita: alcanza.</p></div>
+    <div class="section-head mt3"><h2>Cómo se calcula, paso a paso</h2><p class="lead">Cinco cuentas para entender qué pasa con los aportes y el ahorro. Siga los dibujos, cambie los valores y vea el resultado. La fórmula completa está guardada debajo de cada ejemplo: puede abrirla cuando quiera.</p></div>
 
-    <ol class="steps formulas" id="u-formulas"></ol>
+    <ol class="math-lessons" id="u-formulas"></ol>
+    <template id="math-art">
+      <img data-art="split" src="../assets/illustrations/math-split.webp" alt="Una mujer separa monedas en dos destinos." width="700" height="700" loading="lazy" decoding="async">
+      <img data-art="contribution" src="../assets/illustrations/math-contribution.webp" alt="Una empleada y su empleador reúnen sus aportes." width="700" height="700" loading="lazy" decoding="async">
+      <img data-art="share" src="../assets/illustrations/math-share.webp" alt="Tres personas con cantidades diferentes de monedas." width="700" height="700" loading="lazy" decoding="async">
+      <img data-art="pension" src="../assets/illustrations/math-pension.webp" alt="Un hombre mayor avanza por escalones hacia una mesada." width="700" height="700" loading="lazy" decoding="async">
+      <img data-art="fund" src="../assets/illustrations/math-fund.webp" alt="Una alcancía recibe ingresos y entrega pagos." width="700" height="700" loading="lazy" decoding="async">
+    </template>
 
     <!-- ---------- 4· El simulador ---------- -->
     <div class="section-head mt3"><h2>Mueva el umbral y mire qué pasa</h2><p class="lead">Aquí sí lo puede cambiar. Los botones traen los cinco valores que estuvieron sobre la mesa. Todo lo que se mueve abajo es una <b>estimación de esta plataforma</b>, no una cifra oficial: al lado de cada resultado está la cifra publicada por el CARF para poder comparar.</p></div>
@@ -408,6 +416,7 @@
 <script src="../js/shell.js"></script>
 <script src="../js/charts.js"></script>
 <script src="../js/models.js"></script>
+<script src="../js/math-explainers.js"></script>
 <script src="../js/app.js"></script>
 </body>
 </html>
