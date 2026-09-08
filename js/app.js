@@ -11,6 +11,49 @@
   const escapeHTML=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   const lawCite=(k,locator="",article="")=>`<a class="cite" data-ref="${k}"${locator?` data-locator="${escapeHTML(locator)}"`:""}${article?` data-article="${article}"`:""}>[${SRC[k]||"?"}]</a>`;
   const cite=k=>lawCite(k);
+  /* Solo enlaza referencias al articulado de esta ley. Las citas de otras
+     normas, el texto oficial y las fichas bibliográficas conservan su lectura. */
+  function linkLawMentions(root){
+    if(!root||!SEMANAS.ANALISIS) return;
+    const skip='a,button,script,style,code,pre,summary,.art,.law-official-content,.law-source-entry,.law-source-meta,.refs,.refs-local,[data-no-law-links],mjx-container';
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:node=>
+      node.parentElement?.closest(skip)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    const pattern=/\b(art[ií]culos?|arts?\.?)\s+(\d{1,3}(?!\d)(?:\s*(?:[–—-]|,|y|e)\s*\d{1,3}(?!\d))*)/gi;
+    const otherLaw=/(?:ley\s+(?!2381\b)\d+|constituci[oó]n|c[oó]digo\s+(?:civil|sustantivo|procesal)|decreto\s+\d+)/i;
+    for(const node of nodes){
+      const value=node.nodeValue; pattern.lastIndex=0;
+      const hits=[...value.matchAll(pattern)]; if(!hits.length) continue;
+      const fragment=document.createDocumentFragment();let end=0,changed=false;
+      for(const hit of hits){
+        const index=hit.index,after=value.slice(index+hit[0].length);
+        const sentenceStart=Math.max(value.lastIndexOf('. ',index-1),value.lastIndexOf('; ',index-1));
+        const before=value.slice(sentenceStart<0?0:sentenceStart+2,index);
+        const isExternal=/^\s*(?:(?:de|del)\s+)?(?:(?:la|el)\s+)?(?:ley\s+(?!2381\b)\d+|constituci[oó]n|C\.?\s*P\.?|c[oó]digo|decreto)/i.test(after)||otherLaw.test(before);
+        const numbers=[...hit[2].matchAll(/\d+/g)];
+        if(isExternal||numbers.some(n=>+n[0]<1||+n[0]>95)) continue;
+        fragment.append(value.slice(end,index));
+        const makeLink=(label,n)=>{const a=document.createElement('a');a.className='law-article-link';a.href='#ley';a.dataset.lawArticle=n;a.textContent=label;a.setAttribute('role','button');a.setAttribute('aria-haspopup','dialog');a.setAttribute('aria-label',`Abrir artículo ${n} de la Ley 2381`);return a;};
+        if(numbers.length===1) fragment.append(makeLink(hit[0],numbers[0][0]));
+        else{
+          fragment.append(hit[0].slice(0,hit[0].length-hit[2].length));let at=0;
+          for(const number of numbers){fragment.append(hit[2].slice(at,number.index));fragment.append(makeLink(number[0],number[0]));at=number.index+number[0].length;}
+          fragment.append(hit[2].slice(at));
+        }
+        end=index+hit[0].length;changed=true;
+      }
+      if(changed){fragment.append(value.slice(end));node.replaceWith(fragment);}
+    }
+  }
+  function articleLinkAction(e){
+    const link=e.target.closest?.('[data-law-article]'); if(!link) return;
+    if(e.type==='keydown'&&e.key!==' ') return;
+    e.preventDefault();
+    if(document.querySelector('#gloss.open')) SEMANAS.panel?.cerrar();
+    openArt(+link.dataset.lawArticle);
+  }
+  document.addEventListener('click',articleLinkAction);
+  document.addEventListener('keydown',articleLinkAction);
   const on=(id,ev,fn)=>{ const e=document.getElementById(id); if(e) e.addEventListener(ev,fn); return e; };
   const val=id=>{ const e=document.getElementById(id); return e?(e.type==="checkbox"?e.checked:parseFloat(e.value)):null; };
   const txt=id=>{ const e=document.getElementById(id); return e?e.value:""; };
@@ -252,7 +295,7 @@
     const normalize=s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim();
     const filtrados=()=>{ const f=sel.value,s=st.value,qq=normalize(q.value||"");
       return SEMANAS.ARTICULOS.filter(a=>(f==="all"||a.p===f)&&(s==="all"||a.st===s)&&
-        (!qq||normalize(a.t+" "+a.s+" "+a.n+" "+((TX[a.n]||{}).x||"")+" "+Object.values(SEMANAS.ANALISIS?.[a.n]||{}).join(" ")).includes(qq))); };
+        (!qq||normalize(a.t+" "+a.s+" "+a.n+" "+((TX[a.n]||{}).x||"")+" "+(SEMANAS.LECTURA_CLARA?.[a.n]||'')+" "+Object.values(SEMANAS.ANALISIS?.[a.n]||{}).join(" ")).includes(qq))); };
 
     const render=()=>{
       const items=filtrados(); const total=Math.max(1,Math.ceil(items.length/POR_PAGINA));
@@ -260,7 +303,7 @@
       $("#art-count").textContent=items.length+" artículos";
       const desde=(pagina-1)*POR_PAGINA;
       const pagina_items=items.slice(desde,desde+POR_PAGINA);
-      list.innerHTML=pagina_items.map(a=>`<div class="art" data-n="${a.n}" tabindex="0" role="button"><div class="n">ART. ${a.n}</div><div class="t">${a.t}</div><div class="p">${a.s}</div><div class="tags"><span class="tag">${PL[a.p]}</span><span class="tag ${ST[a.st][1]}">${ST[a.st][0]}</span></div></div>`).join("")
+      list.innerHTML=pagina_items.map(a=>`<div class="art" data-n="${a.n}" tabindex="0" role="button"><div class="n">ART. ${a.n}</div><div class="t">${a.t}</div><div class="p">${escapeHTML(SEMANAS.LECTURA_CLARA?.[a.n]||a.s)}</div><div class="tags"><span class="tag">${PL[a.p]}</span><span class="tag ${ST[a.st][1]}">${ST[a.st][0]}</span></div></div>`).join("")
         || `<p class="art-sin">Ningún artículo coincide con la búsqueda.</p>`;
       $$(".art",list).forEach(el=>{ el.addEventListener("click",()=>openArt(+el.dataset.n));
         el.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openArt(+el.dataset.n); } }); });
@@ -306,7 +349,7 @@
     const pane=(id,html)=>`<div class="law-tabpanel" role="tabpanel" id="law-panel-${id}" aria-labelledby="law-tab-${id}" tabindex="0"${id==='entender'?'':' hidden'}>${html}</div>`;
     const detail=d?`
       <div class="law-tabs" role="tablist" aria-label="Lecturas del artículo ${n}">${tab('entender','Entenderlo')}${tab('interpretar','Interpretación jurídica')}${tab('aplicar','En la práctica')}${tab('fuentes','Fuentes y método')}</div>
-      ${pane('entender',`<p class="law-question">${escapeHTML(d.q)}</p>${block('La regla','Qué establece y a quién se aplica',d.l,ref('ley2381',`Artículo ${n}`))}${block('El propósito','Qué busca proteger',d.f)}<p class="small muted">Lectura pedagógica del texto de 2024. El estado temporal se explica en «Fuentes y método»; los requisitos no deben trasladarse automáticamente a todos los regímenes.</p>`)}
+      ${pane('entender',`<p class="law-question">${escapeHTML(d.q)}</p><div class="law-plain"><span class="law-analysis-label">En palabras sencillas</span><p>${escapeHTML(SEMANAS.LECTURA_CLARA?.[n]||d.l)} ${ref('ley2381',`Artículo ${n}`)}</p></div>${block('Para llevarlo a un caso','Qué habría que revisar',d.v)}<div class="law-example"><h4>Un ejemplo</h4><p>${escapeHTML(d.e)}</p></div><p class="small muted">Esta es la primera explicación. En «Interpretación jurídica» encontrará el análisis detallado. En «Fuentes y método» explicamos qué documentos usamos y qué falta comprobar sobre su aplicación.</p>`)}
       ${pane('interpretar',`${block('01 · Literal y técnica','La regla y sus condiciones',d.l,ref('ley2381',`Artículo ${n}`)+ref('codcivil','Artículos 27–29'))}${block('02 · Sistemática','Cómo encaja con otras normas',d.s,ref('ley2381',`Artículos ${n}, ${d.r.join(', ')}`))}${related}${block('03 · Finalista','Por qué sostenemos esta lectura',d.f,ref('codcivil','Artículo 27'))}${block('04 · Constitucional y límites','Qué no permite concluir el artículo',d.c,ref('constitucion','Parámetros constitucionales pertinentes: arts. 4, 13, 29, 48 y 53')+ref('c054'))}${block('05 · Antecedentes y precedentes','Cómo usamos otras leyes y sentencias',SEMANAS.LEGAL_METHOD.historico,d.k.map(k=>ref(k)).join(' '))}${block('06 · Aplicación en el tiempo','Texto, vigencia y estado procesal',SEMANAS.LEGAL_METHOD.temporal,ref('camara264'))}`)}
       ${pane('aplicar',`<div class="law-example"><span class="law-analysis-label">Caso hipotético · no es una liquidación</span><h4>Un ejemplo para entenderlo</h4><p>${escapeHTML(d.e)}</p></div>${block('Aplicación al caso','Qué habría que comprobar',d.v)}${block('Límite de la conclusión','El punto que requiere especial cuidado',d.c)}<p class="small">El ejemplo supone que el artículo resulta aplicable. Para determinarlo se necesitan hechos, documentos, régimen y fecha; las dudas de la ficha no se resuelven inventando una regla.</p>${related}`)}
       ${pane('fuentes',`<p><b>Trazabilidad del análisis.</b> Cada referencia explica qué documento es, dónde consultar y qué sustenta. Al abrirla, la ficha se muestra sobre este artículo y conserva el punto de lectura.</p><div class="law-source-warning"><b>Estado individual reportado:</b> ${ST[a.st][0]}. La clasificación proviene del catálogo previo del observatorio; falta cotejar su alcance exacto con la parte resolutiva accesible de C-264/26. La comunicación de la Cámara solo permite corroborar el anuncio general. ${ref('camara264')}</div>${sourceList}<details class="law-official"><summary>El método de lectura, explicado</summary><div class="law-official-content">${Object.values(SEMANAS.LEGAL_METHOD).map(t=>`<p>${escapeHTML(t)}</p>`).join('')}<p>Revisión editorial: 7 de septiembre de 2026. Los ejemplos y las conclusiones pertenecen a SEMANAS; no se presentan como interpretación vinculante de una autoridad.</p></div></details>`)}
@@ -317,7 +360,7 @@
       ${detail}
       <details class="law-official"><summary>Texto exacto del artículo ${n}</summary><div class="law-official-content"><p class="law-official-note">Transcripción de la versión de 2024 publicada por Función Pública; conserva erratas y remisiones. El artículo 93 se recuperó cotejando la copia SUIN/OIT. Para contrastar el documento y su presentación original, abra la referencia. ${ref(n===93?'ley2381pdf':'ley2381',`Artículo ${n}`)} ${SEMANAS.LEYPAGES?.[n]?`<button class="pdfbtn" data-law-pdf="${SEMANAS.LEYPAGES[n]}">Ver art. ${n} en PDF · p. ${SEMANAS.LEYPAGES[n]}</button>`:''}</p>${textoOficial(n)}</div></details>
       <nav class="law-article-nav" aria-label="Navegar entre artículos"><button class="btn sm ghost" id="art-prev"${n===1?' disabled':''}>← Artículo ${Math.max(1,n-1)}</button><button class="btn sm" id="art-next"${n===95?' disabled':''}>Artículo ${Math.min(95,n+1)} →</button></nav>`;
-    m.classList.add("open"); syncLayers(); renderCites();
+    m.classList.add("open"); syncLayers(); renderCites(); linkLawMentions($("#modal-body"));
     $("#modal-body").scrollTop=0;
     $("#art-prev").onclick=()=>openArt(Math.max(1,n-1));
     $("#art-next").onclick=()=>openArt(Math.min(95,n+1));
@@ -815,5 +858,5 @@
 
   }
 
-  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); glosario(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
+  document.addEventListener("DOMContentLoaded",()=>{ pdfWire(); tabs(); timeline(); umbral(); pillars(); articulos(); modal(); sanabria(); renderCites(); refsLocales(); linkLawMentions($("main")); heroCanvas(); series(); diagnostico(); calc(); analisis(); demo(); monte(); fondo(); autom(); reveal(); glosario(); const y=$("#year"); if(y) y.textContent=new Date().getFullYear(); if(window.MathJax&&MathJax.typesetPromise) MathJax.typesetPromise().catch(()=>{}); });
 })();

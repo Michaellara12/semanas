@@ -120,3 +120,15 @@ Automático. Cada cambio que llegue a `main` se publica en https://michaellara12
   de artículo → fuente → PDF, cierre de la capa superior y retorno de foco.
 - La prueba de navegador está en `tests/test_reforma_ui.cjs`; instrucciones,
   resultados y alcance de revisión en `tests/REFORMA.md`.
+- `SEMANAS.LECTURA_CLARA` añade una primera explicación sencilla a los 95
+  artículos; el análisis jurídico y la transcripción siguen separados.
+- Las menciones a artículos de la Ley 2381 se enlazan mediante
+  `linkLawMentions`. Excluir otras normas y la transcripción oficial. Usar
+  `data-no-law-links` en bloques de otra ley; nunca enlazar un artículo de
+  la Constitución o de la Ley 100 al lector de la reforma.
+- La comparación es una pareja anterior/nueva por tema (`law-compare-pair`):
+  columnas alineadas en escritorio, blanco seguido de verde en móvil.
+- Hay once escenas transparentes; prompts y procedimiento en
+  `assets/illustrations/GENERACION-v2.md`. El número del paso no reserva una
+  columna en móvil. Las imágenes que sobresalen requieren margen y no deben
+  recortarse por `overflow:hidden`.

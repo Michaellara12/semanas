@@ -62,3 +62,16 @@ ilustraciones, lector de artículos y fuentes en móvil y escritorio.
 Las URLs, ubicación, uso y límites de cada referencia se mantienen en
 `SEMANAS.SOURCES` y `SEMANAS.LEGAL_SOURCES` de `js/data.js` y son visibles
 en el lector. Los ejemplos son hipotéticos.
+
+## Revisión de lenguaje, ilustraciones y comparación
+
+- Se verifican 95 primeras explicaciones sencillas sin quitar las pestañas
+  jurídicas ni modificar las transcripciones.
+- La prueba de navegador comprueba enlaces de artículos, retorno del foco,
+  rangos y exclusión de referencias a la Constitución y a la Ley 100.
+- Comprueba pares de comparación alineados en escritorio y alternados en
+  móvil, contenido de pasos a todo el ancho e imagen de lectura sin fondo CSS.
+- `node tests/test_illustrations.cjs` requiere Sharp y verifica las once
+  ilustraciones con transparencia real.
+- Se revisaron además 1.024 y 1.280 píxeles; los títulos largos se mantienen
+  completos. MathJax representa las dos fórmulas del comparador.

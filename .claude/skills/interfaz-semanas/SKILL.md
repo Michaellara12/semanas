@@ -169,6 +169,15 @@ bloque, busque su selector en `css/styles.css` y copie la estructura que espera.
 
 ## 9. Móvil y accesibilidad
 
+- En la introducción de Ley 2381, el número del paso va encima del contenido
+  en móvil, sin una columna vacía a la izquierda.
+- La comparación Ley 100/Ley 2381 agrupa cada tema en una pareja: anterior en
+  blanco y nuevo en verde. En móvil se intercalan por tema, sin separar todos
+  los contenidos anteriores de todos los nuevos.
+- Las ilustraciones de reforma tienen transparencia real. No agregarles un
+  fondo blanco en CSS. Las que sobresalen de un bloque mantienen margen libre
+  y la figura completa; las tramas del dibujo no se colocan detrás del texto.
+
 - Móvil primero. Nada desborda en horizontal; lo ancho va en un contenedor con
   desplazamiento propio.
 - Los paneles laterales entran por la derecha en escritorio y como media hoja

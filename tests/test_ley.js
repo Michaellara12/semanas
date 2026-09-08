@@ -11,9 +11,11 @@ const S=sandbox.SEMANAS;
 assert.equal(S.ARTICULOS.length,95);
 assert.equal(Object.keys(S.LEYTEXTO).length,95);
 assert.equal(Object.keys(S.ANALISIS).length,95);
+assert.equal(Object.keys(S.LECTURA_CLARA).length,95);
 assert.equal(new Set(S.SOURCES.map(s=>s.k)).size,S.SOURCES.length,'Claves bibliográficas duplicadas');
 for(let n=1;n<=95;n++){
   const a=S.ANALISIS[n];
+  assert.ok(S.LECTURA_CLARA[n]?.length>65,`Art. ${n}: falta primera lectura sencilla`);
   assert.ok(a&&S.LEYTEXTO[n]?.x,`Artículo ${n} incompleto`);
   for(const field of ['q','l','s','f','c','e','v']) assert.ok(a[field]?.length>20,`Art. ${n}: falta ${field}`);
   assert.ok(a.r.length,`Art. ${n}: sin conexiones`);
