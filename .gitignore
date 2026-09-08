@@ -1,6 +1,9 @@
 # Salidas generadas por build.py (se regeneran con: python build.py)
 dist/
 
+# Evidencia temporal de pruebas visuales y extracción de fuentes
+/tmp/
+
 # Sistema
 Thumbs.db
 .DS_Store

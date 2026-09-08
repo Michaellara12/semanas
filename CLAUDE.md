@@ -10,7 +10,7 @@ Dentro de una ruta, cada parte es un `<section id="…">` declarado en el campo 
 
 ## Estado del proyecto (actualizar si cambia)
 
-- **Estado jurídico:** la Sentencia C-264 de 2026 (25 de agosto, M.P. Paola Andrea Meneses Mosquera) declaró exequible la mayor parte de la Ley 2381 solo por vicios de procedimiento, devolvió a la Cámara los artículos 14, 36 y 93 más apartes de 11, 19, 23, 63, 84 y 92, y fijó la **vigencia el 1 de abril de 2027**. Más de 100 demandas de fondo siguen suspendidas hasta esa fecha.
+- **Estado jurídico reportado:** la comunicación de la Cámara de Representantes del 26 de agosto de 2026 informa aval mayoritario de la Ley 2381 por C-264/26, subsanación y fecha del 1 de abril de 2027. La revisión del 7 de septiembre no pudo cotejar la parte resolutiva completa; los estados individuales se presentan como reportados, no como comprobación autónoma del fallo.
 - **Corte de información:** 5 de septiembre de 2026. Si se agregan datos posteriores, actualizar también esta línea y el pie del menú lateral en `js/shell.js`.
 - **Es un borrador en evolución** (rough sketch): se espera seguir agregando secciones, ilustraciones y análisis.
 
@@ -22,7 +22,7 @@ Dentro de una ruta, cada parte es un `<section id="…">` declarado en el campo 
 | `<seccion>/index.html` | Una carpeta por ruta. Contiene solo su `<main>`; declara `data-root="../"` y `data-route="<seccion>"` en `<html>`. |
 | `js/routes.js` | **Única fuente de verdad de la navegación**: número, título, descripción, color, patrón y partes internas (`sub`) de cada ruta, más los grupos del menú (`PARTS`). Agregar una parte = crear el `<section id>` + añadirlo a `sub`. |
 | `js/shell.js` | Inyecta el armazón compartido y el pie anterior/siguiente. |
-| `js/ley-texto.js` | Texto oficial de los 95 artículos (94 transcritos; el 93 no aparece con encabezado en Función Pública), en `SEMANAS.LEYTEXTO`. Lo consume el acordeón de artículo por artículo. |
+| `js/ley-texto.js` | Texto de los 95 artículos (93 recuperado y separado del 92 mediante cotejo SUIN/OIT, página 49), en `SEMANAS.LEYTEXTO`. Lo consume el acordeón de artículo por artículo. |
 | `js/glossary.js` | `GLOSARIO` (definición, «lo importante», ejemplo y términos relacionados) y `TERM_FRASES` (frases que disparan el marcado automático). El glosario no tiene página: vive en el cajón lateral. |
 | `.claude/skills/interfaz-semanas/` | Reglas de interfaz obligatorias: controles con marca, patrones fuera del texto, color, navegación. |
 | `css/styles.css` | Identidad visual completa en variables CSS. |
@@ -105,3 +105,18 @@ Automático. Cada cambio que llegue a `main` se publica en https://michaellara12
 - Integrar las ilustraciones y animaciones del autor en los bloques `.illus` y en el retrato de la sección de crítica.
 - Cargar un derecho de petición real (historia laboral) en la calculadora para validarla contra una liquidación oficial.
 - Profundizar el análisis histórico a medida que se publiquen nuevos boletines de Colpensiones y del DANE.
+
+## Lectura jurídica de la reforma (7 de septiembre de 2026)
+
+- `js/ley-analisis.js` contiene 95 análisis editoriales con problema, alcance,
+  lectura sistemática, finalidad, límites, ejemplo, comprobaciones y fuentes.
+- `css/reforma-visual.css` compone la introducción y el lector. Las ilustraciones
+  son WebP locales en `assets/illustrations/`; ver `GENERACION.md` para prompts.
+- Los estados individuales se etiquetan como **reportados**: se corroboró el
+  anuncio institucional de la Cámara, pero no estuvo accesible la parte
+  resolutiva íntegra de C-264/26. No atribuirle razonamientos no cotejados.
+- La fuente `ley2381pdf` es copia SUIN/OIT con páginas físicas en `LEYPAGES`.
+- Verificar `node tests/test_models.js`, `node tests/test_ley.js` y la interacción
+  de artículo → fuente → PDF, cierre de la capa superior y retorno de foco.
+- La prueba de navegador está en `tests/test_reforma_ui.cjs`; instrucciones,
+  resultados y alcance de revisión en `tests/REFORMA.md`.

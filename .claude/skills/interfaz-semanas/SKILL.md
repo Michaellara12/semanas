@@ -136,11 +136,12 @@ bloque, busque su selector en `css/styles.css` y copie la estructura que espera.
   queda como un cuadrado por detrás de la línea. El contenido no se recorta
   porque el `padding-left` lo mantiene pasada la onda; si se baja ese padding,
   el texto se corta.
-- **Artículo por artículo es la cuadrícula de tarjetas de siempre**, paginada de
-  diez en diez. Al hacer clic, el detalle se abre en la ventana (`.modal`) con
-  dos columnas: «En palabras sencillas» (interpretación para quien no maneja
-  lenguaje jurídico) y «Texto exacto del artículo» (transcripción de Función
-  Pública en `js/ley-texto.js`). El buscador también busca en el texto oficial.
+- **Artículo por artículo conserva la cuadrícula**, paginada de diez en diez.
+  El detalle abre en una ventana con pestañas accesibles: Entenderlo,
+  Interpretación jurídica, En la práctica y Fuentes y método. El texto oficial
+  vive en un `details` cerrado inicialmente. Las fuentes aparecen encima del
+  artículo y el PDF encima de la fuente. Escape cierra solo la capa superior
+  y restaura el foco. El buscador incluye análisis y texto, ignorando tildes.
 - **Las citas no muestran nada al pasar el cursor.** Se hace clic en `[n]` y se
   abre el mismo cajón (`SEMANAS.abrirCita`) con la ficha: qué documento es, en
   qué página o artículo está el dato, la lista de páginas citadas, «Ver el PDF

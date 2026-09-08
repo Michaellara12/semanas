@@ -7,10 +7,11 @@ concatena en un solo documento y lo marca con <html data-single>, atributo que
 routes.js usa para volver a resolver la navegación con anclas (#historia) en
 lugar de rutas (historia/). Opcional: el sitio publicado no lo necesita.
 """
-import re, pathlib
+import re, pathlib, base64
 
 root = pathlib.Path(__file__).parent
 css = (root / "css/styles.css").read_text(encoding="utf-8")
+css += "\n" + (root / "css/reforma-visual.css").read_text(encoding="utf-8")
 portada = (root / "index.html").read_text(encoding="utf-8")
 
 # --- orden de las secciones, leído de js/routes.js ------------------------
@@ -43,6 +44,11 @@ todo = "\n".join(partes)
 todo = re.sub(r'href="\.\./([a-z0-9]+)/"', r'href="#\1"', todo)
 todo = re.sub(r'href="([a-z0-9]+)/"', r'href="#\1"', todo)
 todo = todo.replace('href="../"', 'href="#inicio"')
+# Las ilustraciones editoriales también viajan en el documento único.
+def incrustar_imagen(match):
+    asset = root / match.group(1)
+    return 'src="data:image/webp;base64,' + base64.b64encode(asset.read_bytes()).decode("ascii") + '"'
+todo = re.sub(r'src="\.\./(assets/illustrations/[^\"]+\.webp)"', incrustar_imagen, todo)
 
 # --- armado del archivo único --------------------------------------------
 CDN = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg.js"
@@ -55,7 +61,7 @@ mathjax = ('<script>window.MathJax={tex:{inlineMath:[["\\\\(","\\\\)"]],'
            '<script src="%s" id="MathJax-script" async></script>' % CDN)
 
 scripts = []
-for js in ("js/data.js", "js/glossary.js", "js/ley-texto.js", "js/routes.js", "js/shell.js",
+for js in ("js/data.js", "js/glossary.js", "js/ley-texto.js", "js/ley-analisis.js", "js/routes.js", "js/shell.js",
            "js/charts.js", "js/models.js", "js/app.js"):
     src = (root / js).read_text(encoding="utf-8").replace("</script>", "<\\/script>")
     scripts.append("<script>\n" + src + "\n</script>")

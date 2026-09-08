@@ -67,7 +67,7 @@
     const tail = document.createElement("div");
     tail.id = "shell-tail";
     tail.innerHTML = `
-<div class="modal" id="modal" role="dialog" aria-modal="true"><div class="box"><button class="close" id="modal-close" aria-label="Cerrar">×</button><div id="modal-body"></div></div></div>
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Lectura del artículo" aria-hidden="true"><div class="box"><div class="law-dialog-head"><span>SEMANAS · Lectura de la ley</span><button class="close" id="modal-close" aria-label="Cerrar artículo">×</button></div><div id="modal-body"></div></div></div>
 
 <div class="pdfview" id="pdfview" role="dialog" aria-modal="true" aria-label="Vista previa de la fuente">
   <div class="shell">

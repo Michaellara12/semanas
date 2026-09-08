@@ -6,8 +6,8 @@
    el 6 de septiembre de 2026. h = encabezado del artículo tal como aparece;
    x = cuerpo, con saltos de línea donde la fuente los trae.
 
-   El artículo 93 no aparece con su encabezado en la fuente consultada, así
-   que no tiene texto aquí: la interfaz lo dice y remite al enlace oficial.
+   Art. 93 recuperado y separado del 92 el 7 de septiembre de 2026,
+   cotejado con SUIN/OIT, página física 49 de pdf/ley2381pdf.pdf.
    No se corrige ortografía ni puntuación: es una transcripción.
    ===================================================================== */
 (function(){
@@ -649,8 +649,9 @@ El banco de la República se encargará de todas las labores pertinentes a la ad
 El Banco de la República, Podrá seleccionar y contratar a terceros para la gestión del portafolio de acuerdo con las políticas establecidas por el Comité y para cualquiera de las operaciones descritas en el numeral 1. Para esto y todos los servicios que requiera la administración del Fondo, el Banco operará bajo un régimen de contratación privado.
 El Banco se ocupará de la gestión de los aspectos legales de la administración del Fondo para lo cual Podrá contratar los servicios de terceros en las condiciones ya descritas.
 El Banco determinará los mecanismos de gestión operativa del Fondo, velando siempre por la autonomía técnica y administrativa del Banco.
-Los costos de administración del Fondo, incluyendo los servicios prestados por el Banco y contratos con terceros, serán pagado con cargo a los rendimientos de los recursos administrados y en subsidio con cargo a estos últimos. 2381
-COMUNIDADES NEGRAS, AFROCOLOMBIANAS, RAIZALES y PALENQUERAS y CAMPESINADO. Todas las menciones específicas a un numero de años o a un número de semanas en los artículos 3, 17, 18, 32, 36, 37, 39, 42, 43, 47, 51 Y 76, que se exigen como requisito para algún beneficio o se toman como base para un cómputo, deberán ajustarse a la baja, en razón a la diferencia entre la esperanza de vida general de los colombianos y la esperanza de vida de quienes pertenecen a los pueblos indígenas, comunidades negras, afrocolombiana, raizales; palenqueras y campesinas. En el primer año de vigencia de la presente ley el DANE deberá calcular esta diferencia y con base en ese cálculo el Ministerio de Trabajo deberá determinar el número de años y/o semanas que se aplicarán diferencialmente en cada uno de los grupos mencionados. Esta reglamentación y su aplicación estarán orientadas por los principios de progresividad y condición más favorable.`},
+Los costos de administración del Fondo, incluyendo los servicios prestados por el Banco y contratos con terceros, serán pagado con cargo a los rendimientos de los recursos administrados y en subsidio con cargo a estos últimos.
+`},
+  93:{h:`TRATO DIFERENCIAL A LOS PUEBLOS INDIGENAS, COMUNIDADES NEGRAS, AFROCOLOMBIANAS, RAIZALES y PALENQUERAS y CAMPESINADO`,x:`Todas las menciones específicas a un numero de años o a un número de semanas en los artículos 3, 17, 18, 32, 36, 37, 39, 42, 43, 47, 51 Y 76, que se exigen como requisito para algún beneficio o se toman como base para un cómputo, deberán ajustarse a la baja, en razón a la diferencia entre la esperanza de vida general de los colombianos y la esperanza de vida de quienes pertenecen a los pueblos indígenas, comunidades negras, afrocolombiana, raizales; palenqueras y campesinas. En el primer año de vigencia de la presente ley el DANE deberá calcular esta diferencia y con base en ese cálculo el Ministerio de Trabajo deberá determinar el número de años y/o semanas que se aplicarán diferencialmente en cada uno de los grupos mencionados. Esta reglamentación y su aplicación estarán orientadas por los principios de progresividad y condición más favorable.`},
   94:{h:`VIGENCIA`,x:`El Sistema de Protección Social Integral para la Vejez, invalidez y Muerte de origen común, previsto en la presente ley, entrará en vigor el 01 de julio de 2025.`},
   95:{h:`DEROGATORIAS`,x:`la presente ley rige a partir de su sanción y deroga las disposiciones que le sean contrarios. '.
 Sin perjuicio de lo anterior, las normas continuarán vigentes para atender el Régimen de Transición y el régimen de aquellos ya pensionados al momento de expedirse esta ley.

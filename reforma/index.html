@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&amp;family=Figtree:ital,wght@0,400..900;1,400..700&amp;family=Caveat:wght@500..700&amp;family=IBM+Plex+Mono:wght@400;600&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/reforma-visual.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23141414'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23FFC300' stroke-width='7' stroke-dasharray='75 32'/%3E%3C/svg%3E">
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"},options:{skipHtmlTags:["script","noscript","style","textarea","pre","code"]}};</script>
 <script src="../vendor/tex-svg.js" id="MathJax-script" async></script>
@@ -17,99 +18,78 @@
 <main>
 <section class="section" id="que-es">
   <div class="wrap">
-    <div class="chapter c-cyan"><span class="lbl">Qué es</span><span class="part">Reforma 2381 de 2024</span></div>
-    <div class="section-head reveal">
-      <h2>La Ley 2381, explicada desde cero</h2>
-      <p class="lead">Es la ley que reorganiza cómo se financian y se pagan las pensiones en Colombia. No inventa un sistema nuevo: toma los dos regímenes que existen desde 1993 y los pone a trabajar juntos, uno encima del otro, en vez de competir por el mismo afiliado. Esta primera parte explica qué es, cómo funciona y qué busca, con el texto de la ley y los comunicados oficiales del Gobierno como únicas fuentes.</p>
+    <div class="chapter c-cyan"><span class="lbl">Entender la ley</span><span class="part">Reforma 2381 de 2024</span></div>
+    <div class="law-hero">
+      <div>
+        <span class="law-eyebrow">Seguridad social · Colombia</span>
+        <h1>La Ley 2381,<br><em>paso a paso.</em></h1>
+        <p class="lead">Qué protege, cómo organiza los aportes y qué cambia para las personas. Una guía para entender la reforma pensional desde cero y leer sus artículos con contexto.</p>
+        <div class="law-actions"><a class="btn" href="#ley">Explorar los 95 artículos ↓</a><a class="btn ghost" href="#law-primer-paso">Empezar por lo básico ↓</a></div>
+      </div>
+      <figure class="law-hero-art"><img src="../assets/illustrations/ley2381-chica.webp" width="900" height="900" fetchpriority="high" alt="Una joven sostiene un libro con la bandera de Colombia; ilustración geométrica en magenta, cian y violeta."></figure>
     </div>
+    <aside class="law-status"><b>Primero, una distinción: lo que la ley diseña y cuándo se aplica.</b><p>La Cámara de Representantes informó el 26 de agosto de 2026 que la decisión C-264 de 2026 avaló la mayor parte de la reforma, ordenó subsanar disposiciones y fijó el 1 de abril de 2027 para el nuevo sistema. Esa comunicación institucional no reemplaza la sentencia: el alcance exacto de los apartes pendientes exige consultar su parte resolutiva. Esta guía explica el texto de 2024 y señala las cuestiones que requieren esa comprobación. <a class="cite" data-ref="camara264"></a></p></aside>
 
-    <div class="grid">
-      <div class="listblock rule-cyan reveal">
-        <h3>En una frase</h3>
-        <p>La Ley 2381 de 2024 crea el <b>Sistema de Protección Social Integral para la Vejez, Invalidez y Muerte</b>, organizado en cuatro <span class="term" data-t="pilares">pilares</span> que se suman: uno para quien nunca cotizó, uno para quien cotizó pero no alcanzó, uno obligatorio para todo el que trabaja y uno voluntario. Su objeto declarado es garantizar el derecho a la seguridad social del artículo 48 de la Constitución con criterios de universalidad, solidaridad y eficiencia. <a class="cite" data-ref="ley2381"></a></p>
-        <p class="small muted">Lo que <b>no</b> cambia: la edad de pensión (57 años mujeres, 62 hombres), las 1.300 <span class="term" data-t="semanas">semanas</span> exigidas, la <span class="term" data-t="cotizacion">tasa de cotización</span> del 16 % y el tope de 25 salarios mínimos. <a class="cite" data-ref="abece"></a></p>
-      </div>
-    </div>
+    <div class="law-intro-step" id="law-primer-paso"><span class="law-step-number" aria-hidden="true">01</span><div>
+      <h2>Una ley para proteger ingresos a lo largo de la vida</h2>
+      <p>La Ley 2381 de 2024 crea el <b>Sistema de Protección Social Integral para la Vejez, Invalidez y Muerte de origen común</b>. Su objeto es desarrollar el derecho a la seguridad social: ayudar a sostener económicamente a las personas cuando llegan a la vejez, pierden su capacidad laboral o fallece quien protegía a su familia. «Origen común» distingue estos riesgos de los accidentes y enfermedades relacionados con el trabajo, que tienen su propio sistema. <a class="cite" data-ref="ley2381" data-locator="Artículos 1, 3, 13 y 40"></a></p>
+      <p>No todas las ayudas son una pensión. La ley diferencia <b>pensiones contributivas</b>, que dependen de requisitos de afiliación y cotización, de <b>rentas solidarias o semicontributivas</b>, con reglas distintas de acceso, monto y protección de sobrevivientes. Saber cuál prestación se está leyendo evita atribuirle derechos que corresponden a otra.</p>
+      <div class="law-protection"><div><h3>¿Por qué cambia la organización?</h3><p>En el esquema de la Ley 100, prima media y ahorro individual son regímenes alternativos. La reforma reúne ambos mecanismos en un mismo pilar contributivo y articula apoyos para quienes no alcanzan una pensión. La finalidad de ampliar la protección está en la ley; que el diseño logre sus objetivos de cobertura y financiación requiere evaluación y no se demuestra solo con aprobarlo. <a class="cite" data-ref="ley100"></a> <a class="cite" data-ref="ley2381" data-locator="Artículos 3, 4 y 5"></a></p></div><img src="../assets/illustrations/ley2381-proteccion.webp" width="1000" height="667" loading="lazy" decoding="async" alt="Dos personas mayores cuidan juntas una planta, como imagen de protección durante la vejez."></div>
+    </div></div>
 
-    <!-- Cómo funciona, paso a paso -->
-    <div class="section-head mt3 reveal"><h3 class="h2-like">Cómo funciona: el recorrido de un aporte</h3><p class="lead">Hoy cada trabajador escoge Colpensiones <b>o</b> una AFP y todo su aporte va a una sola parte. Con la ley, el aporte se reparte por tramos de ingreso. Así queda el recorrido según los artículos 19, 20 y 24. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="abece"></a></p></div>
-    <div class="explica">
-      <div class="paso reveal"><span class="n">1</span><h3>Se cotiza el 16 %</h3><p>Sobre el IBC, como hoy: 12 puntos el empleador y 4 el trabajador. El porcentaje no sube; lo que cambia es el destino del dinero (art. 20).</p></div>
-      <div class="paso reveal d1"><span class="n">2</span><h3>Hasta 2,3 SMLMV va a Colpensiones</h3><p>La parte del aporte que corresponde a los primeros 2,3 salarios mínimos entra al <b>Componente de Prima Media</b>. Es obligatorio para todos, gane lo que gane (art. 19).</p></div>
-      <div class="paso reveal d2"><span class="n">3</span><h3>Lo que exceda va a la cuenta individual</h3><p>El aporte sobre el ingreso por encima de 2,3 y hasta 25 SMLMV entra a una cuenta a nombre del trabajador en una administradora privada: el <b>Componente Complementario de Ahorro Individual</b>.</p></div>
-      <div class="paso reveal d3"><span class="n">4</span><h3>El excedente se ahorra</h3><p>Mientras Colpensiones recaude más de lo que paga, la diferencia va al <span class="term" data-t="fapc">Fondo de Ahorro del Pilar Contributivo</span>, administrado por el Banco de la República, para los años en que la relación se invierta (art. 24).</p></div>
-      <div class="paso reveal d4"><span class="n">5</span><h3>Una sola pensión</h3><p>Al retiro, Colpensiones reconoce y paga una única <b>Pensión Integral de Vejez</b> que suma lo causado en los dos componentes (art. 19). El afiliado no recibe dos mesadas: recibe una. <a class="cite" data-ref="abece"></a></p></div>
-    </div>
+    <div class="law-intro-step"><span class="law-step-number" aria-hidden="true">02</span><div>
+      <h2>Primero se identifica a quién cubre</h2>
+      <p>La regla general comprende a las personas residentes en Colombia y a colombianos domiciliados en el exterior. Pero cada pilar tiene condiciones propias: el solidario exige ciudadanía colombiana y residencia; la vinculación contributiva de colombianos en el exterior es voluntaria. Además hay regímenes exceptuados y especiales que deben revisarse antes de aplicar la regla general. <a class="cite" data-ref="ley2381" data-locator="Artículos 2, 12 y 17"></a></p>
+      <p>Para alguien que ya cotiza, el primer dato decisivo es la <b>transición</b>: el artículo 75 conserva el régimen anterior para quienes alcancen el umbral de semanas correspondiente al entrar en vigor el sistema. Las pensiones ya reconocidas y los derechos adquiridos también tienen protección. No se puede concluir que a toda persona le cambie la pensión por igual. <a class="cite" data-ref="ley2381" data-locator="Artículos 4, 75 y 95"></a></p>
+    </div></div>
 
-    <div class="grid g2 mt3">
-      <div class="listblock rule-orange reveal">
-        <h3>Un ejemplo con el salario mínimo de 2026</h3>
-        <p class="small">Con el mínimo en $1.750.905, el umbral de 2,3 equivale a unos <b>$4.027.000</b>. <a class="cite" data-ref="d1469"></a></p>
-        <ul class="list small">
-          <li><b>Quien gana $2.500.000</b> está por debajo del umbral: su aporte completo va a Colpensiones, como si estuviera en el régimen de prima media de hoy.</li>
-          <li><b>Quien gana $7.000.000</b> cotiza por los primeros $4.027.000 a Colpensiones y por los $2.973.000 restantes a su cuenta individual. Al final recibirá una pensión que suma ambas partes.</li>
-          <li><b>Quien gana más de 4 SMLMV</b> aporta además entre 1,5 % y 3 % al Fondo de Solidaridad Pensional, según el tramo (art. 20). <a class="cite" data-ref="abece"></a></li>
-        </ul>
+    <div class="law-intro-step"><span class="law-step-number" aria-hidden="true">03</span><div>
+      <h2>Cuatro pilares, distintas formas de protección</h2>
+      <p>Un pilar es una parte del sistema diseñada para una situación. No son cuatro pagos que toda persona vaya a recibir juntos: la ley fija requisitos y compatibilidades para cada uno. <a class="cite" data-ref="ley2381" data-locator="Artículos 3, 16, 17 y 18"></a></p>
+      <div class="law-pillar-rows">
+        <article class="law-pillar-row c-magenta"><span class="law-eyebrow">01 · Protección sin pensión</span><h3>Solidario</h3><p>Renta básica para personas colombianas en pobreza extrema, pobreza o vulnerabilidad. El artículo 17 exige, entre otras condiciones, 60 años a mujeres o 65 a hombres, residencia previa y ausencia de pensión; prevé edades especiales ante pérdida de capacidad laboral.</p><p>La administra Prosperidad Social y se financia con recursos públicos y de solidaridad. <b>Es una renta básica, no una pensión contributiva.</b> <a class="cite" data-ref="ley2381" data-locator="Artículo 17, requisitos y parágrafos"></a></p></article>
+        <article class="law-pillar-row c-yellow"><span class="law-eyebrow">02 · Aportes que no alcanzaron</span><h3>Semicontributivo</h3><p>Convierte cotizaciones insuficientes en una renta vitalicia a los 60 años para mujeres o 65 para hombres. El texto prevé entre 300 y menos de 1.000 semanas; desde 2036 cambia el límite para hombres. El cálculo depende también de la elegibilidad al solidario.</p><p>Tiene tope del 80 % del salario mínimo y no se sustituye ni se hereda. Hasta 299 semanas, la ley contempla indemnización y devolución de saldos. <a class="cite" data-ref="ley2381" data-locator="Artículo 18, literales y parágrafos 2 y 3"></a></p></article>
+        <article class="law-pillar-row c-cyan"><span class="law-eyebrow">03 · Cotizar para pensionarse</span><h3>Contributivo</h3><p>Combina prima media en Colpensiones, sobre el ingreso hasta 2,3 salarios mínimos, con ahorro individual sobre el exceso hasta el límite legal. La edad, las semanas y el ahorro determinan la prestación según cada componente.</p><p>Colpensiones integra el reconocimiento y pago de una pensión de vejez. Las administradoras del ahorro individual deben estar autorizadas; no todas tienen que ser privadas. <a class="cite" data-ref="ley2381" data-locator="Artículos 19, 32, 34 y 57"></a></p></article>
+        <article class="law-pillar-row c-peri"><span class="law-eyebrow">04 · Complementar el ahorro</span><h3>Ahorro voluntario</h3><p>Permite añadir ahorro mediante los mecanismos del sistema financiero para complementar la protección económica en la vejez. No sustituye una cotización obligatoria.</p><p>Las condiciones del producto, sus costos y las reglas tributarias importan. Ahorrar voluntariamente no garantiza por sí solo una pensión ni una exención para cualquier retiro. <a class="cite" data-ref="ley2381" data-locator="Artículos 3, pilar voluntario; 81, parágrafo; y 84"></a></p></article>
       </div>
-      <div class="listblock rule-violet reveal d1">
-        <h3>Quién administra qué (art. 3)</h3>
-        <div class="rows">
-          <div class="r"><div class="k">Solidario</div><div class="v">Prosperidad Social. Transferencia para personas mayores en pobreza. No exige cotización. <a class="cite" data-ref="pilarSol"></a></div></div>
-          <div class="r"><div class="k">Semicontrib.</div><div class="v">Colpensiones. Renta vitalicia para quien cotizó entre 300 y 1.000 semanas y no se pensionó.</div></div>
-          <div class="r"><div class="k">Contributivo</div><div class="v">Colpensiones hasta el umbral; administradoras privadas vigiladas por la Superintendencia Financiera por encima.</div></div>
-          <div class="r"><div class="k">Voluntario</div><div class="v">Administradoras privadas. Aportes adicionales, con beneficios tributarios.</div></div>
-        </div>
-      </div>
-    </div>
+    </div></div>
 
-    <!-- Principios e intenciones -->
-    <div class="section-head mt3 reveal"><h3 class="h2-like">Qué busca la ley, según el propio texto y el Gobierno</h3><p class="lead">Las intenciones no se toman de la prensa ni de los críticos, sino de la ley y de los comunicados oficiales de quienes la impulsaron. Lo que sigue es lo que ellos dicen que querían lograr.</p></div>
-    <div class="grid g3">
-      <div class="block rule-cyan reveal">
-        <h4>1 · Cubrir a quien hoy no tiene nada</h4>
-        <p class="small muted">El artículo 1 fija como objeto «garantizar el derecho a la seguridad social» con universalidad. El instrumento es el Pilar Solidario: una renta para las personas mayores en pobreza que nunca alcanzaron una pensión, financiada con presupuesto y no con cotizaciones. Presidencia y Prosperidad Social lo presentan como la mayor ampliación de cobertura del sistema. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="pilarSol"></a></p>
-      </div>
-      <div class="block rule-magenta reveal d1">
-        <h4>2 · Acabar con la competencia entre regímenes</h4>
-        <p class="small muted">El artículo 3 reemplaza la elección entre Colpensiones y una AFP por un pilar contributivo donde ambos componentes conviven. El Ministerio del Trabajo defendió el umbral de 2,3 SMLMV como el punto en que el pilar público recibe lo suficiente para financiar las pensiones de los ingresos bajos y medios sin absorber todo el ahorro. <a class="cite" data-ref="mintrabU"></a> <a class="cite" data-ref="senadoU"></a></p>
-      </div>
-      <div class="block rule-orange reveal d2">
-        <h4>3 · No dejar a nadie con las manos vacías</h4>
-        <p class="small muted">Quien cotiza años pero no llega a 1.300 semanas hoy recibe una devolución y sale del sistema. El Pilar Semicontributivo convierte ese ahorro en una renta de por vida con subsidio, y la <b>prestación anticipada de vejez</b> aprobada en tercer debate cubre a quien tiene las semanas pero no la edad. <a class="cite" data-ref="mintrabU"></a></p>
-      </div>
-      <div class="block rule-violet reveal">
-        <h4>4 · Concentrar el subsidio público en los ingresos bajos</h4>
-        <p class="small muted">Al limitar el componente público a 2,3 SMLMV, el subsidio implícito del régimen de prima media deja de crecer con el ingreso: por encima del umbral, la pensión sale del ahorro propio. Es el argumento distributivo con el que el Gobierno sostuvo el diseño en el Senado. <a class="cite" data-ref="senadoU"></a></p>
-      </div>
-      <div class="block rule-green reveal d1">
-        <h4>5 · Ahorrar hoy para pagar mañana</h4>
-        <p class="small muted">El artículo 24 crea el Fondo de Ahorro del Pilar Contributivo en el Banco de la República, para guardar el excedente de los primeros años y usarlo cuando el envejecimiento invierta la relación entre cotizantes y pensionados. El artículo 5 obliga al Estado a proveer los recursos dentro de la Regla Fiscal y el Marco Fiscal de Mediano Plazo. <a class="cite" data-ref="ley2381"></a></p>
-      </div>
-      <div class="block rule-wine reveal d2">
-        <h4>6 · Proteger a quien ya venía cotizando</h4>
-        <p class="small muted">El artículo 75 deja en la Ley 100, con todas sus reglas, a las mujeres con 750 semanas y a los hombres con 900 al momento de la vigencia. El ABECÉ oficial lo resume así: la reforma «aplica» a quien tenga menos semanas que esas; los demás no cambian de régimen. <a class="cite" data-ref="abece"></a></p>
-      </div>
-    </div>
+    <div class="law-intro-step"><span class="law-step-number" aria-hidden="true">04</span><div>
+      <h2>Así se distribuye una cotización</h2>
+      <ol class="law-checks"><li><b>Se calcula el ingreso base de cotización (IBC).</b> Es el ingreso sobre el cual se aplica la tasa. Para un dependiente parte del salario; para un independiente existen reglas propias. El auxilio de transporte no es un salario adicional para este ejemplo. <a class="cite" data-ref="ley2381" data-locator="Artículo 22"></a></li><li><b>Se aplica la tasa del 16 %.</b> En un contrato laboral, 12 puntos corresponden al empleador y 4 al trabajador. El independiente asume su aporte; los ingresos altos tienen contribuciones solidarias adicionales. <a class="cite" data-ref="ley2381" data-locator="Artículos 20 y 21"></a></li><li><b>Se separa la base en dos tramos.</b> Hasta 2,3 salarios mínimos corresponde a prima media; el exceso al componente de ahorro individual. Luego, dentro de cada componente, la cotización se distribuye entre financiación pensional, seguros, administración y solidaridad según el artículo 23. No todo lo recaudado entra a una cuenta personal. <a class="cite" data-ref="ley2381" data-locator="Artículos 19 y 23"></a></li><li><b>Una parte financia una reserva colectiva.</b> El Fondo de Ahorro del Pilar Contributivo guarda recursos para obligaciones futuras, con reglas legales de acumulación y uso. Lo administra el Banco de la República; no es la cuenta individual de cada afiliado. <a class="cite" data-ref="ley2381" data-locator="Artículos 24 y 92"></a></li></ol>
+      <div class="law-example"><h3>Ejemplo: una base de 3 salarios mínimos</h3><p>La base se divide en <b>2,3</b> para prima media y <b>0,7</b> para ahorro individual. El aporte ordinario total es <b>0,48 salarios mínimos</b>: 3 × 16 %. De ese aporte, 0,368 corresponde al primer tramo y 0,112 al segundo, antes de la distribución interna del artículo 23.</p><p class="small">Ejemplo pedagógico del diseño legal para una persona fuera de transición. Se expresa en salarios mínimos para no depender del valor en pesos de un año. No es una liquidación de pensión. <a class="cite" data-ref="ley2381" data-locator="Artículos 19, 20, 22 y 23"></a></p></div>
+    </div></div>
 
-    <div class="listblock rule-peri mt3 reveal">
-      <h3>Los principios que la ley se impone (art. 4)</h3>
-      <p class="small">Son veintiuno. Estos son los que más pesan a la hora de leer el resto del articulado y las demandas pendientes: <b>universalidad</b> (cubrir a todos), <b>solidaridad</b> (los que más tienen aportan a los que menos), <b>sostenibilidad financiera y actuarial</b> (que las promesas se puedan pagar), <b>progresividad</b>, <b>respeto a los derechos adquiridos</b>, <b>enfoque de género</b>, <b>libertad de elección</b> dentro del componente de ahorro, y <b>financiamiento colectivo</b>. Cuando dos principios chocan —libertad de elección frente a solidaridad, por ejemplo— aparece una demanda. <a class="cite" data-ref="ley2381"></a></p>
-    </div>
+    <div class="law-intro-step"><span class="law-step-number" aria-hidden="true">05</span><div>
+      <h2>Qué cambia al pedir una prestación</h2>
+      <div class="law-table-wrap"><table class="law-table"><caption>Las preguntas que conviene separar</caption><thead><tr><th scope="col">Pregunta</th><th scope="col">Qué establece el texto</th><th scope="col">Dónde leer</th></tr></thead><tbody>
+        <tr><th scope="row">¿A qué edad?</th><td>Para vejez contributiva: 57 años mujeres y 62 hombres. Las rentas solidaria y semicontributiva tienen edades diferentes.</td><td>Arts. 17, 18 y 32</td></tr>
+        <tr><th scope="row">¿Cuántas semanas?</th><td>El artículo 32 conserva 1.300 como regla general y contiene una reducción gradual para mujeres hasta 1.000. El calendario del texto debe leerse junto con la vigencia aplicable.</td><td>Arts. 32, 75 y 94</td></tr>
+        <tr><th scope="row">¿Cuánto se recibe?</th><td>Prima media usa una fórmula sobre el ingreso base de liquidación; el ahorro individual financia un complemento actuarial. No equivale automáticamente al último salario.</td><td>Arts. 32–34</td></tr>
+        <tr><th scope="row">¿Hay otras vías?</th><td>Pensión familiar, protección a padres o madres con hijos con discapacidad, beneficio de semanas por hijos y prestación anticipada. Cada figura tiene requisitos propios y debe verificarse su estado jurídico.</td><td>Arts. 35–39 y 89</td></tr>
+        <tr><th scope="row">¿Y si hay invalidez o fallecimiento?</th><td>Se revisan el origen del riesgo, las semanas, la calificación y los beneficiarios. No se aplican automáticamente las condiciones de la pensión de vejez.</td><td>Arts. 40–56</td></tr>
+      </tbody></table></div><p class="small">Fuente de la comparación: Ley 2381, artículos indicados. <a class="cite" data-ref="ley2381" data-locator="Artículos 17–18, 32–56, 75, 89 y 94"></a></p>
+      <p><b>Una precisión sobre las mujeres:</b> el calendario de la Ley 2381 y la decisión C-197 de 2023 sobre el régimen de prima media de la Ley 100 son fuentes diferentes. No se deben intercambiar sus fechas ni aplicar la tabla de una a todas las afiliadas de la otra. <a class="cite" data-ref="c197"></a></p>
+    </div></div>
 
-    <div class="callout mt3 reveal">
-      <p><b>Cuándo y a quién.</b> La Corte Constitucional fijó la entrada en vigencia el <b>1 de abril de 2027</b>. Ese día se cuenta quién tiene 750 o 900 semanas y se queda en la Ley 100, y quién pasa al nuevo sistema. El ABECÉ oficial fue escrito cuando la fecha prevista era julio de 2025; su contenido operativo sigue vigente, con la fecha corrida. <a class="cite" data-ref="c264"></a> <a class="cite" data-ref="abece"></a></p>
-    </div>
+    <div class="law-intro-step"><span class="law-step-number" aria-hidden="true">06</span><div>
+      <h2>Transición y traslado son dos cosas distintas</h2>
+      <p><b>La transición conserva reglas anteriores.</b> El artículo 75 fija 750 semanas para mujeres y 900 para hombres al entrar en vigor el sistema. Para comprobarlas se revisan la historia laboral, los tiempos públicos y, cuando corresponda, aportes en el exterior. El umbral permite identificar el régimen aplicable; no significa que ya se cumplan los requisitos para pensionarse. <a class="cite" data-ref="ley2381" data-locator="Artículo 75 y parágrafos"></a></p>
+      <p><b>La oportunidad de traslado permite cambiar de régimen.</b> El artículo 76 exige semanas, cercanía a la edad de pensión y doble asesoría; concede dos años desde la promulgación. No empieza a contarse de nuevo porque se difiera la entrada del sistema. El Auto 841 de 2025 exceptuó este artículo de la suspensión que ordenó. Para una solicitud concreta se deben verificar su fecha y las decisiones posteriores que la afecten. <a class="cite" data-ref="ley2381" data-locator="Artículo 76"></a> <a class="cite" data-ref="auto841" data-locator="Numeral quinto de la parte resolutiva"></a></p>
+      <p>El siguiente paso es leer el artículo que responde a su situación. En cada ficha encontrará la regla, por qué la interpretamos así, un ejemplo y los documentos que permiten contrastarla.</p>
+    </div></div>
   </div>
 </section>
 
 <section class="section tint" id="ley">
   <div class="wrap">
     <div class="chapter c-cyan"><span class="lbl">Artículo por artículo</span><span class="part">La ley 2381</span></div>
-    <div class="section-head reveal"><h2>Los 95 artículos, uno por uno</h2><p class="lead">Haga clic en un artículo y se abre con dos cosas: la interpretación en palabras sencillas, para quien no maneja lenguaje jurídico, y el <b>texto exacto</b> tal como lo publica Función Pública. Diez por página; el buscador también busca dentro del texto oficial. <a class="cite" data-ref="ley2381"></a> <a class="cite" data-ref="c264"></a></p></div>
-    <div class="art-tools"><span class="searchbar"><input type="text" id="art-search" placeholder="Buscar (p. ej. «2,3», «semanas», «Banco de la República»)"></span><span class="select-wrap"><select id="art-filter"></select></span><span class="select-wrap"><select id="art-status"><option value="all">Todos los estados</option><option value="ex">Exequibles</option><option value="parc">Con aparte devuelto</option><option value="dev">Devueltos</option><option value="cond">Condicionado</option></select></span><span class="tag" id="art-count"></span></div>
+    <div class="section-head law-reading-head"><div><h2>La ley, con lupa.</h2><p class="lead">Los 95 artículos, uno por uno. Abra una ficha para entender la regla, seguir su interpretación jurídica y explorar un ejemplo. El texto oficial está en un cajón que puede abrir y cerrar.</p><p class="small">El buscador recorre títulos, texto legal y análisis, con o sin tildes. Las referencias explican qué sustenta cada fuente. <a class="cite" data-ref="ley2381"></a></p></div><img src="../assets/illustrations/ley2381-lectura.webp" width="700" height="700" loading="lazy" decoding="async" alt="Una lectora examina un libro con una lupa."></div>
+    <div class="law-method-note"><b>Cómo leemos cada artículo.</b> Partimos de su texto, lo conectamos con otras normas, explicamos su finalidad y revisamos los límites constitucionales y temporales. Son lecturas editoriales sustentadas en el Código Civil y la jurisprudencia, con las dudas identificadas. <a class="cite" data-ref="codcivil"></a> <a class="cite" data-ref="c054"></a></div>
+    <div class="art-tools"><span class="searchbar"><input type="search" id="art-search" aria-label="Buscar en los artículos y su análisis" placeholder="Buscar una palabra, tema o número…"></span><span class="select-wrap"><select id="art-filter" aria-label="Filtrar artículos por tema"></select></span><span class="select-wrap"><select id="art-status" aria-label="Filtrar por estado reportado"><option value="all">Todos los estados reportados</option><option value="ex">Aval de trámite reportado</option><option value="parc">Aparte pendiente reportado</option><option value="dev">Devolución reportada</option><option value="cond">Vigencia condicionada reportada</option></select></span><span class="tag" id="art-count" aria-live="polite"></span></div>
     <div class="art-list" id="art-list"></div>
     <nav class="art-pages" id="art-pages" aria-label="Páginas de artículos"></nav>
-    <div class="note mt2 small"><b>Nota:</b> los resúmenes no sustituyen el texto legal; los artículos 14, 36 y 93 y apartes de 11, 19, 23, 63, 84 y 92 pueden cambiar tras la subsanación ordenada por la Corte (30 días hábiles dentro de la legislatura). <a class="cite" data-ref="lafmProp"></a></div>
+    <div class="note mt2 small"><b>Sobre los estados:</b> el catálogo previo identifica devoluciones y condicionamientos. La comunicación institucional consultada confirma el anuncio general; el alcance por artículo requiere cotejar la parte resolutiva y la subsanación. Por eso se muestran como estados reportados, separados del análisis del texto de 2024. <a class="cite" data-ref="camara264"></a></div>
   </div>
 </section>
 
@@ -127,7 +107,7 @@
     <div class="compare mt3 reveal">
       <div class="col before"><h3><span class="tag">Antes</span> Ley 100 de 1993 / Ley 797 de 2003</h3>
         <div class="row"><div class="k">Arquitectura</div><div class="v">Dos regímenes excluyentes y en competencia: RPM (Colpensiones) y RAIS (AFP). Traslado cada 5 años hasta 10 antes de la edad. <a class="cite" data-ref="ley100"></a></div></div>
-        <div class="row"><div class="k">Requisitos RPM</div><div class="v">57 (M) / 62 (H) años y 1.300 semanas. <a class="cite" data-ref="ley797"></a></div></div>
+        <div class="row"><div class="k">Requisitos RPM</div><div class="v">57 (M) / 62 (H) años. Base histórica de 1.300 semanas; para mujeres debe revisarse el efecto temporal de C-197/23 y la normativa aplicable. <a class="cite" data-ref="ley797"></a> <a class="cite" data-ref="c197"></a></div></div>
         <div class="row"><div class="k">Fórmula RPM</div><div class="v">\( r = 65{,}5 - 0{,}5\,s \) sobre el IBL (10 años); +1,5 % por cada 50 semanas extra; máximo 80 % (70,5 % en ingresos altos); mínimo 1 SMMLV; tope 25 SMMLV.</div></div>
         <div class="row"><div class="k">Requisitos RAIS</div><div class="v">Capital que financie ≥ 110 % del SMMLV, a cualquier edad; o Garantía de Pensión Mínima a 57/62 con 1.150 semanas.</div></div>
         <div class="row"><div class="k">Si no alcanza</div><div class="v">Indemnización sustitutiva (RPM) o devolución de saldos con rendimientos (RAIS), en un solo pago, heredable.</div></div>
@@ -138,7 +118,7 @@
       </div>
       <div class="col after"><h3><span class="tag purple">Después</span> Ley 2381 de 2024 (vigencia 1 abr 2027)</h3>
         <div class="row"><div class="k">Arquitectura</div><div class="v">Cuatro pilares. Un solo Pilar Contributivo con dos componentes complementarios. Traslado solo entre administradoras del CCAI. <a class="cite" data-ref="ley2381"></a></div></div>
-        <div class="row"><div class="k">Requisitos</div><div class="v">57/62 años; 1.300 semanas; mujeres bajan 25 semanas por año hasta 1.000 en 2036; −50 semanas por hijo (máx. 3, piso 850; art. 36 devuelto a la Cámara).</div></div>
+        <div class="row"><div class="k">Requisitos</div><div class="v">57/62 años; 1.300 semanas; el texto prevé que las mujeres bajen 25 semanas por año hasta 1.000 en 2036, sujeto a la vigencia aplicable; −50 semanas por hijo (máx. 3, piso 850; art. 36, devolución reportada que debe cotejarse).</div></div>
         <div class="row"><div class="k">Fórmula</div><div class="v">Misma \( r = 65{,}5 - 0{,}5\,s \) pero sobre el IBL topado a 2,3 SMLMV (r ≈ 64,4–65 %); +1,5 % por 50 semanas; máximo 80 %. Encima de 2,3 SMLMV: anualidad vitalicia del CCAI.</div></div>
         <div class="row"><div class="k">Prestación anticipada</div><div class="v">> 1.000 semanas y 62 (M) / 65 (H) antes de 2036: pensión proporcional con descuento de cotizaciones faltantes (art. 37).</div></div>
         <div class="row"><div class="k">Si no alcanza</div><div class="v">300–999 semanas: Renta Vitalicia semicontributiva a los 60/65, tope 80 % SMLMV, no heredable. &lt; 300: devolución / indemnización.</div></div>
@@ -294,34 +274,25 @@
 <section class="section" id="jurisprudencia">
   <div class="wrap">
     <div class="chapter c-wine"><span class="lbl">Corte Constitucional</span><span class="part">La ley 2381</span></div>
-    <div class="section-head reveal"><h2>Del Auto 841 a la Sentencia C-264</h2></div>
+    <div class="section-head reveal"><h2>El texto legal y su recorrido judicial</h2><p class="lead">Una ley puede estar publicada y, al mismo tiempo, tener su entrada en vigor suspendida o condicionada. Para aplicarla hay que leer qué decidió el tribunal, sobre qué disposiciones y desde cuándo.</p></div>
     <div class="grid g3">
-      <div class="block rule-cyan reveal"><h3>Auto 841 de 2025</h3><p class="small muted"><b>17 de junio de 2025</b> · M.P. Jorge Enrique Ibáñez Najar · exp. D-15989. La plenaria de la Cámara, el 14 de junio de 2024, declaró «suficiente ilustración» sin debatir más de 700 proposiciones y acogió el texto del Senado sin explicar las diferencias con la ponencia: vicio de deliberación mínima, pero subsanable. Ordenó repetir el segundo debate y suspendió la vigencia prevista para el 1 de julio de 2025. <a class="cite" data-ref="auto841"></a></p></div>
-      <div class="panel peri reveal d1"><h3>Subsanación (jun–ago 2025)</h3><p class="small muted">La Cámara repitió la votación el 27 y 28 de junio de 2025 con base en el comunicado de prensa; el Auto solo fue notificado el 14 de agosto. Según el salvamento del conjuez Carlos Pablo Márquez, esa premura y la falta de votación artículo por artículo de las proposiciones no desistidas constituían vicios adicionales que debían llevar a la inexequibilidad. <a class="cite" data-ref="c264"></a> <a class="cite" data-ref="sCorte"></a></p></div>
-      <div class="panel ink reveal d2"><h3>Sentencia C-264 de 2026</h3><p class="small muted"><b style="color:#fff">25 de agosto de 2026</b> · M.P. Paola Andrea Meneses Mosquera · 7–1. Exequibilidad, «exclusivamente por los vicios de procedimiento examinados», de los arts. 1–10, 12, 13, 15–18, 20–22, 24–35, 37–62, 64–83, 85–91 y 95, y de apartes de 11, 19, 23, 63, 84 y 92. Devuelve los arts. 14, 36 y 93 y seis apartes; art. 94 exequible en el entendido de que la vigencia es el <b style="color:#fff">1 de abril de 2027</b>; suspende los términos de las demás demandas hasta esa fecha. <a class="cite" data-ref="c264"></a> <a class="cite" data-ref="elcolC264"></a></p></div>
+      <div class="block rule-cyan reveal"><h3>Auto 841 de 2025</h3><p class="small muted">La Corte identificó un defecto subsanable de deliberación en el trámite legislativo y ordenó repetir el debate correspondiente en la Cámara. Suspendió la entrada en vigor general, con las excepciones del parágrafo transitorio del artículo 12 y del artículo 76. La orden de corregir el trámite no equivale a una decisión definitiva sobre todo el contenido de la ley. <a class="cite" data-ref="auto841" data-locator="Parte resolutiva; suspensión y excepciones"></a></p></div>
+      <div class="panel peri reveal d1"><h3>Decisión reportada en 2026</h3><p class="small muted">El 26 de agosto de 2026, la Cámara informó que la C-264 de 2026 avaló la mayor parte de la reforma, ordenó subsanar disposiciones y fijó el 1 de abril de 2027 para el nuevo sistema. Es una comunicación institucional sobre la decisión; permite documentar el anuncio, pero no sustituye la lectura de los numerales resolutivos. <a class="cite" data-ref="camara264"></a></p></div>
+      <div class="panel ink reveal d2"><h3>Qué falta cotejar</h3><p class="small muted">La parte resolutiva íntegra de C-264/26 no estuvo accesible en esta revisión. Por eso los estados individuales del explorador se identifican como <b>reportados</b>. No se presentan como una comprobación autónoma de cada aparte ni se atribuyen al fallo argumentos que no pudieron contrastarse. <a class="cite" data-ref="c264"></a></p></div>
     </div>
-    <div class="block rule-orange mt2 reveal"><h3>Lo que la Cámara debe resolver</h3><div class="table-wrap"><table><thead><tr><th>Artículo / aparte</th><th>Tema</th><th>Proposición pendiente</th><th>Autor</th></tr></thead><tbody>
-      <tr><td>11, inciso 4</td><td>Propiedad de las cuentas individuales</td><td>Precisar el carácter de propiedad privada de los saldos del CCAI</td><td>Armando Zabaraín</td></tr>
-      <tr><td>14 (completo)</td><td>Características de las prestaciones y equivalencias actuariales</td><td>Modificación integral</td><td>Armando Zabaraín</td></tr>
-      <tr><td>19, literal k</td><td>Inversión de los recursos de las cuentas</td><td>Reglas de inversión</td><td>Armando Zabaraín</td></tr>
-      <tr><td>23, parágrafo transitorio</td><td>Comisión máxima de las AFP (0,7 % sobre saldos)</td><td>Modificación y artículo nuevo</td><td>Jennifer Pedraza</td></tr>
-      <tr><td>36 (completo)</td><td>Semanas por hijos para mujeres</td><td>Piso de 1.000 semanas (no 850), sin aplicar a la transición ni elevar la tasa</td><td>Víctor Salcedo</td></tr>
-      <tr><td>63, inciso 2</td><td>Inversión del CCAI y fondos generacionales</td><td>Considerar el impacto fiscal de mediano y largo plazo; prohibir usar los recursos como crédito al Gobierno</td><td>Víctor Salcedo</td></tr>
-      <tr><td>84, numeral 5</td><td>Tratamiento tributario</td><td>Pensiones gravadas solo en la parte que exceda 1.000 UVT mensuales</td><td>Víctor Salcedo</td></tr>
-      <tr><td>92, inciso 1 y 93</td><td>Administración del FAPC por el Banco de la República</td><td>Responsabilidad «de medio y no de resultado»; Colpensiones asume el pago</td><td>Víctor Salcedo</td></tr>
-    </tbody></table></div><p class="muted xs mt1">Fuentes: Comunicado 27 de la Corte; El Colombiano; La FM. <a class="cite" data-ref="c264"></a> <a class="cite" data-ref="elcolC264"></a> <a class="cite" data-ref="lafmProp"></a> Desde el 1 de abril de 2027 la Corte retomará más de 100 demandas de fondo (libertad de elección, propiedad del ahorro, sostenibilidad, competencia).</p></div>
-      <div class="listblock rule-magenta mt3 reveal">
-      <h3>Dónde va la reforma hoy (corte: 5 de septiembre de 2026)</h3>
-      <div class="rows">
-        <div class="r"><div class="k">En firme</div><div class="v">El grueso del articulado quedó exequible, pero <b>solo por vicios de procedimiento</b>. La Corte no se pronunció sobre el fondo de casi ninguna norma. <a class="cite" data-ref="c264"></a></div></div>
-        <div class="r"><div class="k">En la Cámara</div><div class="v">Tres artículos completos (14, 36 y 93) y apartes de otros seis volvieron a debate. Hasta que se resuelvan, esas reglas no están definidas.</div></div>
-        <div class="r"><div class="k">Suspendido</div><div class="v">Más de <b>cien demandas de fondo</b> quedaron a la espera. Se retoman cuando la ley entre en vigencia, así que la discusión constitucional de fondo —igualdad, propiedad de los saldos, libertad de escogencia— apenas empieza.</div></div>
-        <div class="r"><div class="k">Sin reglamentar</div><div class="v">Buena parte de la operación depende de decretos que aún no salen: reglas de inversión del <span class="term" data-t="fapc">Fondo de Ahorro</span>, operación del pilar semicontributivo y comisiones. Cualquier estimación de esta plataforma cambia cuando se publiquen.</div></div>
-        <div class="r"><div class="k">Ya en marcha</div><div class="v">El Decreto 0415 de 2026 ordenó a las AFP girar a Colpensiones los saldos de cerca de 120.000 afiliados que usaron la ventana de traslado. <a class="cite" data-ref="d0415"></a></div></div>
-        <div class="r"><div class="k">1 abr 2027</div><div class="v">Fecha fijada por la Corte para el arranque del sistema de pilares. El <span class="term" data-t="transicion">régimen de transición</span> se cuenta con las semanas acumuladas a ese día.</div></div>
-      </div>
-    </div>
-</div>
+    <div class="block rule-orange mt2 reveal"><h3>Cómo leer una decisión sin confundir sus efectos</h3><div class="table-wrap"><table><thead><tr><th scope="col">Expresión</th><th scope="col">Qué permite concluir</th><th scope="col">Qué hay que comprobar</th></tr></thead><tbody>
+      <tr><th scope="row">Aval por un cargo de trámite</th><td>Resuelve el problema procesal examinado.</td><td>Si la decisión limita sus efectos a ese cargo; no supone un aval de todo el contenido.</td></tr>
+      <tr><th scope="row">Subsanación</th><td>Ordena corregir un defecto identificado.</td><td>Disposición afectada, autoridad, plazo y efecto sobre su aplicación.</td></tr>
+      <tr><th scope="row">Vigencia condicionada</th><td>La aplicación depende de lo decidido por la Corte.</td><td>Fecha, excepciones y alcance temporal exactos en la parte resolutiva.</td></tr>
+      <tr><th scope="row">Comunicado o noticia</th><td>Informa públicamente sobre una decisión.</td><td>Contrastar el documento judicial antes de trasladar el resumen a un caso individual.</td></tr>
+    </tbody></table></div><p class="muted xs mt1">Guía editorial de lectura, a partir del Auto 841 y del anuncio institucional de la Cámara. <a class="cite" data-ref="auto841"></a> <a class="cite" data-ref="camara264"></a></p></div>
+    <div class="listblock rule-magenta mt3 reveal"><h3>Antes de aplicar una regla a una persona</h3><div class="rows">
+      <div class="r"><div class="k">Texto</div><div class="v">Ubicar artículo, inciso y parágrafo en la ley. El explorador conserva una transcripción y enlaza el PDF en la página del artículo.</div></div>
+      <div class="r"><div class="k">Decisión</div><div class="v">Comprobar si existe una suspensión, excepción, condicionamiento o decisión posterior sobre ese contenido concreto.</div></div>
+      <div class="r"><div class="k">Tiempo</div><div class="v">Distinguir la fecha de publicación, la de entrada en vigor y la de los hechos del caso. La transición del artículo 75 exige identificar primero la vigencia aplicable.</div></div>
+      <div class="r"><div class="k">Operación</div><div class="v">Consultar la reglamentación exigida y las competencias de cada entidad. Una norma reglamentaria desarrolla la ley dentro de sus límites; no reemplaza por sí sola un requisito legal.</div></div>
+    </div></div>
+  </div>
 </section>
 
 <section class="section tint-pink" id="critica">
@@ -390,7 +361,7 @@
 
     <div class="section-head mt3 reveal"><h3 class="h2-like">3 · Las propuestas sobre la mesa</h3></div>
     <div class="block rule-violet reveal"><h3>Mapa de propuestas en disputa (septiembre de 2026)</h3><div class="table-wrap"><table><thead><tr><th>Propuesta</th><th>Semicontributivo</th><th>Contributivo / umbral</th><th>Libertad de elección</th><th>Evaluación fiscal disponible</th></tr></thead><tbody>
-      <tr><td>Ley 2381 (vigente desde abr-2027)</td><td>Obligatorio: renta vitalicia 300–999 semanas</td><td>CPM obligatorio hasta 2,3 SMLMV</td><td>Solo entre administradoras del CCAI</td><td>MinHacienda (121,13 % PIB a 2100), CARF (+62,3 % PIB VPN), MFMP 2026 (121,5 %)</td></tr>
+      <tr><td>Ley 2381 (diseño legal; vigencia reportada abr-2027)</td><td>Obligatorio: renta vitalicia 300–999 semanas</td><td>CPM obligatorio hasta 2,3 SMLMV</td><td>Solo entre administradoras del CCAI</td><td>MinHacienda (121,13 % PIB a 2100), CARF (+62,3 % PIB VPN), MFMP 2026 (121,5 %)</td></tr>
       <tr><td>Sanabria / De la Espriella («del Tigre»)</td><td>Eliminado u opcional</td><td>Opcional; Colpensiones solo hasta 2,3 SMLMV</td><td>Total entre RPM y RAIS</td><td>No publicada</td></tr>
       <tr><td>Centro Democrático – Forero &amp; Briceño</td><td>Eliminado</td><td>Sin obligación de cotizar en Colpensiones</td><td>Total</td><td>No publicada</td></tr>
       <tr><td>Centro Democrático – Cadavid &amp; Posada</td><td>Eliminado</td><td>Pilares se mantienen; umbral 1 SMLMV</td><td>Encima del umbral</td><td>Coincide con la recomendación del CARF (ahorro ≈ 20 % PIB)</td></tr>
@@ -404,11 +375,11 @@
 <section class="section" id="preguntas">
   <div class="wrap">
     <div class="chapter c-yellow"><span class="lbl">Preguntas abiertas</span><span class="part">El debate</span></div>
-    <div class="section-head reveal"><h2>Lo que la evidencia aún no cierra</h2><p class="lead">Preguntas que un análisis técnico debe poner sobre la mesa, con lo que dice cada fuente. Sirven como agenda de investigación y como guía para leer las más de 100 demandas pendientes.</p></div>
+    <div class="section-head reveal"><h2>Lo que la evidencia aún no cierra</h2><p class="lead">Preguntas que un análisis técnico debe poner sobre la mesa, con lo que dice cada fuente. Sirven como agenda de investigación y como guía para leer los debates constitucionales pendientes.</p></div>
     <div class="grid g2">
       <div>
         <details class="acc"><summary>¿Es actuarialmente justa la renta semicontributiva frente a la devolución de saldos?</summary><div class="body">Depende de qué cotizaciones se computen (16 o 13 puntos), de la tasa técnica y de la tabla de mortalidad, todo pendiente de reglamentación. Con 3 % real, 16 puntos y subsidio de 20 %, 416 semanas a 1 SMLMV producen ≈ $232.000 mensuales vitalicios frente a $23–27 millones de pago único, con punto de equilibrio hacia los 73,5 años: para quien muere antes (o para su familia) gana la devolución; para quien vive más, la renta. La sección 07 permite explorar cada caso. <a class="cite" data-ref="oit25"></a> <a class="cite" data-ref="sMini"></a></div></details>
-        <details class="acc"><summary>¿Está protegido el Fondo de Ahorro del uso político?</summary><div class="body">El art. 24 prohíbe destinarlo a otros fines y lo pone en el Banco de la República con Comité Directivo y concepto del CARF; pero el inciso 1 del art. 92, el art. 93 (responsabilidad de medio) y el inciso 2 del art. 63 (prohibir usarlo como crédito en emergencias) fueron devueltos a la Cámara. El Decreto 0415 de 2026, que aceleró el giro de $25 billones a Colpensiones antes de la vigencia, muestra la tensión práctica. <a class="cite" data-ref="c264"></a> <a class="cite" data-ref="d0415"></a></div></details>
+        <details class="acc"><summary>¿Está protegido el Fondo de Ahorro del uso político?</summary><div class="body">El artículo 24 destina los recursos del Fondo a obligaciones pensionales y establece reglas de administración, inversión y control; el 92 desarrolla la función del Banco de la República. El artículo 93 regula un asunto diferente: el trato diferencial a pueblos y comunidades. La protección jurídica del ahorro debe evaluarse con los límites de uso, la independencia de gestión y los controles efectivos, sin confundir esos artículos. Cualquier efecto atribuido a C-264/26 sobre un aparte exige cotejar la decisión íntegra. <a class="cite" data-ref="ley2381" data-locator="Artículos 24 y 92"></a> <a class="cite" data-ref="ley2381pdf" data-page="49" data-locator="Artículo 93"></a> <a class="cite" data-ref="camara264"></a></div></details>
         <details class="acc"><summary>¿2,3 SMLMV es el umbral correcto?</summary><div class="body">El CARF sostiene que cuanto menor el umbral, mayor el ahorro nacional y menor el subsidio; con 1 SMLMV el VPN baja ≈ 20 % del PIB. El análisis de subsidios muestra por qué: a 2,3 SMLMV el subsidio absoluto por pensión es ≈ $195 millones (hombre) y se extiende a todos los cotizantes. <a class="cite" data-ref="carf24"></a></div></details>
         <details class="acc"><summary>¿Cuánto cuesta la equidad de género?</summary><div class="body">Bajar las semanas de las mujeres a 1.000 y descontar 50 por hijo corrige una brecha real (22,4 % de mujeres mayores con pensión), pero el CARF identifica estas medidas, junto con la prestación anticipada, como las de mayor impacto fiscal; la reserva actuarial de una mujer ya es 20–40 % mayor por edad y longevidad. <a class="cite" data-ref="daneMayores"></a> <a class="cite" data-ref="carf24"></a></div></details>
         <details class="acc"><summary>¿Qué pasa con las pensiones mínimas del RAIS tras el Decreto 1485?</summary><div class="body">Al sustituir la cobertura de deslizamiento, el riesgo de que el mínimo suba más que la inflación (23 % en 2026) recae en aseguradoras y afiliados: menos rentas vitalicias ofrecidas y más capital requerido (≈ $552 millones para 1 SMLMV con cónyuge, i = 3 %, g = 1,5 %). <a class="cite" data-ref="d1485"></a> <a class="cite" data-ref="d1469"></a></div></details>
@@ -428,6 +399,7 @@
 <script src="../js/data.js"></script>
 <script src="../js/glossary.js"></script>
 <script src="../js/ley-texto.js"></script>
+<script src="../js/ley-analisis.js"></script>
 <script src="../js/routes.js"></script>
 <script src="../js/shell.js"></script>
 <script src="../js/charts.js"></script>

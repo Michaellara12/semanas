@@ -639,7 +639,7 @@ td.num{font-size:.88rem}
 .card.k .cite,.band.ink .cite,.section.ink .cite,.slab .cite{background:rgba(255,255,255,.18);color:var(--yellow)}
 
 /* Visor de PDF a pantalla completa */
-.pdfview{position:fixed;inset:0;z-index:320;display:none;flex-direction:column;background:rgba(0,0,0,.62);backdrop-filter:blur(5px)}
+.pdfview{position:fixed;inset:0;z-index:360;display:none;flex-direction:column;background:rgba(0,0,0,.62);backdrop-filter:blur(5px)}
 .pdfview.open{display:flex}
 .pdfview .shell{margin:auto;width:min(1080px,100%);height:100%;max-height:100%;background:var(--paper-2);display:flex;flex-direction:column;border-left:var(--bd);border-right:var(--bd);animation:pop .3s var(--ease)}
 @media (min-width:900px){.pdfview .shell{height:min(94vh,980px);border:var(--bd);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--pop)}}
@@ -1131,10 +1131,10 @@ input[type=range]:focus-visible{outline:none}
 .gloss-puntos li{margin-bottom:6px}
 .gloss-ficha .term{white-space:normal}
 
-.gloss-veil{position:fixed;inset:0;z-index:78;background:rgba(0,0,0,.34);opacity:0;transition:opacity .25s var(--ease)}
+.gloss-veil{position:fixed;inset:0;z-index:339;background:rgba(0,0,0,.34);opacity:0;transition:opacity .25s var(--ease)}
 .gloss-veil.open{opacity:1}
 .gloss{
-  position:fixed;top:0;right:0;bottom:0;z-index:80;width:min(560px,94vw);
+  position:fixed;top:0;right:0;bottom:0;z-index:340;width:min(620px,94vw);
   display:flex;flex-direction:column;background:var(--paper);
   border-left:var(--bd);box-shadow:-18px 0 44px rgba(0,0,0,.16);
   transform:translateX(102%);transition:transform .28s var(--ease)}
@@ -1197,6 +1197,14 @@ input[type=range]:focus-visible{outline:none}
   .gloss-lista li{border-right:0}
 }
 body.gloss-abierto{overflow:hidden}
+body.law-modal-open{overflow:hidden}
+/* Fichas jurídicas compartidas también desde bibliografía y otras rutas. */
+.law-source-context{background:var(--soft-blue);padding:18px;margin:16px 0}
+.law-source-context h4{margin:0 0 8px;text-transform:none;letter-spacing:0;font-size:1rem}
+.law-source-meta{display:grid;gap:10px;margin:16px 0}
+.law-source-meta dt{font-weight:800;font-size:.8rem}
+.law-source-meta dd{margin:3px 0 0;font-size:.9rem;line-height:1.6}
+.law-source-warning{font-size:.85rem;color:var(--ink-2);background:var(--pale-yellow);padding:16px}
 
 /* =====================================================================
    PORTADA EDUCATIVA · explicación del sistema
